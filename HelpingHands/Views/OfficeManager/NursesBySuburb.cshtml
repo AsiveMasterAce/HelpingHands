@@ -1,0 +1,17 @@
+﻿@model List<PreferredSuburb>
+@{
+    ViewData["Title"] = "NursesBySuburb";
+}
+
+
+<h2>Nurses by Suburb</h2>
+
+@foreach (var suburbNurses in Model)
+{
+    <h3>Suburb: @suburbNurses.Suburb.Name</h3>
+    <h4>Nurses:</h4>
+    <ul>
+        <li>@(suburbNurses.Nurse.FirstName) @(suburbNurses.Nurse.LastName)</li>
+    </ul>
+    <hr />
+}
