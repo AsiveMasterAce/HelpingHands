@@ -1,17 +1,29 @@
-﻿@model List<PreferredSuburb>
+﻿@model HelpingHands.Models.Suburb
 @{
     ViewData["Title"] = "NursesBySuburb";
 }
 
 
-<h2>Nurses by Suburb</h2>
+<div class="container">
 
-@foreach (var suburbNurses in Model)
-{
-    <h3>Suburb: @suburbNurses.Suburb.Name</h3>
-    <h4>Nurses:</h4>
-    <ul>
-        <li>@(suburbNurses.Nurse.FirstName) @(suburbNurses.Nurse.LastName)</li>
-    </ul>
-    <hr />
-}
+    <div class="col-4">
+
+        @foreach(var name in Model.PreferredSuburbs){
+
+            <h1>
+                @name.Suburb.Name
+         
+            </h1>
+            <h4>
+
+                @name.Nurse.FirstName
+            </h4>
+
+            <h4>
+
+               
+            </h4>
+        }
+    </div>
+</div>
+

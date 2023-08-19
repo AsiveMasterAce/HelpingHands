@@ -1,4 +1,5 @@
 ﻿using HelpingHands.Data;
+using HelpingHands.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,7 @@ namespace HelpingHands.Controllers
     public class OfficeManagerController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IConfiguration _configuration;
         public OfficeManagerController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
            
@@ -16,20 +18,29 @@ namespace HelpingHands.Controllers
         {
             return View();
         }
-        [HttpGet]
-        public async Task<IActionResult> NursesBySuburb()
+        public IActionResult GetSuburbs()
         {
-            var result = await (from preferredSuburb in _context.preferredSuburb
-                                join nurse in _context.Nurse on preferredSuburb.NurseID equals nurse.NurseID
-                                join suburb in _context.Suburb on preferredSuburb.SuburbID equals suburb.SuburbID
-                                group nurse by suburb.Name into nursesBySuburb
-                                select new
-                                {
-                                    Suburb = nursesBySuburb.Key,
-                                    Nurses = nursesBySuburb.Select(n => n.FirstName + " " + n.LastName).ToList()
-                                }).ToListAsync();
+            var suburbs = _context.Suburb.Where(c => c.Archived == false).ToList();
 
-            return View(result);
+            return View(suburbs);
+        }
+        [HttpGet]
+        public async Task<IActionResult> NursesBySuburb([FromRoute] int suburbID)
+        {
+            var suburbs= _context.Suburb.Where(s=>s.SuburbID==suburbID).Include(s=>s.PreferredSuburbs).ThenInclude(s=>s.Nurse).FirstOrDefault();
+         
+            if (suburbs!=null)
+            {
+                NotFound();
+            }
+            var suburb = new Suburb
+            {
+                SuburbID = suburbs.SuburbID,
+                PreferredSuburbs=suburbs.PreferredSuburbs,
+                Name=suburbs.Name,
+
+            };
+            return View(suburb);
         }
     }
 }

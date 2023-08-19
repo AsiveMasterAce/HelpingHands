@@ -4,6 +4,10 @@ namespace HelpingHands.Models
 {
     public class Suburb
     {
+        public Suburb()
+        {
+            this.PreferredSuburbs = new List<PreferredSuburb>();
+        }
         public int SuburbID { get; set; }
         public string? Name { get; set; }
         public int PostalCode { get; set; }

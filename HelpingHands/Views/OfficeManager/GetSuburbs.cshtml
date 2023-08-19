@@ -1,0 +1,60 @@
+﻿@model IEnumerable<HelpingHands.Models.Suburb>
+@{
+    ViewData["Title"] = "GetSuburbs";
+}
+
+<div class="container mt-5">
+
+    <h3> Select Suburb</h3>
+
+    <table class="table" id="suburbTable"> 
+        <thead>
+ 
+          <tr>
+
+              <th>
+                  Suburb Name   
+             </th>
+             <th>
+                  Postal Codes
+             </th>
+             <th>
+                 Action
+             </th>
+          </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+             {
+              <tr>
+               
+
+                  <td>
+                      @item.Name
+
+                 </td>
+                 <td>
+                     @item.PostalCode
+                 </td>
+                 <td>
+
+                     <a asp-action="NursesBySuburb" asp-controller="OfficeManager"  asp-route-id="@item.SuburbID" class="btn btn-primary ">
+                         Show Nurses
+                     </a>
+                 </td>
+             </tr>
+             }
+        </tbody>
+
+    </table>
+    
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+        $("#suburbTable").DataTable();
+
+    });
+</script>
