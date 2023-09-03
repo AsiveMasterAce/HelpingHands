@@ -8,12 +8,9 @@
 
     <div class="col-4">
 
+       <h1> @Model.Name </h1>
         @foreach(var name in Model.PreferredSuburbs){
 
-            <h1>
-                @name.Suburb.Name
-         
-            </h1>
             <h4>
 
                 @name.Nurse.FirstName

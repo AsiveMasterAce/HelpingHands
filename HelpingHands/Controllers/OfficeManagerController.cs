@@ -25,11 +25,11 @@ namespace HelpingHands.Controllers
             return View(suburbs);
         }
         [HttpGet]
-        public async Task<IActionResult> NursesBySuburb([FromRoute] int suburbID)
+        public async Task<IActionResult> NursesBySuburb([FromRoute] int Id)
         {
-            var suburbs= _context.Suburb.Where(s=>s.SuburbID==suburbID).Include(s=>s.PreferredSuburbs).ThenInclude(s=>s.Nurse).FirstOrDefault();
+            var suburbs= _context.Suburb.Where(s=>s.SuburbID==Id).Include(s=>s.PreferredSuburbs).ThenInclude(s=>s.Nurse).FirstOrDefault();
          
-            if (suburbs!=null)
+            if (suburbs==null)
             {
                 NotFound();
             }
