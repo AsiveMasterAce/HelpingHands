@@ -18,8 +18,27 @@ namespace HelpingHands.Controllers
 
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("A"))
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+                else if (User.IsInRole("O"))
+                {
+                    return RedirectToAction("Index", "OfficeManager");
+                } 
+                else if (User.IsInRole("N"))
+                {
+                    return RedirectToAction("Index", "Nurse");
+                }               
+                else if (User.IsInRole("P"))
+                {
+                    return RedirectToAction("Index", "Patient");
+                }
+            }
 
-            return View();
+                return View();
         }
         public IActionResult Test()
         {

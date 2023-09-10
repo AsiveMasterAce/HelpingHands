@@ -6,8 +6,11 @@ namespace HelpingHands.Models
     {
 
         [Required]
-        [EmailAddress]
+        [DataType(DataType.EmailAddress)]
+        
+        [RegularExpression(@"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$", ErrorMessage = "Invalid E-mail Address.")]
         public string ?Email { get; set; }
+
         [Required]
         [DataType(DataType.Password)]
         public string ?Password { get; set; }

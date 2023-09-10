@@ -1,43 +1,58 @@
-﻿@{
-    ViewData["Title"] = "LogIn";
+﻿@model HelpingHands.Models.LogInModel
+@{
+    ViewData["Title"] = "Log In";
     Layout = "~/Views/Shared/_AuthLayout.cshtml";
 }
 
 
 
 <div class="container mx-3" style="position: relative;">
-    <a asp-action="index" asp-controller="Home" style="position: absolute; top: -30%; left: 1%; text-decoration:none; font-size:20px;" class="text-dark">
+    <a asp-action="index" asp-controller="Home" style="position: absolute; top: -25%; left: 1%; text-decoration:none; font-size:20px;" class="text-dark">
         <i class="bi bi-arrow-left-circle-fill"></i>
         Home
     </a>
 
 
     <h1 class="text-center">Welcome</h1>
-    <h5 class="text-center text-secondary"><b>Sign In</b> with your account and let us heal you</h5>
-    <form>
-
-        <div class="form-group py-2">
-            <label for="exampleInputEmail1">Email Address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger text-center" role="alert">
+            @TempData["ErrorMessage"]
         </div>
-        <div class="form-group py-2">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-        </div>
-        <div class="form-group py-2">
-            <a href="#">Forgot Password?</a>
-        </div>
-        <div class="form-check my-2">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Remember Me</label>
-        </div>
+    }
+    else
+    {
+        
+      <h5 class="text-center text-secondary"><b>Sign In</b> with your account and let us heal you</h5>
+     
+    }
+    <form asp-action="LogInPost" asp-controller="Auth" enctype="multipart/form-data" method="post">
+             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group py-2">
+                <label for="exampleInputEmail1">Email Address</label>
+                <input  asp-for="Email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group py-2">
+                <label for="exampleInputPassword1">Password</label>
+                <input  asp-for="Password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group py-2">
+                <a href="#">Forgot Password?</a>
+            </div>
+            <div class="form-check my-2">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label  asp-for="RememberMe" class="form-check-label" for="exampleCheck1">Remember Me</label>
+            
+            </div>
 
 
-        <div class="form-group mt-2">
+            <div class="form-group mt-2">
 
-            <button type="submit" class="btn btn-primary w-100 p-2">Sign In</button>
-        </div>
+                <button type="submit" class="btn btn-primary w-100 p-2">Sign In</button>
+            </div>
 
 
     </form>
@@ -47,9 +62,11 @@
 
     </div>
 
-
-
 </div>
 
 
 
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

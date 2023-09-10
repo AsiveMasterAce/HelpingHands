@@ -1,24 +1,37 @@
 ﻿<div class="dashboard-nav">
-    <header>
-        <a href="#!" class="menu-toggle"><i class="bi bi-list"></i></a>
-        <a href="#" class="brand-logo">
-            <i class="fas fa-anchor"></i> <span>Helping Hands</span>
-        </a>
-    </header>
-    <nav class="dashboard-nav-list">
-        <a href="#" class="dashboard-nav-item">
+
+
+
+    @if (User.IsInRole("A"))
+    {
+        <header>
+            <a href="#!" class="menu-toggle"><i class="bi bi-list"></i></a>
+            <a href="#" class="brand-logo">
+               <span>Admin</span>
+            </a>
+        </header>
+
+        <nav class="dashboard-nav-list">
+            <a href="#" class="dashboard-nav-item">
             <i class="bi bi-house"></i>
             Home
-        </a><a href="#" class="dashboard-nav-item active">
-            <i class="fas fa-tachometer-alt"></i> dashboard
-        </a><a href="#" class="dashboard-nav-item"><i class="fas fa-file-upload"></i> Upload </a>
+        </a>
+        
+        <a asp-action="GetSuburbs" asp-controller="OfficeManager" class="dashboard-nav-item">
+            
+            <i class="fas fa-file-upload"></i> Suburb
+            
+        </a>
         <div class='dashboard-nav-dropdown'>
             <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
                 <i class="fas fa-photo-video"></i> Media
             </a>
             <div class='dashboard-nav-dropdown-menu'>
-                <a href="#"
-                   class="dashboard-nav-dropdown-item">All</a><a href="#" class="dashboard-nav-dropdown-item">Recent</a><a href="#" class="dashboard-nav-dropdown-item">Images</a><a href="#" class="dashboard-nav-dropdown-item">Video</a>
+                <a  asp-action="Example" asp-controller="OfficeManager"
+                   class="dashboard-nav-dropdown-item">All</a>
+                <a href="#" class="dashboard-nav-dropdown-item">Recent</a>
+                <a href="#" class="dashboard-nav-dropdown-item">Images</a>
+                <a href="#" class="dashboard-nav-dropdown-item">Video</a>
             </div>
         </div>
         <div class='dashboard-nav-dropdown'>
@@ -42,6 +55,191 @@
         </div>
         <a href="#" class="dashboard-nav-item"><i class="fas fa-cogs"></i> Settings </a><a href="#" class="dashboard-nav-item"><i class="fas fa-user"></i> Profile </a>
         <div class="nav-item-divider"></div>
-        <a href="#" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Logout </a>
-    </nav>
+
+        <form asp-action="LogOut" asp-controller="Auth" method="post" style="display: inline;margin-right:1rem;">
+            
+           <span class="mx-4"> <button type="submit" class="btn btn-danger w-75"><i class="bi bi-box-arrow-in-right"></i> Log Out</button> </span>
+        </form>
+
+        </nav>
+    }
+    else if(User.IsInRole("O"))
+    {       <header>
+                <a href="#!" class="menu-toggle"><i class="bi bi-list"></i></a>
+                <a href="#" class="brand-logo">
+                   <span>Office Manager</span>
+                </a>
+            </header>
+
+        <nav class="dashboard-nav-list">
+            <a href="#" class="dashboard-nav-item">
+            <i class="bi bi-house"></i>
+            Home
+        </a>
+        
+        <a asp-action="GetSuburbs" asp-controller="OfficeManager" class="dashboard-nav-item">
+            
+            <i class="fas fa-file-upload"></i> Suburb
+            
+        </a>
+        <div class='dashboard-nav-dropdown'>
+            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                <i class="fas fa-photo-video"></i> Media
+            </a>
+            <div class='dashboard-nav-dropdown-menu'>
+                <a  asp-action="Example" asp-controller="OfficeManager"
+                   class="dashboard-nav-dropdown-item">All</a>
+                <a href="#" class="dashboard-nav-dropdown-item">Recent</a>
+                <a href="#" class="dashboard-nav-dropdown-item">Images</a>
+                <a href="#" class="dashboard-nav-dropdown-item">Video</a>
+            </div>
+        </div>
+        <div class='dashboard-nav-dropdown'>
+            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                <i class="fas fa-users"></i> Users
+            </a>
+            <div class='dashboard-nav-dropdown-menu'>
+                <a href="#"
+                   class="dashboard-nav-dropdown-item">All</a><a href="#" class="dashboard-nav-dropdown-item">Subscribed</a><a href="#"
+                                                                                                                               class="dashboard-nav-dropdown-item">Non-subscribed</a><a href="#" class="dashboard-nav-dropdown-item">Banned</a><a href="#" class="dashboard-nav-dropdown-item">New</a>
+            </div>
+        </div>
+        <div class='dashboard-nav-dropdown'>
+            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                <i class="fas fa-money-check-alt"></i> Payments
+            </a>
+            <div class='dashboard-nav-dropdown-menu'>
+                <a href="#"
+                   class="dashboard-nav-dropdown-item">All</a><a href="#" class="dashboard-nav-dropdown-item">Recent</a><a href="#" class="dashboard-nav-dropdown-item"> Projections</a>
+            </div>
+        </div>
+        <a href="#" class="dashboard-nav-item"><i class="fas fa-cogs"></i> Settings </a><a href="#" class="dashboard-nav-item"><i class="fas fa-user"></i> Profile </a>
+        <div class="nav-item-divider"></div>
+
+        <form asp-action="LogOut" asp-controller="Auth" method="post" style="display: inline;">
+            <button type="submit" class="btn btn-danger">Log Out</button>
+        </form>
+
+        </nav>
+    }
+    else if (User.IsInRole("N"))
+    {
+        <header>
+            <a href="#!" class="menu-toggle"><i class="bi bi-list"></i></a>
+            <a href="#" class="brand-logo">
+               <span>Nurse</span>
+            </a>
+        </header>
+
+        <nav class="dashboard-nav-list">
+            <a href="#" class="dashboard-nav-item">
+            <i class="bi bi-house"></i>
+            Home
+        </a>
+        
+        <a asp-action="GetSuburbs" asp-controller="OfficeManager" class="dashboard-nav-item">
+            
+            <i class="fas fa-file-upload"></i> Suburb
+            
+        </a>
+        <div class='dashboard-nav-dropdown'>
+            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                <i class="fas fa-photo-video"></i> Media
+            </a>
+            <div class='dashboard-nav-dropdown-menu'>
+                <a  asp-action="Example" asp-controller="OfficeManager"
+                   class="dashboard-nav-dropdown-item">All</a>
+                <a href="#" class="dashboard-nav-dropdown-item">Recent</a>
+                <a href="#" class="dashboard-nav-dropdown-item">Images</a>
+                <a href="#" class="dashboard-nav-dropdown-item">Video</a>
+            </div>
+        </div>
+        <div class='dashboard-nav-dropdown'>
+            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                <i class="fas fa-users"></i> Users
+            </a>
+            <div class='dashboard-nav-dropdown-menu'>
+                <a href="#"
+                   class="dashboard-nav-dropdown-item">All</a><a href="#" class="dashboard-nav-dropdown-item">Subscribed</a><a href="#"
+                                                                                                                               class="dashboard-nav-dropdown-item">Non-subscribed</a><a href="#" class="dashboard-nav-dropdown-item">Banned</a><a href="#" class="dashboard-nav-dropdown-item">New</a>
+            </div>
+        </div>
+        <div class='dashboard-nav-dropdown'>
+            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                <i class="fas fa-money-check-alt"></i> Payments
+            </a>
+            <div class='dashboard-nav-dropdown-menu'>
+                <a href="#"
+                   class="dashboard-nav-dropdown-item">All</a><a href="#" class="dashboard-nav-dropdown-item">Recent</a><a href="#" class="dashboard-nav-dropdown-item"> Projections</a>
+            </div>
+        </div>
+        <a href="#" class="dashboard-nav-item"><i class="fas fa-cogs"></i> Settings </a><a href="#" class="dashboard-nav-item"><i class="fas fa-user"></i> Profile </a>
+        <div class="nav-item-divider"></div>
+
+        <form asp-action="LogOut" asp-controller="Auth" method="post" style="display: inline;">
+            <button type="submit" class="btn btn-danger">Log Out</button>
+        </form>
+
+        </nav>
+    }
+    else if (User.IsInRole("P"))
+    {
+        <header>
+            <a href="#!" class="menu-toggle"><i class="bi bi-list"></i></a>
+            <a href="#" class="brand-logo">
+               <span>Patient</span>
+            </a>
+        </header>
+
+        <nav class="dashboard-nav-list">
+            <a href="#" class="dashboard-nav-item">
+            <i class="bi bi-house"></i>
+            Home
+        </a>
+        
+        <a asp-action="GetSuburbs" asp-controller="OfficeManager" class="dashboard-nav-item">
+            
+            <i class="fas fa-file-upload"></i> Suburb
+            
+        </a>
+        <div class='dashboard-nav-dropdown'>
+            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                <i class="fas fa-photo-video"></i> Media
+            </a>
+            <div class='dashboard-nav-dropdown-menu'>
+                <a  asp-action="Example" asp-controller="OfficeManager"
+                   class="dashboard-nav-dropdown-item">All</a>
+                <a href="#" class="dashboard-nav-dropdown-item">Recent</a>
+                <a href="#" class="dashboard-nav-dropdown-item">Images</a>
+                <a href="#" class="dashboard-nav-dropdown-item">Video</a>
+            </div>
+        </div>
+        <div class='dashboard-nav-dropdown'>
+            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                <i class="fas fa-users"></i> Users
+            </a>
+            <div class='dashboard-nav-dropdown-menu'>
+                <a href="#"
+                   class="dashboard-nav-dropdown-item">All</a><a href="#" class="dashboard-nav-dropdown-item">Subscribed</a><a href="#"
+                                                                                                                               class="dashboard-nav-dropdown-item">Non-subscribed</a><a href="#" class="dashboard-nav-dropdown-item">Banned</a><a href="#" class="dashboard-nav-dropdown-item">New</a>
+            </div>
+        </div>
+        <div class='dashboard-nav-dropdown'>
+            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                <i class="fas fa-money-check-alt"></i> Payments
+            </a>
+            <div class='dashboard-nav-dropdown-menu'>
+                <a href="#"
+                   class="dashboard-nav-dropdown-item">All</a><a href="#" class="dashboard-nav-dropdown-item">Recent</a><a href="#" class="dashboard-nav-dropdown-item"> Projections</a>
+            </div>
+        </div>
+        <a href="#" class="dashboard-nav-item"><i class="fas fa-cogs"></i> Settings </a><a href="#" class="dashboard-nav-item"><i class="fas fa-user"></i> Profile </a>
+        <div class="nav-item-divider"></div>
+
+        <form asp-action="LogOut" asp-controller="Auth" method="post" style="display: inline;">
+            <button type="submit" class="btn btn-danger">Log Out</button>
+        </form>
+
+        </nav>
+    }
 </div>

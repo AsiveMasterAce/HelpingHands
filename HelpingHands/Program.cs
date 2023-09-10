@@ -11,9 +11,9 @@ builder.Services.AddAuthentication(
     Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/login";
-        options.LogoutPath= "/Logout";
-
+        options.LoginPath = "/Auth/login";
+        options.LogoutPath= "/Auth/LogOut";
+        options.AccessDeniedPath = "/Auth/AccessDenied";
         options.Cookie.Name = "helpingHands_cookie";
     });
 

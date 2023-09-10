@@ -1,10 +1,13 @@
 ﻿using HelpingHands.Data;
 using HelpingHands.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HelpingHands.Controllers
 {
+    [Authorize(Roles = "O")]
+
     public class OfficeManagerController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -18,6 +21,8 @@ namespace HelpingHands.Controllers
         {
             return View();
         }
+
+       
         public IActionResult GetSuburbs()
         {
             var suburbs = _context.Suburb.Where(c => c.Archived == false).ToList();
@@ -41,6 +46,14 @@ namespace HelpingHands.Controllers
 
             };
             return View(suburb);
+        }
+
+     
+        public IActionResult Example()
+        {
+            
+
+            return View();
         }
     }
 }
