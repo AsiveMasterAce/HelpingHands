@@ -21,4 +21,20 @@ $(document).ready(function () {
             $(".dashboard").toggleClass("dashboard-compact");
         }
     });
+
+    //var url = window.location.href;
+
+    //// iterate over all nav links
+    //$('.dashboard-nav .dashboard-nav-list .dashboard-nav-item').each(function () {
+    //    var link = $(this).attr('href');
+
+    //    // check if the link is in the current URL
+    //    if (url.includes(link)) {
+    //        // add active class
+    //        $(this).addClass('active');
+    //    }
+    //});
 });
+
+
+

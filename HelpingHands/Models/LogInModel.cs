@@ -8,7 +8,7 @@ namespace HelpingHands.Models
         [Required]
         [DataType(DataType.EmailAddress)]
         
-        [RegularExpression(@"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$", ErrorMessage = "Invalid E-mail Address.")]
+        [RegularExpression(@"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$", ErrorMessage = "Invalid E-mail Address Format.")]
         public string ?Email { get; set; }
 
         [Required]

@@ -273,7 +273,7 @@ h1, .h1 {
     }
 
 .active {
-    background: rgba(0, 0, 0, 0.1);
+    background-color: var(--sweet-red);
 }
 
 .dashboard-nav-dropdown {
@@ -458,4 +458,27 @@ h1, .h1 {
     .dashboard-compact .dashboard-toolbar {
         left: 0;
     }
+}
+.small-margin {
+    margin: 0 auto;
+}
+.col-3 {
+    flex: 0 0 auto;
+    width: 23%;
+}
+
+.btn-push-down {
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.small-text {
+    font-size: 0.75rem;
+}
+.small-btn {
+    padding: 5px 10px;
+    font-size: 0.75rem; 
+    width: auto; 
 }

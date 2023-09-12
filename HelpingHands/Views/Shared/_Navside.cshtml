@@ -1,7 +1,5 @@
 ﻿<div class="dashboard-nav">
 
-
-
     @if (User.IsInRole("A"))
     {
         <header>
@@ -17,49 +15,30 @@
             Home
         </a>
         
-        <a asp-action="GetSuburbs" asp-controller="OfficeManager" class="dashboard-nav-item">
-            
-            <i class="fas fa-file-upload"></i> Suburb
-            
-        </a>
         <div class='dashboard-nav-dropdown'>
             <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
-                <i class="fas fa-photo-video"></i> Media
+               <i class="bi bi-people"></i> Users
             </a>
             <div class='dashboard-nav-dropdown-menu'>
-                <a  asp-action="Example" asp-controller="OfficeManager"
-                   class="dashboard-nav-dropdown-item">All</a>
+                <a  asp-action="Users" asp-controller="Admin"
+                   class="dashboard-nav-dropdown-item">All
+               </a>
                 <a href="#" class="dashboard-nav-dropdown-item">Recent</a>
                 <a href="#" class="dashboard-nav-dropdown-item">Images</a>
                 <a href="#" class="dashboard-nav-dropdown-item">Video</a>
             </div>
         </div>
-        <div class='dashboard-nav-dropdown'>
-            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
-                <i class="fas fa-users"></i> Users
-            </a>
-            <div class='dashboard-nav-dropdown-menu'>
-                <a href="#"
-                   class="dashboard-nav-dropdown-item">All</a><a href="#" class="dashboard-nav-dropdown-item">Subscribed</a><a href="#"
-                                                                                                                               class="dashboard-nav-dropdown-item">Non-subscribed</a><a href="#" class="dashboard-nav-dropdown-item">Banned</a><a href="#" class="dashboard-nav-dropdown-item">New</a>
-            </div>
-        </div>
-        <div class='dashboard-nav-dropdown'>
-            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
-                <i class="fas fa-money-check-alt"></i> Payments
-            </a>
-            <div class='dashboard-nav-dropdown-menu'>
-                <a href="#"
-                   class="dashboard-nav-dropdown-item">All</a><a href="#" class="dashboard-nav-dropdown-item">Recent</a><a href="#" class="dashboard-nav-dropdown-item"> Projections</a>
-            </div>
-        </div>
-        <a href="#" class="dashboard-nav-item"><i class="fas fa-cogs"></i> Settings </a><a href="#" class="dashboard-nav-item"><i class="fas fa-user"></i> Profile </a>
-        <div class="nav-item-divider"></div>
-
-        <form asp-action="LogOut" asp-controller="Auth" method="post" style="display: inline;margin-right:1rem;">
+        <a asp-action="" asp-controller="" class="dashboard-nav-item">
             
-           <span class="mx-4"> <button type="submit" class="btn btn-danger w-75"><i class="bi bi-box-arrow-in-right"></i> Log Out</button> </span>
-        </form>
+            <i class="fas fa-file-upload"></i> Manage Suburbs
+            
+        </a>
+        
+         <a href="#" class="dashboard-nav-item"> <i class="bi bi-gear"></i>Settings </a>
+        <a href="#" class="dashboard-nav-item"><i class="bi bi-person-circle"></i> Profile </a>
+
+           <div class="nav-item-divider"></div>
+           <span class="mx-4"> <button type="submit" class="btn btn-danger w-75 btn-push-down"  data-bs-toggle="modal" data-bs-target="#LogOutModal"><i class="bi bi-box-arrow-in-right"></i> Log Out</button> </span>
 
         </nav>
     }
@@ -113,13 +92,12 @@
                    class="dashboard-nav-dropdown-item">All</a><a href="#" class="dashboard-nav-dropdown-item">Recent</a><a href="#" class="dashboard-nav-dropdown-item"> Projections</a>
             </div>
         </div>
-        <a href="#" class="dashboard-nav-item"><i class="fas fa-cogs"></i> Settings </a><a href="#" class="dashboard-nav-item"><i class="fas fa-user"></i> Profile </a>
-        <div class="nav-item-divider"></div>
+         <a href="#" class="dashboard-nav-item"> <i class="bi bi-gear"></i>Settings </a>
+        <a href="#" class="dashboard-nav-item"><i class="bi bi-person-circle"></i> Profile </a>
 
-        <form asp-action="LogOut" asp-controller="Auth" method="post" style="display: inline;">
-            <button type="submit" class="btn btn-danger">Log Out</button>
-        </form>
-
+           <div class="nav-item-divider"></div>
+    
+          <span class="mx-4"> <button type="submit" class="btn btn-danger w-75 btn-push-down" data-bs-toggle="modal" data-bs-target="#LogOutModal"><i class="bi bi-box-arrow-in-right"></i> Log Out</button> </span>
         </nav>
     }
     else if (User.IsInRole("N"))
@@ -132,54 +110,31 @@
         </header>
 
         <nav class="dashboard-nav-list">
-            <a href="#" class="dashboard-nav-item">
+            <a href="#" class="dashboard-nav-item active`">
             <i class="bi bi-house"></i>
             Home
         </a>
         
-        <a asp-action="GetSuburbs" asp-controller="OfficeManager" class="dashboard-nav-item">
-            
-            <i class="fas fa-file-upload"></i> Suburb
-            
-        </a>
         <div class='dashboard-nav-dropdown'>
             <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
-                <i class="fas fa-photo-video"></i> Media
+                <i class="bi bi-calendar-heart"></i> Visits
             </a>
             <div class='dashboard-nav-dropdown-menu'>
-                <a  asp-action="Example" asp-controller="OfficeManager"
-                   class="dashboard-nav-dropdown-item">All</a>
-                <a href="#" class="dashboard-nav-dropdown-item">Recent</a>
-                <a href="#" class="dashboard-nav-dropdown-item">Images</a>
-                <a href="#" class="dashboard-nav-dropdown-item">Video</a>
+                <a  asp-action="" asp-controller=""
+                   class="dashboard-nav-dropdown-item">All
+               </a>
+                <a href="#" class="dashboard-nav-dropdown-item">On-going Visits</a>
+                <a href="#" class="dashboard-nav-dropdown-item">Upcoming Visits</a>
+                <a href="#" class="dashboard-nav-dropdown-item">History Visits</a>
             </div>
         </div>
-        <div class='dashboard-nav-dropdown'>
-            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
-                <i class="fas fa-users"></i> Users
-            </a>
-            <div class='dashboard-nav-dropdown-menu'>
-                <a href="#"
-                   class="dashboard-nav-dropdown-item">All</a><a href="#" class="dashboard-nav-dropdown-item">Subscribed</a><a href="#"
-                                                                                                                               class="dashboard-nav-dropdown-item">Non-subscribed</a><a href="#" class="dashboard-nav-dropdown-item">Banned</a><a href="#" class="dashboard-nav-dropdown-item">New</a>
-            </div>
-        </div>
-        <div class='dashboard-nav-dropdown'>
-            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
-                <i class="fas fa-money-check-alt"></i> Payments
-            </a>
-            <div class='dashboard-nav-dropdown-menu'>
-                <a href="#"
-                   class="dashboard-nav-dropdown-item">All</a><a href="#" class="dashboard-nav-dropdown-item">Recent</a><a href="#" class="dashboard-nav-dropdown-item"> Projections</a>
-            </div>
-        </div>
-        <a href="#" class="dashboard-nav-item"><i class="fas fa-cogs"></i> Settings </a><a href="#" class="dashboard-nav-item"><i class="fas fa-user"></i> Profile </a>
+      
+        <a href="#" class="dashboard-nav-item"> <i class="bi bi-gear"></i>Settings </a>
+        <a href="#" class="dashboard-nav-item"><i class="bi bi-person-circle"></i> Profile </a>
         <div class="nav-item-divider"></div>
 
-        <form asp-action="LogOut" asp-controller="Auth" method="post" style="display: inline;">
-            <button type="submit" class="btn btn-danger">Log Out</button>
-        </form>
-
+     
+        <span class="mx-4"> <button type="submit" class="btn btn-danger w-75 btn-push-down" data-bs-toggle="modal" data-bs-target="#LogOutModal"><i class="bi bi-box-arrow-in-right"></i> Log Out</button> </span>
         </nav>
     }
     else if (User.IsInRole("P"))
@@ -220,8 +175,10 @@
             </a>
             <div class='dashboard-nav-dropdown-menu'>
                 <a href="#"
-                   class="dashboard-nav-dropdown-item">All</a><a href="#" class="dashboard-nav-dropdown-item">Subscribed</a><a href="#"
-                                                                                                                               class="dashboard-nav-dropdown-item">Non-subscribed</a><a href="#" class="dashboard-nav-dropdown-item">Banned</a><a href="#" class="dashboard-nav-dropdown-item">New</a>
+                   class="dashboard-nav-dropdown-item">All</a><a href="#" class="dashboard-nav-dropdown-item">Subscribed</a>
+                   <a href="#" class="dashboard-nav-dropdown-item">Non-subscribed</a>
+                   <a href="#" class="dashboard-nav-dropdown-item">Banned</a>
+                   <a href="#" class="dashboard-nav-dropdown-item">New</a>
             </div>
         </div>
         <div class='dashboard-nav-dropdown'>
@@ -236,10 +193,61 @@
         <a href="#" class="dashboard-nav-item"><i class="fas fa-cogs"></i> Settings </a><a href="#" class="dashboard-nav-item"><i class="fas fa-user"></i> Profile </a>
         <div class="nav-item-divider"></div>
 
-        <form asp-action="LogOut" asp-controller="Auth" method="post" style="display: inline;">
-            <button type="submit" class="btn btn-danger">Log Out</button>
-        </form>
-
+     
+            <span class="mx-4"> <button type="submit" class="btn btn-danger w-75 btn-push-down"  data-bs-toggle="modal" data-bs-target="#LogOutModal"><i class="bi bi-box-arrow-in-right"></i> Log Out</button> </span>
         </nav>
     }
 </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="LogOutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <div class="fs-1 text-danger">
+            <i class="bi bi-exclamation-circle"></i>
+        </div>
+       <h5>Are You SureYou Want To Log Out???</h5> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id="logOut">Log Out</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+@*code for the pop modal to pass the action to the controller using Ajax Request
+
+link used for help
+https://www.phind.com/search?cache=t9cmyhwr3d4lkppqfcy94tv2
+*@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+    $(document).ready(function() {
+    $("#logOut").click(function(e) {
+        e.preventDefault();
+        
+        $.ajax({
+            url: '/Auth/LogOut',
+            type: 'POST',
+            success: function() {
+               
+                    window.location.href = "/Home/Index";
+            },
+            error: function() {
+
+                console.log('An error occurred.');
+            }
+        });
+    });
+});
+</script>

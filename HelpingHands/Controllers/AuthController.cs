@@ -53,8 +53,9 @@ namespace HelpingHands.Controllers
        
                     var claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Name, user.Email),
+                        new Claim(ClaimTypes.Name, user.FirstName +" "+user.LastName),
                         new Claim(ClaimTypes.Role,role),
+                        //new Claim(ClaimTypes.,user.UserID),
 
                     };
 
@@ -81,8 +82,9 @@ namespace HelpingHands.Controllers
         {
               
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-                
-            return RedirectToAction("Index", "Home");
+
+            return Json(new { success = true });
+            //return RedirectToAction("Index", "Home");
         }
         //access denied page from
         // https://www.c-sharpcorner.com/article/authentication-and-claim-based-authorisation-with-asp-net-identity-core/
