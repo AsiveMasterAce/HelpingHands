@@ -13,7 +13,7 @@
 
   <div class="ms-auto">
       
-  <button class="btn btn-success">Add New User</button>
+  <a asp-action="AddUser" asp-controller="Admin" class="btn btn-success">Add New User</a>
   </div>
     
 </div>
@@ -33,7 +33,7 @@
             <th style="width: 15%">
                Password
             </th>
-            <th style="width: 15%">
+            <th style="width: 15%" class="no-sort">
               Cell Number
             </th>
             <th style="width: 10%">
@@ -58,12 +58,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Password)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CellNo)
+            <td class="">
+                0 @item.CellNo
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserType)
+                @item.UserType
             </td>
+                
+
             <td>
                 <a class="btn btn-warning rounded-3 small-btn">
                     <i class="bi bi-pen"></i>
@@ -87,7 +89,9 @@
 
     $(document).ready(function () {
         $("#userTable").DataTable({
-             "columnDefs": [
+            "scrollY": "420px",
+            "scrollCollapse": true,
+            "columnDefs": [
                     { "orderable": false, "targets": 'no-sort' }
             ]
         });

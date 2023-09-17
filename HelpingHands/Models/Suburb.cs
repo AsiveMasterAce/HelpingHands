@@ -18,5 +18,6 @@ namespace HelpingHands.Models
         public virtual City? City { get; set; }
 
         public IList<PreferredSuburb>? PreferredSuburbs { get; set; }
+        public IList<CareContract>? CareContracts { get; set; }
     }
 }

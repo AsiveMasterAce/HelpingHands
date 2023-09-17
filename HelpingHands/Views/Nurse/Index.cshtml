@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Index";
+      var careContracts =  ViewBag.Contract as IEnumerable<CareContract>;
 }
 
 <div class="container">
@@ -7,62 +8,107 @@
 
 
 
-    <h4>Nurse Dashboard</h4>
-    <div class="card">
-      <div class="card-body">
-         <div class="row">
-                <div class="col-3 bg-white rounded-1 shadow-sm small-margin">
-                    <div class="d-flex p-2">
-                        <div class="fw-bold text-success fs-1">
-                           <i class="bi bi-geo-fill"></i>
-                        </div>
-                         <div class="ms-auto text-center">
-                             <h3>23</h3>
-                             <p>Total Visits</p>
-                        </div>
 
-                    </div>
-                </div> 
-              <div class="col-3 bg-white rounded-1 shadow-sm  small-margin">
-                    <div class="d-flex p-2">
-                        <div class="fw-bold text-warning fs-1">
-                            <i class="bi bi-mailbox"></i>
-                        </div>
-                         <div class="ms-auto text-center">
-                             <h3>2</h3>
-                             <p>New Contracts</p>
-                        </div>
+    <div class="row">
+        <div class="col-3 bg-white rounded-1 shadow-sm small-margin">
+            <div class="d-flex p-2">
+                <div class="fw-bold text-success fs-1">
+                   <i class="bi bi-box2-heart-fill"></i>
+                </div>
+                <div class="ms-auto text-center">
+                    <h3>@ViewBag.CareConsAss</h3>
+                    <p>Open Contracts</p>
+                </div>
 
-                    </div>
-                </div> 
-               <div class="col-3 bg-white rounded-1 shadow-sm small-margin">
-                    <div class="d-flex p-2">
-                        <div class="fw-bold text-danger fs-1">
-                           <i class="bi bi-bandaid-fill"></i>
-                        </div>
-                         <div class="ms-auto text-center">
-                             <h3>10</h3>
-                             <p>Total Patients</p>
-                        </div>
+            </div>
+        </div>
+        <div class="col-3 bg-white rounded-1 shadow-sm  small-margin">
+            <div class="d-flex p-2">
+                <div class="fw-bold text-warning fs-1">
+                    <i class="bi bi-boxes"></i>
+                </div>
+                <div class="ms-auto text-center">
+                    <h3>@ViewBag.CareCons</h3>
+                    <p>Total Contracts</p>
+                </div>
 
-                    </div>
-                </div> 
-            <div class="col-3 bg-white rounded-1 shadow-sm small-margin">
-                    <div class="d-flex p-2">
-                        <div class="fw-bold text-primary fs-1">
-                          <i class="bi bi-envelope-paper"></i>
-                        </div>
-                         <div class="ms-auto text-center">
-                             <h3>4</h3>
-                             <p>new emails</p>
-                        </div>
+            </div>
+        </div>
+        <div class="col-3 bg-white rounded-1 shadow-sm small-margin">
+            <div class="d-flex p-2">
+                <div class="fw-bold text-danger fs-1">
+                    <i class="bi bi-box-seam"></i>
+                </div>
+                <div class="ms-auto text-center">
+                    <h3>@ViewBag.CareConsClose</h3>
+                    <p>Closed Contracts</p>
+                </div>
 
-                    </div>
-                </div> 
-             
-         </div>
-          
-      </div>
-        
+            </div>
+        </div>
+        <div class="col-3 bg-white rounded-1 shadow-sm small-margin">
+            <div class="d-flex p-2">
+                <div class="fw-bold text-primary fs-1">
+                    <i class="bi bi-envelope-paper"></i>
+                </div>
+                <div class="ms-auto text-center">
+                    <h3>0</h3>
+                    <p>New emails</p>
+                </div>
+
+            </div>
+        </div>
+
     </div>
+
+     <div class="row mt-4">
+        <div class="col-12 shadow-sm">
+            
+            <div class="d-flex">
+            <div>
+
+            <h5>My Assigned Care Contracts</h5>
+            </div>
+            <div class="ms-auto">
+                <a class="btn btn-danger small-btn"> <i class="bi bi-eye"></i>View More</a>
+            </div>
+
+            </div>
+            <table class="table small-text">
+                <thead>
+                    <tr>
+                        <th>Contract Date</th>
+                        <th>Patient</th>
+                        <th>Address</th>
+                        <th>Suburb</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in careContracts)
+                    {
+                       
+                        <tr>
+                            <td>
+                                @item.ContractDate.Value.ToString("dd/MM/yyyy")
+                            </td>
+                            <td>
+                                @item.Patient.FirstName @item.Patient.LastName
+                            </td>
+                            <td>
+                              @item.AddressLine1 @item.AddressLine2
+                            </td>
+                            <td>
+                                @item.Suburb.Name
+                            </td>
+
+
+                        </tr>
+
+                    }
+
+
+                </tbody>
+            </table>
+     
+        </div>
 </div>

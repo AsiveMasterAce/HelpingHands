@@ -24,7 +24,7 @@ namespace HelpingHands.Models.Users
         public int SuburbID { get; set; }
 
         [ForeignKey("User")]
-        public int UserID { get; set; }
+        public int userID { get; set; }
 
         public bool Archived { get; set; }
 
@@ -34,5 +34,6 @@ namespace HelpingHands.Models.Users
         public virtual Suburb? Suburb { get; set; }
 
         public IList<PatientChronicCondition>? PatientCondition { get; set; }
+        public IList<CareContract>? CareContracts { get; set; }
     }
 }

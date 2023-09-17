@@ -17,7 +17,17 @@ namespace HelpingHands.Controllers
 
         public IActionResult Index()
         {
+
+            var users = _context.Users.ToList();
+            var cities = _context.City.ToList();
+            var chronicCons = _context.ChronicCondition.ToList();
+
+            
+            ViewBag.CountCities = cities.Count();
+            ViewBag.CountChronicCon = chronicCons.Count();
+            ViewBag.CountUsers =  users.Count(); 
             return View();
+
         }
         public IActionResult Users()
         {
@@ -26,6 +36,11 @@ namespace HelpingHands.Controllers
             ViewBag.Users = users;
 
             return View(users);
+        }
+
+        public IActionResult AddUser()
+        {
+            return View();
         }
     }
 }

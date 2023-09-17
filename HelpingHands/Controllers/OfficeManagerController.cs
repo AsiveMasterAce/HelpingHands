@@ -19,6 +19,19 @@ namespace HelpingHands.Controllers
         }
         public IActionResult Index()
         {
+            var contracts = _context.CareContract.Where(c=>c.Archived==false).Include(c=>c.Patient).ToList();
+           
+
+            var nurse = _context.Nurse.Where(c => c.Archived == false).ToList();
+            var careVisits = _context.CareVisit.Where(c => c.Archived == false).ToList();
+
+            ViewBag.NurseCount = nurse.Count();
+            ViewBag.ContractCounts = contracts.Count();
+            ViewBag.VisitsCount = careVisits.Count();
+
+    
+            ViewBag.Visits = careVisits.Take(6);
+            ViewBag.Contract= contracts.Take(6).Where(c=>c.CareStatus.Contains("Assigned")).OrderByDescending(c=>c.ContractDate);
             return View();
         }
 

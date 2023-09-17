@@ -9,26 +9,28 @@ namespace HelpingHands.Models
     {
         [Key]
         public int ContractID { get; set; }
-        public DateTime ContractDate { get; set; }
+        public DateTime? ContractDate { get; set; }
         public string? WoundDescription { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public string? CareStatus { get; set; }
         public string? AddressLine1 { get; set; }
         public string? AddressLine2 { get; set; }
-        public bool Archived { get; set; }
+        public bool? Archived { get; set; }
 
+       
         [ForeignKey("Suburb")]
-        public int SuburbID { get; set; }
+        public int? SuburdID { get; set; }
         [ForeignKey("Nurse")]
-        public int NurseID { get; set; }
+        public int? NurseID { get; set; }
         [ForeignKey("Patient")]
-        public int PatientID { get; set; }
+        public int? PatientID { get; set; }
 
         public virtual Nurse? Nurse { get; set; }
         public virtual Suburb? Suburb { get; set; }
         public virtual Patient? Patient { get; set; }
 
-
+     
+        public IList<CareVisit>? CareVisits { get; set; }
     }
 }

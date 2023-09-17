@@ -45,6 +45,38 @@ namespace HelpingHands.Data
                 .HasForeignKey(PC => PC.ChronicID);
 
             #endregion
+            //builder.Entity<CareContract>(cc =>
+            //{
+            //    cc.HasKey(x => x.ContractID);
+
+            //    cc.HasOne(x => x.Nurse).WithOne().HasForeignKey<CareContract>(x => x.NurseID).IsRequired();
+            //    cc.HasOne(x => x.Patient).WithOne().HasForeignKey<CareContract>(x => x.PatientID).IsRequired();
+            //    cc.HasOne(x => x.Suburb).WithOne().HasForeignKey<CareContract>(x => x.SuburdID).IsRequired();
+            //});
+
+            //builder.Entity<CareContract>().HasKey(cc => new { cc.NurseID, cc.PatientID, cc.SuburdID });
+
+            //builder.Entity<CareContract>()
+            //    .HasOne<Patient>(CC => CC.Patient)
+            //    .WithMany(p => p.CareContracts)
+            //    .HasForeignKey(CC => CC.PatientID);
+
+            //builder.Entity<CareContract>()
+            //    .HasOne<Nurse>(CC => CC.Nurse)
+            //    .WithMany(s => s.CareContracts)
+            //    .HasForeignKey(CC => CC.NurseID); 
+
+            //builder.Entity<CareContract>()
+            //     .HasOne<Suburb>(PS => PS.Suburb)
+            //    .WithMany(s => s.CareContracts)
+            //    .HasForeignKey(PS => PS.SuburdID);
+
+            //builder.Entity<CareVisit>()
+            //.HasOne(cv => cv.CareContract)
+            //.WithMany(cc => cc.CareVisits)
+            //.HasPrincipalKey(cc => cc.ContractID)
+            //.HasForeignKey(cv => cv.ContractID);
+
         }
 
        public DbSet<UserModel> Users { get; set; }

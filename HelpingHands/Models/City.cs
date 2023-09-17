@@ -7,7 +7,7 @@ namespace HelpingHands.Models
         [Key]
         public int CityId { get; set; }
         public string? Name { get; set; }
-        public string? Description { get; set; }
+        public string? Short { get; set; }
 
         public bool Archived { get; set; }
 

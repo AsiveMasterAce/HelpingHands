@@ -5,29 +5,13 @@
     --sweet-red: #e5383bad;
     --wine-red: #e5383b8f;
     --Dash-white: #f8f9fa;
-    --Nav-hover:#9e2a2b7d;
-}
-/*html {
-  font-size: 14px;
+    --Nav-hover: #9e2a2b7d;
+    --bg-greyish: #e0e1dd1a
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+.bg-greyish{
+    background-color:var(--bg-greyish);
 }
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-    margin-bottom: 60px;
-   
-}*/
-
-
 
 *, *::before, *::after {
     -webkit-box-sizing: border-box;

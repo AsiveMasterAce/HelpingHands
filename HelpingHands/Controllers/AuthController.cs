@@ -47,15 +47,15 @@ namespace HelpingHands.Controllers
             {
                 var user = _context.Users.Where(u => u.Archived == false && u.Email==model.Email && u.Password== model.Password).FirstOrDefault();
 
-                var role = user.UserType.Trim();
                 if(user!=null)
                 {
+                  var role = user.UserType.Trim();
        
                     var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, user.FirstName +" "+user.LastName),
                         new Claim(ClaimTypes.Role,role),
-                        //new Claim(ClaimTypes.,user.UserID),
+                        new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.UserID)),
 
                     };
 

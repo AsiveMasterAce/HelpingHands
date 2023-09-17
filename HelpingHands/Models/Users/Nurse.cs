@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HelpingHands.Models.Users
 {
@@ -16,7 +17,11 @@ namespace HelpingHands.Models.Users
         public string? IDNumber { get; set; }
 
         public bool Archived { get; set; }
+        [ForeignKey("User")]
+        public int userID { get;set; }
 
+        public virtual UserModel? User { get; set; }
         public IList<PreferredSuburb>? PreferredSuburbs { get; set; }
+        public IList<CareContract>? CareContracts { get; set; }
     }
 }
