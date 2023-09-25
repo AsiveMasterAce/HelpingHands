@@ -1,13 +1,12 @@
-﻿@model HelpingHands.Models.ViewModels.AddUserViewModel
-
+﻿@model HelpingHands.Models.ViewModels.EditUserViewModel
 @{
-    ViewData["Title"] = "Add User";
+    ViewData["Title"] = "Update User";
 }
 
 <div class="card">
     <div class="card-header d-flex">
 
-        <p class="text-uppercase pt-1">Add new user</p>
+        <p class="text-uppercase pt-1">Update User</p>
 
         <div class="ms-auto">
 
@@ -17,7 +16,7 @@
     </div>
 
     <div class="col-12 card-body">
-        <form asp-action="SubmitUser" asp-controller="Admin">
+        <form asp-action="UpdateUser" asp-controller="Admin" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="row">
                 @if (TempData["ErrorMessage"] != null)
@@ -26,7 +25,8 @@
                         @TempData["ErrorMessage"]
                     </div>
                 }
-
+                <input asp-for="@Model.UserID" hidden />
+                <input asp-for="@Model.UserType" hidden />
                 <div class="form-group col-6">
                     <label asp-for="FirstName" class="control-label required"></label>
                     <input asp-for="FirstName" class="form-control" />
@@ -51,34 +51,16 @@
                 </div>
                 <div class="form-group col-6">
                     <label asp-for="UserType" class="control-label required"></label>
-                    <select asp-for="UserType" class="form-select">
-                        <option value="">Select User Type</option>
-                        <option value="O">Office Manager</option>
-                        <option value="N">Nurse</option>
-                    </select>
-                                         
-                    <span asp-validation-for="UserType" class="text-danger"></span>
+                    <input value="@ViewBag.RoleName" class="form-control" disabled />
+                        
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Password" class="control-label required"></label>
-                <input asp-for="Password" type="password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConfirmPassword" class="control-label required"></label>
-                <input asp-for="ConfirmPassword" type="password" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="d-flex">
                 <div class="form-group mt-3 ms-auto">
-                    <input type="submit" value="Add User" class="btn btn-success" />
+                    <input type="submit" value="Update User" class="btn btn-success" />
                 </div>
             </div>
         </form>
     </div>
 </div>
-
-
 

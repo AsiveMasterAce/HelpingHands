@@ -88,8 +88,7 @@ h1, .h1 {
     word-wrap: break-word;
     background-color: #fff;
     background-clip: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0;
+
 }
 
 .card-body {
@@ -103,9 +102,9 @@ h1, .h1 {
 .card-header {
     padding: 0.75rem 1.25rem;
     margin-bottom: 0;
-    background-color: rgba(0, 0, 0, 0.03);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-    text-align: center;
+    color: #ffff;
+    background-color: var(--Dark-vader);
+
 }
 
 .dashboard {
@@ -465,4 +464,8 @@ h1, .h1 {
     padding: 5px 10px;
     font-size: 0.75rem; 
     width: auto; 
+}
+.required::after {
+    content: "*";
+    color: red;
 }

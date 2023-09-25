@@ -1,7 +1,8 @@
-﻿
+﻿@using HelpingHands.Models.Users
+
 @{
     ViewData["Title"] = "Index";
-   
+   var users = ViewBag.Users as IEnumerable<UserModel>;
 }
 
 
@@ -10,20 +11,16 @@
 
 
 
-    <h4>Admin Dashboard</h4>
+
 
          <div class="row">
                 <div class="col-3 bg-white rounded-1 shadow-sm small-margin">
                     <div class="d-flex p-2">
                         <div class="fw-bold text-success fs-1">
                            <i class="bi bi-people"></i>
-                        </div>
-                                                                                            
+                        </div>                                                                          
                          <div class="ms-auto text-center">
-                           
-                        
-                             <h3>@ViewBag.CountUsers </h3>
-                           
+                             <h3>@ViewBag.CountUsers </h3>     
                              <p>Total Users</p>
                         </div>
     
@@ -68,5 +65,70 @@
              
          </div>
           
-      
+  <div class="row mt-4">
+        <div class="col-12 shadow-sm">
+            
+            <div class="d-flex">
+            <div>
+
+            <h5> Sample of Active Users</h5>
+            </div>
+            <div class="ms-auto">
+                <a class="btn btn-danger small-btn" asp-action="Users" asp-controller="Admin"> <i class="bi bi-eye"></i> View More</a>
+            </div>
+
+            </div>
+            <table class="table small-text">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>  
+                        <th>Email</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in users)
+                    {
+                       
+                        <tr>
+                            <td>
+                                @item.FirstName @item.LastName
+                            </td>
+                            <td>
+                                @item.Email
+                            </td>
+                            <td>
+                                @item.UserType
+                            </td>
+
+                        </tr>
+
+                    }
+
+
+                </tbody>
+            </table>
+     
+        </div>
+          
+
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+        $("#userTable").DataTable({
+            "scrollY": "420px",
+            "scrollCollapse": true,
+            "columnDefs": [
+                    { "orderable": false, "targets": 'no-sort' }
+            ]
+        });
+
+    });
+</script>
 </div>

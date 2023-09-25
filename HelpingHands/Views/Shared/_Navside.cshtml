@@ -23,9 +23,9 @@
                 <a  asp-action="Users" asp-controller="Admin"
                    class="dashboard-nav-dropdown-item">All
                </a>
-                <a href="#" class="dashboard-nav-dropdown-item">Recent</a>
-                <a href="#" class="dashboard-nav-dropdown-item">Images</a>
-                <a href="#" class="dashboard-nav-dropdown-item">Video</a>
+                <a href="#" class="dashboard-nav-dropdown-item">Active</a>
+                <a href="#" class="dashboard-nav-dropdown-item">In Active</a>
+             
             </div>
         </div>
         <a asp-action="" asp-controller="" class="dashboard-nav-item">
@@ -140,27 +140,10 @@
             <i class="bi bi-house"></i>
             Home
         </a>
-        
-        <a asp-action="GetSuburbs" asp-controller="OfficeManager" class="dashboard-nav-item">
-            
-            <i class="fas fa-file-upload"></i> Suburb
-            
-        </a>
+       
         <div class='dashboard-nav-dropdown'>
             <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
-                <i class="fas fa-photo-video"></i> Media
-            </a>
-            <div class='dashboard-nav-dropdown-menu'>
-                <a  asp-action="Example" asp-controller="OfficeManager"
-                   class="dashboard-nav-dropdown-item">All</a>
-                <a href="#" class="dashboard-nav-dropdown-item">Recent</a>
-                <a href="#" class="dashboard-nav-dropdown-item">Images</a>
-                <a href="#" class="dashboard-nav-dropdown-item">Video</a>
-            </div>
-        </div>
-        <div class='dashboard-nav-dropdown'>
-            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
-                <i class="fas fa-users"></i> Users
+                 <i class="bi bi-boxes"></i> Contracts
             </a>
             <div class='dashboard-nav-dropdown-menu'>
                 <a href="#"
@@ -172,18 +155,19 @@
         </div>
         <div class='dashboard-nav-dropdown'>
             <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
-                <i class="fas fa-money-check-alt"></i> Payments
+               <i class="bi bi-bullseye"></i> Visits
             </a>
             <div class='dashboard-nav-dropdown-menu'>
                 <a href="#"
                    class="dashboard-nav-dropdown-item">All</a><a href="#" class="dashboard-nav-dropdown-item">Recent</a><a href="#" class="dashboard-nav-dropdown-item"> Projections</a>
             </div>
         </div>
-        <a href="#" class="dashboard-nav-item"><i class="fas fa-cogs"></i> Settings </a><a href="#" class="dashboard-nav-item"><i class="fas fa-user"></i> Profile </a>
+         <a href="#" class="dashboard-nav-item"> <i class="bi bi-gear"></i>Settings </a>
+        <a href="#" class="dashboard-nav-item"><i class="bi bi-person-circle"></i> Profile </a>
         <div class="nav-item-divider"></div>
 
      
-            <span class="mx-4"> <button type="submit" class="btn btn-danger w-75 btn-push-down"  data-bs-toggle="modal" data-bs-target="#LogOutModal"><i class="bi bi-box-arrow-in-right"></i> Log Out</button> </span>
+        <span class="mx-4"> <button type="submit" class="btn btn-danger w-75 btn-push-down" data-bs-toggle="modal" data-bs-target="#LogOutModal"><i class="bi bi-box-arrow-in-right"></i> Log Out</button> </span>
         </nav>
     }
 </div>
