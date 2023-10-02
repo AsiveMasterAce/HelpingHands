@@ -28,11 +28,20 @@
              
             </div>
         </div>
-        <a asp-action="" asp-controller="" class="dashboard-nav-item">
-            
-           <i class="bi bi-building"></i> Manage Suburbs
-            
-        </a>
+        <div class='dashboard-nav-dropdown'>
+              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+              <i class="bi bi-building"></i> Manage Suburbs
+            </a>
+            <div class='dashboard-nav-dropdown-menu'>
+
+                <a asp-action="Suburbs" asp-controller="Suburb" class="dashboard-nav-dropdown-item">
+                    Suburbs
+                </a> 
+                <a asp-action="Cities" asp-controller="Suburb" class="dashboard-nav-dropdown-item">
+                    Cities
+                </a>
+            </div>
+        </div>
         
          <a href="#" class="dashboard-nav-item"> <i class="bi bi-gear"></i>Settings </a>
         <a href="#" class="dashboard-nav-item"><i class="bi bi-person-circle"></i> Profile </a>

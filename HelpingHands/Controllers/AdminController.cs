@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HelpingHands.Controllers
 {
-    //[Authorize(Roles = "A")]
+    [Authorize(Roles = "A")]
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;

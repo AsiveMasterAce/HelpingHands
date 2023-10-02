@@ -1,0 +1,69 @@
+﻿@model IEnumerable<HelpingHands.Models.City>
+@{
+    ViewData["Title"] = "Cities";
+}
+
+<div class="d-flex mb-3">
+
+  <h5>Our Cities</h5>
+
+  <div class="ms-auto">
+      
+  <a asp-action="" asp-controller="Suburb" class="btn btn-success">New City</a>
+  </div>
+    
+</div>
+<div class="p-3"> 
+<table class="table table-striped table-sm small-text" id="cityTable">
+    <thead class="thead-dark">
+        <tr>
+            <td>Name</td>
+            <td>Short</td>
+            <td class="no-sort">
+
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+     @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Short
+                    </td>
+               
+                    <td>
+                        <a class="btn btn-warning rounded-3 small-btn" asp-controller="" asp-action="">
+                            <i class="bi bi-pen"></i>
+                        </a>
+                        <a class="btn btn-danger rounded-3 small-btn delete-btn" data-bs-toggle="modal" data-bs-target="#DeleteModal">
+                            <i class="bi bi-trash3"></i>
+
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+</table>
+</div>
+
+
+<script>
+
+
+    $(document).ready(function () {
+        $("#cityTable").DataTable({
+             "scrollY": "420px",
+            "scrollCollapse": true,
+            "rowReorder": true,
+            "columnDefs": [
+                    { "orderable": false, "targets": 'no-sort' }
+            ]
+        });
+
+    });
+</script>
