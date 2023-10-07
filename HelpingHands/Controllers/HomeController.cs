@@ -2,10 +2,12 @@
 using HelpingHands.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 using System.Diagnostics;
 
 namespace HelpingHands.Controllers
 {
+  
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

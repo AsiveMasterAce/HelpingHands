@@ -1,0 +1,44 @@
+﻿@model HelpingHands.Models.ViewModels.AddCityVM
+@{
+    ViewData["Title"] = "Add City";
+}
+
+
+<div class="card">
+    <div class="card-header d-flex">
+
+        <p class="text-uppercase pt-1">Add City</p>
+
+        <div class="ms-auto">
+
+            <a class="btn btn-danger" asp-action="Cities" asp-controller="Suburb">Back</a>
+
+        </div>
+    </div>
+
+    <div class="col-12 card-body">
+        <form asp-action="SubmitCity" asp-controller="Suburb">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+
+
+             <div class="form-group col-6">
+                <label for="Name">City Name</label>
+                <input type="text" class="form-control" id="Name" name="Name" required asp-for="Name">
+                <span class="text-danger" asp-validation-for="Name"></span>
+            </div>
+            <div class="form-group col-6">
+                <label asp-for="Short"></label>
+                <input type="text" class="form-control" asp-for="Short" />
+                <span class="text-danger" asp-validation-for="Short"></span>
+            </div>
+
+            </div>
+            <div class="d-flex">
+                <div class="form-group mt-3 ms-auto">
+                    <input type="submit" value="Add City" class="btn btn-success" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

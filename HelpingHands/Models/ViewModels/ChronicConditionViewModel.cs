@@ -1,0 +1,28 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HelpingHands.Models.ViewModels
+{
+    public class ChronicConditionViewModel
+    {
+    }
+    public class AddChronicVM 
+    {
+        [Required]
+        [Display(Name = "Name")]
+        public string? Name { get; set; }
+        [Required]
+        [Display(Name = "Description")]
+        public string? Description { get; set; }
+    }
+
+    public class EditChronicVM
+    {
+        public int ChronicID { get; set; }
+        [Required]
+        [Display(Name = "Name")]
+        public string? Name { get; set; }
+        [Required]
+        [Display(Name = "Description")]
+        public string? Description { get; set; }
+    }
+}

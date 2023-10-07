@@ -1,51 +1,44 @@
-﻿@model IEnumerable<HelpingHands.Models.Suburb>
+﻿@model IEnumerable<HelpingHands.Models.ChronicCondition>
 @{
-    ViewData["Title"] = "Suburbs";
+    ViewData["Title"] = "Chronic Condition";
 }
-
-
 
 <div class="d-flex mb-3">
 
-  <h5>Suburbs We Support</h5>
+    <h5>Chronic Conditions</h5>
 
-  <div class="ms-auto">
-      
-  <a asp-action="AddSuburb" asp-controller="Suburb" class="btn btn-success">New Suburb</a>
-  </div>
-    
+    <div class="ms-auto">
+
+        <a asp-action="AddCondition" asp-controller="Chronic" class="btn btn-success">New Condition</a>
+    </div>
+
 </div>
-<div class="p-3"> 
-<table class="table table-striped table-sm small-text" id="suburbTable">
-    <thead class="thead-dark">
-        <tr>
-            <td>Name</td>
-            <td>City</td>
-            <td>Postal Code</td>
-            <td class="no-sort">
+<div class="p-3">
+    <table class="table table-striped table-sm small-text" id="conditionTable">
+        <thead class="thead-dark">
+            <tr>
+                <td style="width:3%;">Name</td>
+                <td class="no-sort" >Description</td>
+                <td class="no-sort" style="width:8%;">
 
-            </td>
-        </tr>
-    </thead>
-    <tbody>
-     @foreach (var item in Model)
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
             {
                 <tr>
                     <td>
-
                         @item.Name
                     </td>
-                    <td>
-                        @item.City.Name
+                    <td class="text-wrap">
+                        @item.Description
                     </td>
                     <td>
-                        @item.PostalCode
-                    </td>
-                    <td>
-                        <a class="btn btn-warning rounded-3 small-btn" asp-controller="Suburb" asp-action="EditSuburb" asp-route-id="@item.SuburbID">
+                        <a class="btn btn-warning rounded-3 small-btn" asp-controller="Chronic" asp-action="EditCondition" asp-route-id="@item.ChronicID">
                             <i class="bi bi-pen"></i>
                         </a>
-                        <a class="btn btn-danger rounded-3 small-btn delete-btn" data-bs-toggle="modal" data-bs-target="#DeleteModal" data-item-id="@item.SuburbID">
+                        <a class="btn btn-danger rounded-3 small-btn delete-btn" data-bs-toggle="modal" data-bs-target="#DeleteModal" data-item-id="@item.ChronicID">
                             <i class="bi bi-trash3"></i>
 
                         </a>
@@ -53,9 +46,8 @@
                 </tr>
             }
         </tbody>
-</table>
+    </table>
 </div>
-
 
 <!-- Modal -->
 <div class="modal fade" id="DeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -68,7 +60,7 @@
                 <div class="fs-1 text-danger">
                     <i class="bi bi-trash3-fill"></i>
                 </div>
-                <p>Are You Sure My Delete This Suburb???</p>
+                <p>Are You Sure My Delete This Chronic Condition??</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" id="deleteBtn">Delete </button>
@@ -80,14 +72,20 @@
 
 <script>
 
+
     $(document).ready(function () {
-        $("#suburbTable").DataTable({
-             "scrollY": "420px",
+        $("#conditionTable").DataTable({
+            "scrollY": "420px",
             "scrollCollapse": true,
+            "rowReorder": true,
             "columnDefs": [
-                    { "orderable": false, "targets": 'no-sort' }
-            ]
+                {
+                    "orderable": false,
+                    "targets": 'no-sort'
+                }
+            ],
         });
+
 
         $('.delete-btn').click(function () {
             var itemId = $(this).data('item-id');
@@ -95,26 +93,24 @@
             $('#deleteBtn').data('item-id', itemId);
         });
         $("#deleteBtn").click(function () {
-            var suburbId = $(this).data('item-id'); 
+            var chronicID = $(this).data('item-id');
 
-            console.log(suburbId);
+            console.log(chronicID);
 
             $.ajax({
-                url: "/Suburb/DeleteSuburb/" + suburbId,
+                url: "/Chronic/DeleteCondition/" + chronicID,
                 type: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
-                
+
                 success: function () {
-                    window.location.href = "/Suburb/Suburbs";
+                    window.location.href = "/Chronic/ChronicCondition";
                 },
                 error: function () {
                     alert("Error while deleting user");
-                    console.log(suburbId);
+                    console.log(chronicID);
                 }
             });
         });
-
     });
-
 </script>

@@ -1,5 +1,6 @@
 using HelpingHands.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Services.AddAuthentication(
         options.AccessDeniedPath = "/Auth/AccessDenied";
         options.Cookie.Name = "helpingHands_cookie";
     });
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
+
 namespace HelpingHands.Controllers
 {
     [Authorize(Roles = "A")]
@@ -17,7 +18,6 @@ namespace HelpingHands.Controllers
 
             _context = context;
         }
-
         public IActionResult Index()
         {
 
@@ -31,9 +31,11 @@ namespace HelpingHands.Controllers
             ViewBag.CountUsers = users.Count();
 
             ViewBag.Users = users.Where(u => u.Archived == false).Take(6);
+   
             return View();
 
         }
+     
         public IActionResult Users()
         {
             var users = _context.Users.Where(u=>u.Archived==false).ToList();

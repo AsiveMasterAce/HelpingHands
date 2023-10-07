@@ -184,7 +184,7 @@
                 dataType: 'json',
                 //data: JSON.stringify({userId: userId}),
                 success: function () {
-                    alert("User Deleted");
+                    window.location.href = "/Admin/Users";
                 },
                 error: function () {
                     alert("Error while deleting user");

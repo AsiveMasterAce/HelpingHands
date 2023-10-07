@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HelpingHands.Models.ViewModels
 {
-    public class AddSuburbViewModel
+    public class UpdateSuburbVM
     {
+        public int suburbID { get; set; }
         [Required]
         [Display(Name = "Suburb Name")]
         public string? Name { get; set; }
@@ -14,5 +14,4 @@ namespace HelpingHands.Models.ViewModels
         [Display(Name = "City")]
         public int CityID { get; set; }
     }
-   
 }
