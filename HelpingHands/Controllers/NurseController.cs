@@ -1,7 +1,9 @@
 ﻿using HelpingHands.Data;
+using HelpingHands.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using RestSharp;
 using System.Security.Claims;
 
@@ -11,17 +13,17 @@ namespace HelpingHands.Controllers
     public class NurseController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public NurseController(ApplicationDbContext dbContext)
+        private readonly UserService _userService;
+        public NurseController(ApplicationDbContext dbContext, UserService userService )
         {
             _context=dbContext;
+            _userService=userService;
 
         }
         public IActionResult Index()
         {
-            string claimValue = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            int loggedUserID = int.Parse(claimValue);
 
-            var user = _context.Users.Where(u => u.UserID==loggedUserID).FirstOrDefault();
+            var user = _userService.GetLoggedInUser();
 
             var nurse = _context.Nurse.Where(n => n.userID ==user.UserID).FirstOrDefault();
 
@@ -39,5 +41,7 @@ namespace HelpingHands.Controllers
             
             return View();
         }
+
+        
     }
 }

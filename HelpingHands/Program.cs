@@ -1,4 +1,5 @@
 using HelpingHands.Data;
+using HelpingHands.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -23,6 +24,10 @@ builder.Services.AddAuthentication(
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages()
     .AddRazorRuntimeCompilation();
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<UserService>();
+
 
 var app = builder.Build();
 
