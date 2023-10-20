@@ -59,5 +59,8 @@ namespace HelpingHands.Data
        public DbSet<PreferredSuburb> PreferredSuburb { get; set; }
        public DbSet<CareVisit> CareVisit { get; set; }
        public DbSet<CareContract> CareContract { get; set; }
+       public DbSet<Business> Business { get; set; }
+       public DbSet<PostComment> PostComment { get; set; }
+       public DbSet<TimelinePost> TimelinePost { get; set; }
     }
 }

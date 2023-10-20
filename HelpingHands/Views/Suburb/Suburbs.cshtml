@@ -78,6 +78,7 @@
     </div>
 </div>
 
+
 <script>
 
     $(document).ready(function () {
@@ -86,31 +87,32 @@
             "scrollCollapse": true,
             "columnDefs": [
                     { "orderable": false, "targets": 'no-sort' }
-            ]
+            ],
+     
         });
 
         $('.delete-btn').click(function () {
             var itemId = $(this).data('item-id');
-            console.log(itemId);
+            console.log("itemId:", itemId);
             $('#deleteBtn').data('item-id', itemId);
         });
+
+
         $("#deleteBtn").click(function () {
-            var suburbId = $(this).data('item-id'); 
-
-            console.log(suburbId);
-
+            var suburbId = $(this).data('item-id');
+            console.log("suburbId:", suburbId);
             $.ajax({
                 url: "/Suburb/DeleteSuburb/" + suburbId,
                 type: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
-                
+
                 success: function () {
                     window.location.href = "/Suburb/Suburbs";
                 },
                 error: function () {
                     alert("Error while deleting user");
-                    console.log(suburbId);
+                    console.log("suburbId:", suburbId);
                 }
             });
         });

@@ -30,7 +30,7 @@
         </div>
         <div class='dashboard-nav-dropdown'>
               <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
-              <i class="bi bi-building"></i> Manage Suburbs
+              <i class="bi bi-building"></i> Manage Location
             </a>
             <div class='dashboard-nav-dropdown-menu'>
 
@@ -41,7 +41,22 @@
                     Cities
                 </a>
             </div>
+        </div> 
+        <div class='dashboard-nav-dropdown'>
+              <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                    <i class="bi bi-briefcase-fill"></i> <span style="font-size:13px">Business Information</span>
+            </a>
+            <div class='dashboard-nav-dropdown-menu'>
+
+                <a asp-action="Business" asp-controller="Admin" class="dashboard-nav-dropdown-item" style="font-size:14px">
+                    Manage Information
+                </a> 
+                <a asp-action="" asp-controller="" class="dashboard-nav-dropdown-item">
+                    Gallery
+                </a>
+            </div>
         </div>
+
             <a asp-action="ChronicCondition" asp-controller="Chronic" class="dashboard-nav-item"> <i class="bi bi-activity"></i>Chronic Conditions</a>
             <a href="#" class="dashboard-nav-item"> <i class="bi bi-gear"></i>Settings </a>
             <a href="#" class="dashboard-nav-item"><i class="bi bi-person-circle"></i> Profile </a>
@@ -152,14 +167,12 @@
        
         <div class='dashboard-nav-dropdown'>
             <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
-                 <i class="bi bi-boxes"></i> Contracts
+                 <i class="bi bi-boxes"></i> Care Contracts
             </a>
             <div class='dashboard-nav-dropdown-menu'>
-                <a href="#"
-                   class="dashboard-nav-dropdown-item">All</a><a href="#" class="dashboard-nav-dropdown-item">Subscribed</a>
-                   <a href="#" class="dashboard-nav-dropdown-item">Non-subscribed</a>
-                   <a href="#" class="dashboard-nav-dropdown-item">Banned</a>
-                   <a href="#" class="dashboard-nav-dropdown-item">New</a>
+                    <a href="#" class="dashboard-nav-dropdown-item">Create Contract</a>
+                    <a href="#" class="dashboard-nav-dropdown-item">View Contracts</a>
+                    <a href="#" class="dashboard-nav-dropdown-item">Cancel Contracts</a>
             </div>
         </div>
         <div class='dashboard-nav-dropdown'>
@@ -167,8 +180,9 @@
                <i class="bi bi-bullseye"></i> Visits
             </a>
             <div class='dashboard-nav-dropdown-menu'>
-                <a href="#"
-                   class="dashboard-nav-dropdown-item">All</a><a href="#" class="dashboard-nav-dropdown-item">Recent</a><a href="#" class="dashboard-nav-dropdown-item"> Projections</a>
+                    <a href="#" class="dashboard-nav-dropdown-item">View Visit</a>
+                    <a href="#" class="dashboard-nav-dropdown-item">History Visits</a>
+                
             </div>
         </div>
          <a href="#" class="dashboard-nav-item"> <i class="bi bi-gear"></i>Settings </a>

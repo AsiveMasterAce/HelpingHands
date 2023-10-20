@@ -21,10 +21,9 @@ namespace HelpingHands.Controllers
         }
 
      
-        public IActionResult Suburbs()
+        public async Task<IActionResult> Suburbs()
         {
-            var Suburbs = _context.Suburb.Where(s => s.Archived == false).Include(s => s.City).ToList();
-
+            var Suburbs = await _context.Suburb.Where(s => s.Archived == false).Include(s => s.City).ToListAsync();
 
             return View(Suburbs);
         }

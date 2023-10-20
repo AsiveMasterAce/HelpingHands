@@ -3,7 +3,7 @@ using HelpingHands.Models.ViewModels;
 using HelpingHands.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Data;
 
 
 namespace HelpingHands.Controllers
@@ -35,16 +35,37 @@ namespace HelpingHands.Controllers
             return View();
 
         }
-     
-        public IActionResult Users()
+
+ 
+        public IActionResult Users([FromQuery] string userType)
         {
-            var users = _context.Users.Where(u=>u.Archived==false).ToList();
+            var users = _context.Users.Where(u => u.Archived == false);
 
-            ViewBag.Users = users;
-
-            return View(users);
+            if (!string.IsNullOrEmpty(userType) && userType != "ALL")
+            {
+                users = users.Where(u => u.UserType.Contains(userType));
+                if (userType == "O")
+                {
+                    ViewBag.FilterMessage = $"Filtered by Office Manager";
+                }
+                else if (userType == "N")
+                {
+                    ViewBag.FilterMessage = $"Filtered by Nurse";
+                }
+                else if (userType == "P")
+                {
+                    ViewBag.FilterMessage = $"Filtered by Patient";
+                }
+                else if (userType == "A")
+                {
+                    ViewBag.FilterMessage = $"Filtered by Admin";
+                }
+            }
+       
+            var usersList = users.ToList();
+            return View(usersList);
         }
-
+        
         public IActionResult AddUser()
         {
 
@@ -96,10 +117,96 @@ namespace HelpingHands.Controllers
                     return RedirectToAction("AddUser", "Admin");
                 }
                 return RedirectToAction("Users", "Admin");
-            }
+            } 
             return View(model);
         }
 
+
+        public IActionResult UpdateUserPassword([FromRoute] int Id)
+        {
+            var user = _context.Users.Where(u => u.UserID == Id).FirstOrDefault();
+            var role = user.UserType.Trim();
+
+            var roleName = "";
+
+            if (role == "O")
+            {
+                roleName = "Office Manager";
+            }
+            else if (role == "P")
+            {
+                roleName = "Patient";
+            }
+            else if (role == "N")
+            {
+                roleName = "Nurse";
+            }
+            else if (role == "A")
+            {
+                roleName = "Admin";
+            }
+
+            ViewBag.RoleName = roleName;
+            var editUser = new UpdateUserPasswordViewModel
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserType = user.UserType,
+                UserID = user.UserID,
+                Email = user.Email,
+                CellNo = user.CellNo,
+           
+                
+            };
+            return View(editUser);
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SubmitPassword(UpdateUserPasswordViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                bool checkPassword = IsPasswordExist(model.UserID, model.Password);
+
+                if (checkPassword == false)
+                {
+                    var user = _context.Users.Where(u => u.UserID == model.UserID).FirstOrDefault();
+                    if (user == null)
+                    {
+                        return NotFound();
+                    }
+                    user.Password = model.Password;
+
+                    _context.Users.Update(user);
+                    var role = model.UserType.Trim();
+
+                    if (role == "N")
+                    {
+                        var nurse = _context.Nurse.Where(n => n.userID == model.UserID).FirstOrDefault();
+                        nurse.Password = model.Password;
+                        _context.Nurse.Update(nurse);
+                    }
+                    else if (role == "P")
+                    {
+                        var patient = _context.Patient.Where(p => p.userID == model.UserID).FirstOrDefault();
+
+                        patient.Password = model.Password;
+                        _context.Patient.Update(patient);
+                    }
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Users", "Admin");
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "This password is currently in use";
+                    return RedirectToAction("UpdateUserPassword", "Admin");
+                }
+            }
+
+            return View(model);
+        }
         public IActionResult EditUser([FromRoute] int Id)
         {
             var user = _context.Users.Where(u => u.UserID == Id).FirstOrDefault();
@@ -196,6 +303,21 @@ namespace HelpingHands.Controllers
              return View(model);
         }
 
+        public IActionResult Business()
+        {
+            var business = _context.Business.ToList();
+           
+            ViewBag.Business = business;    
+
+            return View();
+
+        }
+
+        public IActionResult AddBusinessData()
+        {
+            return View();
+        }
+
         [HttpPost("/Admin/DeleteUser/{userId}")]
         public JsonResult DeleteUser(int userId)
         {
@@ -214,7 +336,12 @@ namespace HelpingHands.Controllers
             return existingUser != null;
         }
 
+        public bool IsPasswordExist(int userId, string password)
+        {
 
+            var existingUser = _context.Users.FirstOrDefault(u => u.UserID == userId && u.Password == password);
+            return existingUser != null;
+        }
 
 
     }

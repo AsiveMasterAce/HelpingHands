@@ -22,18 +22,25 @@ $(document).ready(function () {
         }
     });
 
-    //var url = window.location.href;
 
-    //// iterate over all nav links
-    //$('.dashboard-nav .dashboard-nav-list .dashboard-nav-item').each(function () {
-    //    var link = $(this).attr('href');
+    var sectionLinks = $('a.dashboard-nav-item, a.dashboard-nav-dropdown-item');
 
-    //    // check if the link is in the current URL
-    //    if (url.includes(link)) {
-    //        // add active class
-    //        $(this).addClass('active');
-    //    }
-    //});
+    sectionLinks.each(function () {
+        if ($(this).prop('href') == window.location.href) {
+            $(this).addClass('active');
+        }
+    });
+
+    window.onscroll = function () {
+        var activeSection = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2);
+        sectionLinks.each(function () {
+            if ($(this).prop('href') == '#' + activeSection.id) {
+                $(this).addClass('active');
+            } else {
+                $(this).removeClass('active');
+            }
+        });
+    };
 });
 
 
