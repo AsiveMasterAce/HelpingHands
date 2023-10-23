@@ -1,0 +1,60 @@
+﻿@model IEnumerable<HelpingHands.Models.CareContract>
+@{
+    ViewData["Title"] = "PatientContracts";
+}
+
+
+<h4>My Care Contracts</h4>
+
+
+@if (Model.Count() > 0 && Model != null)
+{
+  <div class="row">
+    @foreach (var contract in Model)
+    {
+        <div class="card col" style="width: 20rem; margin:2px; padding:0;">
+            <div class="card-header d-flex">
+                    <div class="badge badge-success">
+                        @contract.CareStatus
+                    </div>
+                    <div class="ms-auto">
+                        <button class="btn btn-danger small-btn" title="Cancel Contracts" >
+                            <i class="bi bi-x-circle"></i>
+                        </button>
+                    </div>
+            </div>
+            <div class="col card-body">
+
+                <h6 class="fw-bold">Wound Description:</h6>
+                    <div class="alert alert-light" role="alert">
+                        @contract.WoundDescription
+                    </div>
+                <p class="card-text"> <span class="fw-bold">Nurse Assigned: </span> @(contract.Nurse?.FirstName ?? "Awaiting For Nurse") @contract.Nurse?.LastName </p>
+
+                <h6 class="fw-bold">Nurse Contact Details:</h6>
+                    @if (contract.Nurse != null)
+                    {
+                        <p class="small-text"> <span class="fw-light">Contact Number: </span> @contract.Nurse?.CellNo  </p>
+                        <p class="small-text"> <span class="fw-light">E-Mail Address: </span> @contract.Nurse?.Email </p>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning text-center">
+                            <p>No Nurse Assigned Yet.....</p>
+                        </div>
+                    }
+                <p class="card-text"><span class="fw-bold">Address:</span>  @contract.AddressLine1 @contract.AddressLine2,@contract.Suburb?.Name @contract.Suburb?.City?.Name , @contract.Suburb.PostalCode </p>
+            </div>
+        </div>
+    }
+
+   </div>
+}
+else
+{
+    <div class="col-12">
+        <div class="alert alert-info">
+            <p>No Contracts Found</p>
+        </div>
+    </div>
+}

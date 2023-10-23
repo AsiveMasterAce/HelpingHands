@@ -27,6 +27,7 @@ builder.Services.AddRazorPages()
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<ValidationService>();
 
 
 var app = builder.Build();

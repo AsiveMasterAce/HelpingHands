@@ -20,7 +20,7 @@
         <h5 class="fw-bold fst-italic">Let Us Heal You</h5>
     </div>
     <div class="col-12 card-body">
-        <form asp-action="SubmitUser" asp-controller="Register">
+        <form asp-action="RegisterUser" asp-controller="Register">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="row">
                 @if (TempData["ErrorMessage"] != null)

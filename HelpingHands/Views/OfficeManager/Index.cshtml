@@ -68,7 +68,7 @@
             <div class="d-flex">
             <div>
 
-            <h5> Assigned Care Contracts</h5>
+            <h5> Un-Assigned Care Contracts</h5>
             </div>
             <div class="ms-auto">
                 <a class="btn btn-danger small-btn"> <i class="bi bi-eye"></i>View More</a>
@@ -80,7 +80,8 @@
                     <tr>
                         <th>Contract Date</th>  
                         <th>Patient</th>
-                        <th>Nurse Assigned</th>
+                        <th>Wound Description</th>
+                        <th>Location</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -92,12 +93,14 @@
                                 @item.ContractDate.Value.ToString("dd/MM/yyyy")
                             </td>
                             <td>
-                                @item.Patient.FirstName @item.Patient.LastName
+                                @item.Patient?.FirstName @item.Patient?.LastName
                             </td>
                             <td>
-                                @item.Nurse.FirstName @item.Nurse.LastName
+                                @item.WoundDescription
                             </td>
-
+                            <td>
+                                @item.AddressLine1 @item.AddressLine2 @item.Suburb?.Name @item.Suburb?.City?.Name @item.Suburb?.PostalCode
+                            </td>
                         </tr>
 
                     }

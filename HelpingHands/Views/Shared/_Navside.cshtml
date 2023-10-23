@@ -86,24 +86,39 @@
             
         </a>
 
-        <div class='dashboard-nav-dropdown'>
-            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
-                <i class="bi bi-person-hearts"></i> Nurses
-            </a>
-            <div class='dashboard-nav-dropdown-menu'>
-                <a href="#"
-                   class="dashboard-nav-dropdown-item">All</a><a href="#" class="dashboard-nav-dropdown-item">Subscribed</a><a href="#"
-                                                                                                                               class="dashboard-nav-dropdown-item">Non-subscribed</a><a href="#" class="dashboard-nav-dropdown-item">Banned</a><a href="#" class="dashboard-nav-dropdown-item">New</a>
+            <div class='dashboard-nav-dropdown'>
+                <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                    <i class="bi bi-boxes"></i> Care Contracts
+                </a>
+                <div class='dashboard-nav-dropdown-menu'>
+                    <a href="#"
+                       class="dashboard-nav-dropdown-item">All</a>
+                    <a href="#" class="dashboard-nav-dropdown-item">New Contracts</a>
+                    <a href="#" class="dashboard-nav-dropdown-item">Visits</a>
+                    <a href="#" class="dashboard-nav-dropdown-item">Closed Contracts</a>
+                    <a href="#" class="dashboard-nav-dropdown-item">Canceled Contract</a>
+                    
+                </div>
             </div>
-        </div>
         <div class='dashboard-nav-dropdown'>
-            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
-                <i class="bi bi-car-front"></i> Visits
-            </a>
-            <div class='dashboard-nav-dropdown-menu'>
-                <a href="#"
-                   class="dashboard-nav-dropdown-item">All</a><a href="#" class="dashboard-nav-dropdown-item">Recent</a><a href="#" class="dashboard-nav-dropdown-item"> Projections</a>
-            </div>
+                <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                    <i class="bi bi-person-hearts"></i> Nurses
+                </a>
+                <div class='dashboard-nav-dropdown-menu'>
+                    <a href="#"
+                       class="dashboard-nav-dropdown-item">All</a>
+                    <a href="#" class="dashboard-nav-dropdown-item">Subscribed</a>
+                </div>
+        </div> 
+        <div class='dashboard-nav-dropdown'>
+                <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                    <i class="bi bi-person-hearts"></i> Patients
+                </a>
+                <div class='dashboard-nav-dropdown-menu'>
+                    <a href="#"
+                       class="dashboard-nav-dropdown-item">All</a>
+                    <a href="#" class="dashboard-nav-dropdown-item">Subscribed</a>
+                </div>
         </div>
          <a href="#" class="dashboard-nav-item"> <i class="bi bi-gear"></i>Settings </a>
         <a href="#" class="dashboard-nav-item"><i class="bi bi-person-circle"></i> Profile </a>
@@ -170,8 +185,8 @@
                  <i class="bi bi-boxes"></i> Care Contracts
             </a>
             <div class='dashboard-nav-dropdown-menu'>
-                    <a href="#" class="dashboard-nav-dropdown-item">Create Contract</a>
-                    <a href="#" class="dashboard-nav-dropdown-item">View Contracts</a>
+                    <a asp-action="CreateContract" asp-controller="Patient" class="dashboard-nav-dropdown-item">Create Contract</a>
+                    <a asp-action="PatientContracts" asp-controller="Patient" class="dashboard-nav-dropdown-item">View Contracts</a>
                     <a href="#" class="dashboard-nav-dropdown-item">Cancel Contracts</a>
             </div>
         </div>
@@ -185,8 +200,17 @@
                 
             </div>
         </div>
+        <div class='dashboard-nav-dropdown'>
+                <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                    <i class="bi bi-person-circle"></i> Profile
+                </a>
+                <div class='dashboard-nav-dropdown-menu'>
+                    <a href="#" class="dashboard-nav-dropdown-item">Personal Info</a>
+                    <a href="#" class="dashboard-nav-dropdown-item">Chronic Conditions</a>
+                </div>
+        </div>
          <a href="#" class="dashboard-nav-item"> <i class="bi bi-gear"></i>Settings </a>
-        <a href="#" class="dashboard-nav-item"><i class="bi bi-person-circle"></i> Profile </a>
+
         <div class="nav-item-divider"></div>
 
      

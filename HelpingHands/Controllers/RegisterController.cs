@@ -6,15 +6,22 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using HelpingHands.Services;
 
 namespace HelpingHands.Controllers
 {
     public class RegisterController : Controller
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ApplicationDbContext _context;
-        public RegisterController(ApplicationDbContext context) { 
+        private readonly ValidationService _validationService;
 
-            _context=context;
+
+        public RegisterController(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor, ValidationService validationService)
+        {
+            _context = context;
+            _httpContextAccessor = httpContextAccessor;
+            _validationService = validationService;
         }
 
         public IActionResult Index()
@@ -23,8 +30,7 @@ namespace HelpingHands.Controllers
         }
         public IActionResult PatientRegister()
         {
-            var cities = _context.City.ToList();
-            var suburbs = _context.Suburb.ToList();
+            var cities = _context.City.ToList().OrderBy(c=>c.Name);
 
             ViewBag.Cities = new SelectList(cities, "CityId", "Name");
           
@@ -45,11 +51,13 @@ namespace HelpingHands.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SubmitUser(RegisterPatientViewModel model)
+        public async Task<IActionResult> RegisterUser(RegisterPatientViewModel model)
         { 
             if (ModelState.IsValid)
             {
-                bool checkEMail = IsEmailAlreadyInUse(model.Email);
+                //bool checkEMail = IsEmailAlreadyInUse(model.Email);
+
+                bool checkEMail= _validationService.IsEmailAlreadyInUse(model.Email);
 
                 if (checkEMail == false)
                 {
@@ -79,17 +87,12 @@ namespace HelpingHands.Controllers
                     _context.Patient.Add(newPatient);
                     await _context.SaveChangesAsync();
 
-                    var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Name, newUser.FirstName + " " + newUser.LastName),
-                        new Claim(ClaimTypes.Role, newUser.UserType.Trim()),
-                        new Claim(ClaimTypes.NameIdentifier, Convert.ToString(newUser.UserID)),
-                    };
 
-                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    var principal = new ClaimsPrincipal(claimsIdentity);
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                    var userService = new UserService(_httpContextAccessor, _context);
 
+                    await userService.SignInUser(newUser);
+
+                    
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -101,11 +104,7 @@ namespace HelpingHands.Controllers
             }
             return View(model);
         }
-        public bool IsEmailAlreadyInUse(string email)
-        {
-            var existingUser = _context.Users.FirstOrDefault(u => u.Email == email);
-            return existingUser != null;
-        }
+
 
     }
 }

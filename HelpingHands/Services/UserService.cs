@@ -1,5 +1,8 @@
 ﻿using HelpingHands.Data;
 using HelpingHands.Models.Users;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
@@ -9,7 +12,7 @@ namespace HelpingHands.Services
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ApplicationDbContext _context;
-        public UserService(IHttpContextAccessor httpContextAccessor,ApplicationDbContext context)
+        public UserService(IHttpContextAccessor httpContextAccessor, ApplicationDbContext context)
         {
             _httpContextAccessor = httpContextAccessor;
             _context = context;
@@ -18,6 +21,11 @@ namespace HelpingHands.Services
         public int GetLoggedInUserId()
         {
             var claimValue = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if(claimValue == null)
+            {
+                
+            }
             return int.Parse(claimValue);
         }
 
@@ -25,6 +33,21 @@ namespace HelpingHands.Services
         {
             int loggedUserId = GetLoggedInUserId();
             return _context.Users.FirstOrDefault(u => u.UserID == loggedUserId);
+        }
+
+        public async Task SignInUser(UserModel user)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.FirstName + " " + user.LastName),
+                new Claim(ClaimTypes.Role, user.UserType.Trim()),
+                new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.UserID)),
+            };
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(claimsIdentity);
+
+            await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
         }
     }
 }

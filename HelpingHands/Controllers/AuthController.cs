@@ -5,19 +5,20 @@ using HelpingHands.Models.Users;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using HelpingHands.Services;
 
 namespace HelpingHands.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly IConfiguration _configuration;
-        private readonly ApplicationDbContext _context;
-
         
-        public AuthController(IConfiguration configuration, ApplicationDbContext context)
+        private readonly ApplicationDbContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ValidationService _validationService;
+        public AuthController(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
-            _configuration = configuration;
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
         public IActionResult Index()
         {
@@ -49,22 +50,9 @@ namespace HelpingHands.Controllers
 
                 if(user!=null)
                 {
-                  var role = user.UserType.Trim();
-       
-                    var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Name, user.FirstName +" "+user.LastName),
-                        new Claim(ClaimTypes.Role,role),
-                        new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.UserID)),
+                    var userService = new UserService(_httpContextAccessor, _context);
 
-                    };
-
-                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                    var authProperties = new AuthenticationProperties{ IsPersistent = false };
-                    
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
-
+                    await userService.SignInUser(user);
 
                     return RedirectToAction("Index", "Home");
                 }
