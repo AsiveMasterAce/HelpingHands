@@ -30,7 +30,7 @@
                 </div>
                 <div class="ms-auto text-center">
                     <h3>@ViewBag.ContractCounts</h3>
-                    <p>Active Contracts</p>
+                    <p>New Contracts</p>
                 </div>
 
             </div>
@@ -82,6 +82,8 @@
                         <th>Patient</th>
                         <th>Wound Description</th>
                         <th>Location</th>
+                        <th>Days Overdue</th>
+                        <th> </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -100,6 +102,17 @@
                             </td>
                             <td>
                                 @item.AddressLine1 @item.AddressLine2 @item.Suburb?.Name @item.Suburb?.City?.Name @item.Suburb?.PostalCode
+                            </td>
+                            <td>
+                                @{
+                                    DateTime currentDate = DateTime.UtcNow;
+                                    TimeSpan overdueDays = currentDate - item.ContractDate.Value;
+                                    int daysOverdue = overdueDays.Days;
+                                    @daysOverdue
+                                }
+                            </td>
+                            <td>
+                                
                             </td>
                         </tr>
 

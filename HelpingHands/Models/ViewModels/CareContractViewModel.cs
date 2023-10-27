@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.Identity.Client;
+using System.ComponentModel.DataAnnotations;
 
 namespace HelpingHands.Models.ViewModels
 {
@@ -28,5 +29,12 @@ namespace HelpingHands.Models.ViewModels
 
     }
 
+    public class AssignContract
+    {
+        public int CareContractID { get; set;}
 
+        public int NurseID { get; set; }
+    
+        
+    }
 }

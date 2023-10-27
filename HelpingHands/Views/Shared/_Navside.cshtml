@@ -91,8 +91,7 @@
                     <i class="bi bi-boxes"></i> Care Contracts
                 </a>
                 <div class='dashboard-nav-dropdown-menu'>
-                    <a href="#"
-                       class="dashboard-nav-dropdown-item">All</a>
+                    <a asp-action="CareContract" asp-controller="OfficeManager" class="dashboard-nav-dropdown-item">All</a>
                     <a href="#" class="dashboard-nav-dropdown-item">New Contracts</a>
                     <a href="#" class="dashboard-nav-dropdown-item">Visits</a>
                     <a href="#" class="dashboard-nav-dropdown-item">Closed Contracts</a>
@@ -107,7 +106,7 @@
                 <div class='dashboard-nav-dropdown-menu'>
                     <a href="#"
                        class="dashboard-nav-dropdown-item">All</a>
-                    <a href="#" class="dashboard-nav-dropdown-item">Subscribed</a>
+                   
                 </div>
         </div> 
         <div class='dashboard-nav-dropdown'>
@@ -117,7 +116,7 @@
                 <div class='dashboard-nav-dropdown-menu'>
                     <a href="#"
                        class="dashboard-nav-dropdown-item">All</a>
-                    <a href="#" class="dashboard-nav-dropdown-item">Subscribed</a>
+                   
                 </div>
         </div>
          <a href="#" class="dashboard-nav-item"> <i class="bi bi-gear"></i>Settings </a>
@@ -138,7 +137,7 @@
         </header>
 
         <nav class="dashboard-nav-list">
-            <a href="#" class="dashboard-nav-item active`">
+            <a asp-action="Index" asp-controller="Nurse" class="dashboard-nav-item active`">
             <i class="bi bi-house"></i>
             Home
         </a>
@@ -158,7 +157,7 @@
         </div>
       
         <a href="#" class="dashboard-nav-item"> <i class="bi bi-gear"></i>Settings </a>
-        <a href="#" class="dashboard-nav-item"><i class="bi bi-person-circle"></i> Profile </a>
+        <a asp-action="NurseProfile" asp-controller="Profile" class="dashboard-nav-item"><i class="bi bi-person-circle"></i> Profile </a>
         <div class="nav-item-divider"></div>
 
      
@@ -205,7 +204,7 @@
                     <i class="bi bi-person-circle"></i> Profile
                 </a>
                 <div class='dashboard-nav-dropdown-menu'>
-                    <a href="#" class="dashboard-nav-dropdown-item">Personal Info</a>
+                    <a asp-action="PatientProfile" asp-controller="Profile" class="dashboard-nav-dropdown-item">Personal Info</a>
                     <a href="#" class="dashboard-nav-dropdown-item">Chronic Conditions</a>
                 </div>
         </div>

@@ -1,0 +1,106 @@
+﻿@model HelpingHands.Models.Users.Patient
+@{
+    ViewData["Title"] = "Patient Profile";
+}
+
+<div class="mt-2">
+
+    <div class="d-flex mb-2">
+
+        <h5 class="fw-bold">Profile</h5>
+
+        <div class="ms-auto">
+            <a class="btn btn-success small-btn" style="margin-right: 2rem;" title="Update Profile">Update Profile</a>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-3">
+
+            <div class="p-3 text-center" style="background-color:#f1faee; height:73vh;">
+
+                <img src="~/img/avatar_Test.jpg" class="rounded-4" width="200" height="200" style="margin-top:50px">
+
+                <h4 class="mt-3 fw-bold">@Model.FirstName @Model.LastName</h4>
+            </div>
+
+        </div>
+
+        <div class="col-9">
+
+            <div class="rounded-2 p-3" style="background-color:#f1faee">
+
+                <h5 class="fw-bold mb-3">Personal Details</h5>
+                <div class="row">
+                    <div class="col-3">
+
+                        <h6 class="text-lg-start fw-bold">First Name:</h6>
+                    </div>
+                    <div class="col-6">
+                        @Model.FirstName
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-3">
+
+                        <h6 class="text-lg-start fw-bold">Last Name:</h6>
+                    </div>
+                    <div class="col-6">
+                        @Model.LastName
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-3">
+
+                        <h6 class="text-lg-start fw-bold">Cell Number:</h6>
+                    </div>
+                    <div class="col-6">
+                        @Model.CellNo
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-3">
+
+                        <h6 class="text-lg-start fw-bold">E-mail Address:</h6>
+                    </div>
+                    <div class="col-6">
+                        @Model.Email
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-3">
+
+                        <h6 class="text-lg-start fw-bold">ID Number:</h6>
+                    </div>
+                    <div class="col-6">
+                        @Model.IDNumber
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                </div>
+                <hr />
+                <h5 class="fw-bold">My Chronic Condition</h5>
+
+
+
+            </div>
+
+
+
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+

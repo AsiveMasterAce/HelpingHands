@@ -1,0 +1,71 @@
+﻿@model HelpingHands.Models.ViewModels.AssignContract
+@{
+    ViewData["Title"] = "Assign Contract";
+}
+
+<div class="card">
+    <div class="card-header d-flex">
+
+        <p class="text-uppercase pt-1">Assign Contract To Nurse</p>
+
+        <div class="ms-auto">
+
+            <a class="btn btn-danger" asp-action="CareContract" asp-controller="OfficeManager">Back</a>
+
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-6">
+                <h5>Contract Information</h5>
+            </div>
+            <div class="col-6">
+                <h5>Recommended Nurses</h5>
+                <ul>
+                    @foreach (var nurse in ViewBag.Nurses)
+                    {
+                        if (nurse != null)
+                        {
+                            <li>@nurse.FirstName @nurse.LastName</li>
+
+                        }
+                    }
+                </ul>
+                <form method="post" asp-action="AssignNurse" asp-controller="OfficeManager">
+                    <div class="form-goup">
+                        <label asp-for="NurseID">Choose Nurse</label>
+                        <select asp-for="NurseID" class="form-control w-100">
+                            <option value="" selected >--Select Nurse--</option>
+                            @foreach (var nurse in ViewBag.Nurses)
+                            {
+                                <option value="@nurse.NurseID">@nurse.FirstName @nurse.LastName</option>
+                            }
+                        </select>
+                        <input asp-for="@Model.CareContractID" type="hidden"/>
+                    </div>
+
+                    <div class="form-group mt-4">
+                     <button class="btn btn-success" type="submit">Assign Nurse</button>
+                    </div>
+                </form>
+            </div>
+            <div class="custom-loader d-none" id="spinner"></div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+{
+
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+            $('#spinner').removeClass('d-none');
+
+            setTimeout(function () {
+                $('#spinner').addClass('d-none');
+            }, 2000);
+        });
+</script>

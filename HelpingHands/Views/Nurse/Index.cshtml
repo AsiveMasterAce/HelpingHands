@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Index";
       var careContracts =  ViewBag.Contract as IEnumerable<CareContract>;
+      var careVisits = ViewBag.CareVisits as IEnumerable<CareVisit>;
 }
 
 <div class="container">
@@ -67,48 +68,63 @@
             <div class="d-flex">
             <div>
 
-            <h5>My Assigned Care Contracts</h5>
+            <h5>Today's Visits</h5>
             </div>
             <div class="ms-auto">
                 <a class="btn btn-danger small-btn"> <i class="bi bi-eye"></i>View More</a>
             </div>
 
             </div>
-            <table class="table small-text">
-                <thead>
-                    <tr>
-                        <th>Contract Date</th>
-                        <th>Patient</th>
-                        <th>Address</th>
-                        <th>Suburb</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in careContracts)
-                    {
-                       
-                        <tr>
-                            <td>
-                                @item.ContractDate.Value.ToString("dd/MM/yyyy")
-                            </td>
-                            <td>
-                                @item.Patient.FirstName @item.Patient.LastName
-                            </td>
-                            <td>
-                              @item.AddressLine1 @item.AddressLine2
-                            </td>
-                            <td>
-                                @item.Suburb.Name
-                            </td>
+            @if (careVisits.Count() != 0)
+          {
+                <table class="table small-text">
+                        
+                        <thead>
+                            <tr>
+                                <th>Visit Time</th>
+                                <th>Date</th>
+                                <th>Patient</th>
+                                <th>Address</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in careVisits)
+                            {
+
+                                <tr>
+                                    <td>
+                                        @item.VisitArriveTime.Value.ToString(@"hh\:mm")
+                                    </td>
+                                    <td>
+                                        @item.VisitDate.Value.ToString("dd/MM/yyyy")
+                                    </td>
+                                    <td>
+                                        @item.CareContract.Patient.FirstName @item.CareContract.Patient.LastName
+
+                                    </td>
+                                    <td>
+                                        @item.CareContract.AddressLine1 @item.CareContract.AddressLine2 @item.CareContract.Suburb.Name @item.CareContract.Suburb.PostalCode
+                                    </td>
+                                    <td>
+
+                                    </td>
+
+                                </tr>
+
+                            }
 
 
-                        </tr>
-
-                    }
-
-
-                </tbody>
-            </table>
+                        </tbody>
+                </table>
+                }
+                else
+                {
+                    <div class="alert alert-info text-center">
+                        <p>You have no visits today, add An Event!</p>
+                        <img src="~/img/Calendar-bro.png" class="w-25"> 
+                    </div>
+                }
      
         </div>
 </div>
