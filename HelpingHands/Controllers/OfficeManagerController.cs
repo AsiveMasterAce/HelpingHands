@@ -92,10 +92,7 @@ namespace HelpingHands.Controllers
             {
                 NotFound();
             }
-
             var preferredSuburbs = _context.PreferredSuburb.Where(p => p.SuburbID == careContract.SuburdID).ToList();
-
-
             var nurses = new List<Nurse>();
             foreach (var preferredSuburb in preferredSuburbs)
             {

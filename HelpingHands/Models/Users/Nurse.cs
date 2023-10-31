@@ -20,6 +20,7 @@ namespace HelpingHands.Models.Users
         [ForeignKey("User")]
         public int userID { get;set; }
 
+        public string? ProfilePicUrl { get; set; }
         public virtual UserModel? User { get; set; }
         public IList<PreferredSuburb>? PreferredSuburbs { get; set; }
         public IList<CareContract>? CareContracts { get; set; }

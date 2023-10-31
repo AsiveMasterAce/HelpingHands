@@ -106,6 +106,7 @@ namespace HelpingHands.Controllers
                             CellNo = model.CellNo,
                             Password = model.Password,
                             userID = userId,
+                            
                         };
                         _context.Nurse.Add(newNurse);
                         await _context.SaveChangesAsync();

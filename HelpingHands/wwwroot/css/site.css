@@ -6,9 +6,14 @@
     --wine-red: #e5383b8f;
     --Dash-white: #f8f9fa;
     --Nav-hover: #9e2a2b7d;
-    --bg-greyish: #e0e1dd1a
+    --bg-greyish: #e0e1dd1a;
+    --bg-profile:#f1faee;
 }
 
+.bg-profile{
+
+    background-color:var(--bg-profile);
+}
 .bg-greyish{
     background-color:var(--bg-greyish);
 }
@@ -460,7 +465,14 @@ h1, .h1 {
     flex: 0 0 auto;
     width: 23%;
 }
-
+.btn-green {
+    background-color: #f1faee;
+    border: 1px solid;
+}
+.btn-green:hover {
+   border: 2px solid;
+   color: #3a5a40;
+}
 .btn-push-down {
     position: absolute;
     top: 90%;

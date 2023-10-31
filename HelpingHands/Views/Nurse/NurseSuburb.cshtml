@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewData["Title"] = "My Suburb";
+    var prefSub = ViewBag.PrefSub as IEnumerable<PreferredSuburb>;
+}
+
+<div class="">
+
+    <div class="d-flex">
+
+        <h6 class="fw-bold">My Preffered Suburbs</h6>
+
+        <div class="ms-auto">
+            <a asp-action="PrefSuburb" asp-controller="Nurse" class="btn btn-success btn-sm" >Add A Suburb</a>
+
+        </div>
+    </div>
+   <div class="px-4">
+       
+       <h6>Here Are My Preffered Suburbs</h6>
+        @if (prefSub.Count() != null)
+        {
+            
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Suburb Name</th>
+                    <th>City </th>
+                    <th>Postal Code </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var sub in prefSub)
+                {
+                    <tr>
+                        <td>@sub.Suburb?.Name</td>
+                        <td>@sub.Suburb?.City?.Name</td>
+                        <td>@sub.Suburb?.PostalCode </td>
+                        <td>
+                                <a class="btn btn-danger btn-sm" title="Remove Suburb" data-bs-toggle="modal" data-bs-target="#DeleteModal">
+                          <i class="bi bi-shield-x"></i>
+                          </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-info center">
+
+                No Selected Suburb Yet... Please select Suburb to work with us.
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="fs-1 text-danger">
+                    <i class="bi bi-trash3-fill"></i>
+                </div>
+                <p>Are You Sure You Want To Remove This Suburb???</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="deleteBtn">Delete </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

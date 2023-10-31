@@ -1,0 +1,84 @@
+﻿@model HelpingHands.Models.ViewModels.AddPrefferedViewModel;
+@{
+    ViewData["Title"] = "My Preferred Suburb";
+}
+
+
+<div class="card">
+
+    <div class="card-header d-flex">
+
+        <p class="text-uppercase pt-1">Add A Preffered Suburb</p>
+
+        <div class="ms-auto">
+
+            <a class="btn btn-danger" asp-action="NurseSuburb" asp-controller="Nurse">Back</a>
+
+        </div>
+    </div>
+
+
+    <div class="card-body">
+     
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger text-center" role="alert">
+                @TempData["ErrorMessage"]
+            </div>
+        }
+        else
+        {
+
+        }
+        <form asp-action="SubmitSuburb" asp-controller="Nurse">
+
+            <div class="form-group">
+
+                <label asp-for="SelectedCityId" class="control-label required"></label>
+                @Html.DropDownListFor(model => model.SelectedCityId, ViewBag.Cities as SelectList, "-- Select City --", new { @class = "form-control",id = "cityDropdown" })
+                <span asp-validation-for="SelectedCityId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+
+                <label asp-for="SelectedSuburbId" class="control-label required"></label>
+                <select asp-for="SelectedSuburbId" class="form-control" id="suburbDropdown">
+                    <option value="">--Select Suburb--</option>
+                </select>
+                <span asp-validation-for="SelectedSuburbId" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex">
+                <div class="form-group mt-3 ms-auto">
+                    <input type="submit" value="Add Suburb" class="btn btn-success" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('#suburbDropdown').val('');
+        $('#cityDropdown').change(function () {
+            var cityId = $(this).val();
+
+            $.ajax({
+                url: '/Register/GetSuburbs',
+                type: 'GET',
+                data: { cityId: cityId },
+                success: function (data) {
+                    var suburbDropdown = $('#suburbDropdown');
+                    suburbDropdown.empty();
+
+                    $.each(data, function (index, item) {
+                        suburbDropdown.append('<option value="' + item.value + '">' + item.text + '</option>');
+                    });
+                }
+            });
+        });
+    });
+</script>

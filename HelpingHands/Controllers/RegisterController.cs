@@ -82,7 +82,8 @@ namespace HelpingHands.Controllers
                         CellNo = model.CellNo,
                         Password = model.Password,
                         userID = userId,
-                        SuburbID =model.SelectedSuburbId,
+                        SuburbID = model.SelectedSuburbId,
+                        ProfilePicUrl=null,
                     };
                     _context.Patient.Add(newPatient);
                     await _context.SaveChangesAsync();

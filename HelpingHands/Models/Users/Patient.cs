@@ -19,6 +19,7 @@ namespace HelpingHands.Models.Users
         public string? EmergencyPersonNo { get; set; }
         public string? AddressLine1 { get; set; }
         public string? AddressLine2 { get; set;}
+        public string? ProfilePicUrl { get; set; }
 
         [ForeignKey("Suburb")]
         public int SuburbID { get; set; }

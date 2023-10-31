@@ -1,0 +1,128 @@
+﻿@model HelpingHands.Models.ViewModels.UpdatePatientsProfileViewModel;
+@{
+    ViewData["Title"] = "Update Profile";
+}
+
+<div class="card">
+
+    <div class="card-header d-flex">
+
+        <p class="text-uppercase pt-1">Update Profile</p>
+
+        <div class="ms-auto">
+
+            <a class="btn btn-danger" asp-action="PatientProfile" asp-controller="Profile">Back</a>
+
+        </div>
+    </div>
+
+    <div class="card-body">
+
+        <form asp-action="SubmitPatientProfile" asp-controller="Profile">
+
+            <input asp-for="@Model.PatientID" hidden />
+            <div class="row">
+                <p class="fw-bold">Personal Details:</p>
+                <div class="form-group col-6">
+                    <label asp-for="FirstName" class="control-label required"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="LastName" class="control-label required"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <p class="fw-bold mt-2">Contact Details:</p>
+                <div class="form-group col-6">
+                    <label asp-for="Email" class="control-label required"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="CellNo" class="control-label required"></label>
+                    <input asp-for="CellNo" class="form-control" maxlength="10" />
+                    <span asp-validation-for="CellNo" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <p class="fw-bold mt-2">Identity Details:</p>
+                <div class="form-group col-6">
+                    <label asp-for="IDNumber" class="control-label required"></label>
+                    <input asp-for="IDNumber" class="form-control" maxlength="13" id="idNumber" pattern="[0-9]*" />
+                    <span asp-validation-for="IDNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="DOB" class="control-label required"></label>
+                    <input asp-for="DOB" id="dob" class="form-control" />
+                    <span asp-validation-for="DOB" class="text-danger"></span>
+                </div>
+            </div> 
+            <div class="row">
+                <p class="fw-bold mt-2">Emergency Details:</p>
+                <div class="form-group col-6">
+                    <label asp-for="EmergencyPerson" class="control-label required"></label>
+                    <input asp-for="EmergencyPerson" class="form-control"  />
+                    <span asp-validation-for="EmergencyPerson" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="EmergencyPersonNo" class="control-label required"></label>
+                    <input asp-for="EmergencyPersonNo" class="form-control" maxlength="10" />
+                    <span asp-validation-for="EmergencyPersonNo" class="text-danger"></span>
+                </div>
+            </div> 
+            <div class="d-flex">
+                <div class="form-group mt-3 ms-auto">
+                    <input type="submit" value="Update Profile" class="btn btn-success" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<script>
+    // $(document).ready(function () {
+    //     $('#idNumber').on('keyup', function () {
+    //         var idNumber = $(this).val();
+    //         if (idNumber.length === 6) {
+    //             var dob = new Date(
+    //                 '20' + idNumber.substring(0, 2),
+    //                 idNumber.substring(2, 4) - 1,
+    //                 idNumber.substring(4, 6)
+    //             );
+    //             $('#dob').val(dob.toISOString().split('T')[0]);
+    //         }
+    //     });
+    // });
+    // // $('#idNumber').on('keyup', function () {
+    // //     var idNumber = $(this).val();
+    // //     var dob = extractDOBFromIDNumber(idNumber);
+    // //     $('#datePicker').val(dob);
+    // // });
+
+    // // function extractDOBFromIDNumber(idNumber) {
+    // //     var dobDigits = idNumber.substring(0, 6);
+    // //     var day = dobDigits.substring(4, 6);
+    // //     var month = dobDigits.substring(2, 4);
+    // //     var year = dobDigits.substring(0, 2);
+    // //     var dobString = day + "/" + month + "/" + year;
+    // //     return dobString;
+    // // }
+
+    // // function compareDOBToIDNumber(idNumber, dob) {
+      
+    // //     var dobDigits = idNumber.substring(0, 6);
+
+      
+    // //     if (dobDigits === dob) {
+    // //         return true;
+    // //     } else {
+    // //         return false;
+    // //     }
+    // // }
+
+</script>
