@@ -4,7 +4,7 @@ using HelpingHands.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
-
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace HelpingHands.Controllers
 {
@@ -44,22 +44,6 @@ namespace HelpingHands.Controllers
             if (!string.IsNullOrEmpty(userType) && userType != "ALL")
             {
                 users = users.Where(u => u.UserType.Contains(userType));
-                if (userType == "O")
-                {
-                    ViewBag.FilterMessage = $"Filtered by Office Manager";
-                }
-                else if (userType == "N")
-                {
-                    ViewBag.FilterMessage = $"Filtered by Nurse";
-                }
-                else if (userType == "P")
-                {
-                    ViewBag.FilterMessage = $"Filtered by Patient";
-                }
-                else if (userType == "A")
-                {
-                    ViewBag.FilterMessage = $"Filtered by Admin";
-                }
             }
        
             var usersList = users.ToList();
@@ -313,6 +297,21 @@ namespace HelpingHands.Controllers
             return View();
 
         }
+
+        public IActionResult RemovedUsers([FromQuery] string userType)
+        {
+            var users = _context.Users.Where(u => u.Archived == true);
+
+            if (!string.IsNullOrEmpty(userType) && userType != "ALL")
+            {
+                users = users.Where(u => u.UserType.Contains(userType));
+            }
+
+            var usersList = users.ToList();
+
+            return View(usersList);
+        }
+
 
         public IActionResult AddBusinessData()
         {

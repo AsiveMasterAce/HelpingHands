@@ -90,8 +90,8 @@
             ],
         });
 
-
-        $('.delete-btn').click(function () {
+        $('#cityTable tbody').on('click', '.delete-btn', function ()
+        {
             var itemId = $(this).data('item-id');
             console.log(itemId);
             $('#deleteBtn').data('item-id', itemId);

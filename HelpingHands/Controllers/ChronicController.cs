@@ -1,16 +1,20 @@
 ﻿using HelpingHands.Data;
 using HelpingHands.Models;
 using HelpingHands.Models.ViewModels;
+using HelpingHands.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.EntityFrameworkCore;
 
 namespace HelpingHands.Controllers
 {
     public class ChronicController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public ChronicController(ApplicationDbContext context) 
+        private readonly UserService _userService;
+        public ChronicController(ApplicationDbContext context, UserService userService) 
         {
+            _userService = userService;
             _context = context;      
         }
         public IActionResult Index()
@@ -100,6 +104,19 @@ namespace HelpingHands.Controllers
             _context.SaveChanges();
 
             return Json(true);
+        }
+
+        public IActionResult ChronicsPatient()
+        {
+            var UserID = _userService.GetLoggedInUserId();
+
+            var patient = _context.Patient.Where(p => p.userID == UserID).FirstOrDefault();
+
+            var chronicCon = _context.PatientChronicCondition
+                .Where(cc => cc.PatientID == patient.PatientID)
+                .ToList();
+
+            return View();
         }
         public bool CheckChronicExist(string condition)
         {

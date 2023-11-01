@@ -83,6 +83,7 @@ namespace HelpingHands.Controllers
 
             return View(updateSuburb);
         }
+        [HttpPost]
         public async Task<IActionResult> UpdateSuburb(UpdateSuburbVM model)
         {
             if (ModelState.IsValid)
@@ -116,6 +117,8 @@ namespace HelpingHands.Controllers
         {
            return View();
         }
+
+        [HttpPost]
         public async Task<IActionResult> SubmitCity(AddCityVM model)
         {
             if (ModelState.IsValid) 
@@ -162,7 +165,7 @@ namespace HelpingHands.Controllers
 
             return View(updateCity);
         }
-
+        [HttpPost]
         public async Task<IActionResult> UpdateCity(UpdateCityVM model)
         {
 
@@ -212,6 +215,25 @@ namespace HelpingHands.Controllers
             return Json(true);
         }
 
+
+        public IActionResult RemovedSuburbs()
+        {
+            var InactiveSuburbs = _context.Suburb.Where(s => s.Archived == true).Include(s => s.City).ToList();
+            return View(InactiveSuburbs);
+        }
+
+        [HttpPost("/Suburb/ActivateSuburb/{suburbId}")]
+        public JsonResult ActivateSuburb(int suburbId)
+        {
+            var suburb = _context.Suburb.Where(u => u.SuburbID == suburbId).FirstOrDefault();
+
+            suburb.Archived = false;
+
+            _context.Suburb.Update(suburb);
+            _context.SaveChanges();
+
+            return Json(true);
+        }
         public bool SuburbExistsWithPostalCode(int postalCode)
         {
             return _context.Suburb.Any(s => s.PostalCode == postalCode);

@@ -24,7 +24,7 @@
                    class="dashboard-nav-dropdown-item">All
                </a>
                 <a href="#" class="dashboard-nav-dropdown-item">Active</a>
-                <a href="#" class="dashboard-nav-dropdown-item">In Active</a>
+                <a asp-action="RemovedUsers" asp-controller="Admin" class="dashboard-nav-dropdown-item">In Active</a>
              
             </div>
         </div>
@@ -39,6 +39,9 @@
                 </a> 
                 <a asp-action="Cities" asp-controller="Suburb" class="dashboard-nav-dropdown-item">
                     Cities
+                </a> 
+                <a asp-action="RemovedSuburbs" asp-controller="Suburb" class="dashboard-nav-dropdown-item">
+                   Inactive Suburb
                 </a>
             </div>
         </div> 
@@ -101,7 +104,7 @@
             </div>
         <div class='dashboard-nav-dropdown'>
                 <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
-                    <i class="bi bi-person-hearts"></i> Nurses
+                    <i class="bi bi-person-square"></i> Nurses
                 </a>
                 <div class='dashboard-nav-dropdown-menu'>
                     <a href="#"
@@ -119,6 +122,7 @@
                    
                 </div>
         </div>
+         <a asp-action="ChronicCondition" asp-controller="Chronic" class="dashboard-nav-item"> <i class="bi bi-activity"></i>Chronic Conditions</a>
          <a href="#" class="dashboard-nav-item"> <i class="bi bi-gear"></i>Settings </a>
         <a href="#" class="dashboard-nav-item"><i class="bi bi-person-circle"></i> Profile </a>
 
@@ -175,7 +179,7 @@
         </header>
 
         <nav class="dashboard-nav-list">
-            <a href="#" class="dashboard-nav-item">
+            <a asp-action="Index" asp-controller="Patient" class="dashboard-nav-item">
             <i class="bi bi-house"></i>
             Home
         </a>

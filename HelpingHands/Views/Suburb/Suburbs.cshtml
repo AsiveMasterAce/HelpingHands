@@ -91,11 +91,13 @@
      
         });
 
-        $('.delete-btn').click(function () {
+        $('#suburbTable tbody').on('click', '.delete-btn', function () {
             var itemId = $(this).data('item-id');
             console.log("itemId:", itemId);
+        
             $('#deleteBtn').data('item-id', itemId);
         });
+
 
 
         $("#deleteBtn").click(function () {

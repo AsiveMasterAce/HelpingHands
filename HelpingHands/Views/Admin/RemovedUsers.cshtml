@@ -1,27 +1,18 @@
 ﻿@model IEnumerable<HelpingHands.Models.Users.UserModel>
-
 @{
-    ViewData["Title"] = "Users";
+    ViewData["Title"] = "RemovedUsers";
 }
-
-
-
 
 <div class="d-flex mb-3 mx-3">
 
-    <h5 class="fw-bold">All Active Users</h5>
-
-    <div class="ms-auto">
-
-        <a asp-action="AddUser" asp-controller="Admin" class="btn btn-success">New User</a>
-    </div>
+    <h6 class="fw-bold">All In Active Users</h6>
 
 </div>
 
 <div class="p-3 mx-3">
+    <h5><i class="bi bi-sliders"></i> Filters</h5>
     <div class="filter-bg mb-3 rounded-2 p-3">
         <form method="get" class="form-inline">
-    <h6><i class="bi bi-sliders"></i> Filters</h6>
             <div class="form-group">
                 <label for="userType">Choose User Type:</label>
                 <select name="userType" id="userType" class="form-control-sm">
@@ -72,17 +63,9 @@
                         @item.CellNo
                     </td>
                     <td>
-                        <a class="btn btn-warning rounded-3 small-btn" asp-controller="Admin" asp-action="EditUser" asp-route-Id="@item.UserID">
-                            <i class="bi bi-pen"></i>
+                        <a class="btn btn-success rounded-3 small-btn active-btn" data-bs-toggle="modal" data-bs-target="#ActiveModal" data-item-id="@item.UserID" title="Set Suburb Active">
+                            <i class="bi bi-circle-fill"></i>
                         </a>
-                        <a class="btn btn-danger rounded-3 small-btn delete-btn" data-bs-toggle="modal" data-bs-target="#DeleteModal" data-item-id="@item.UserID">
-                            <i class="bi bi-trash3"></i>
-
-                        </a>
-                        <a class="btn btn-secondary rounded-3 small-btn" asp-controller="Admin" asp-action="UpdateUserPassword" asp-route-Id="@item.UserID">
-                            <i class="bi bi-key-fill"></i>
-                        </a>
-
                     </td>
                 </tr>
             }
@@ -91,84 +74,39 @@
 </div>
 
 
-<!-- Modal -->
-<div class="modal fade" id="DeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body text-center">
-        <div class="fs-1 text-danger">
-           <i class="bi bi-trash3-fill"></i>
+<div id="loaderModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content text-center">
+            <div class="modal-body text-center">
+                <div class="custom-loader text-center"></div>
+
+            </div>
         </div>
-       <p>Are You Sure My Delete This User???</p> 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" id="deleteBtn">Delete </button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
     </div>
-  </div>
 </div>
 
-@if (ViewBag.FilterMessage != null)
-{
-    <script type="text/javascript">
-        $(document).ready(function() {
-            var message = '@ViewBag.FilterMessage';
-            $('.alert').text(message);
-            $('.alert').show();
-            setTimeout(function () {
-                $('.alert').fadeOut('fast');
-            }, 2000);
-        });
-    </script>
-}
-<style>
-
-  /* Define the colors */
-:root {
-  --color-primary: #780000;
-  --color-secondary: #c1121f;
-  --color-accent: #fdf0d5;
-  --color-highlight: #003049;
-  --color-error: #669bbc;
-}
-
-/* Apply the colors to the datatable */
-    .table {
-        background-color: var(--color-primary);
-        color: var(--color-accent);
-        overflow-x: auto;
-        max-width: 100%;
-    }
+<!-- Modal -->
+<div class="modal fade" id="ActiveModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="fs-1 text-info">
+                    <i class="bi bi-emoji-smile-upside-down"></i>
+                </div>
+                <p>Are You Sure You Want This Suburb To Be Active???</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" id="activateBtn">Activate </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-.table th {
-  background-color: var(--color-secondary);
-  color: var(--color-accent);
-}
-
-.table td {
-  background-color: var(--color-accent);
-}
-
-.table tr:hover {
-  background-color: var(--color-highlight);
-}
-
-.table .error {
-  background-color: var(--color-error);
-  color: white;
-}
-  .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-    background-color: var(--color-highlight);
-    color: var(--color-accent);
-    border: 1px solid var(--color-accent);
-  }
-
-</style>
 
 <script>
 
@@ -177,7 +115,7 @@
             "scrollY": "430px",
             "scrollCollapse": true,
             "columnDefs": [
-                    { "orderable": false, "targets": 'no-sort' }
+                { "orderable": false, "targets": 'no-sort' }
             ],
             "rowReorder": true,
             "max-width": "100%"
@@ -209,7 +147,5 @@
             });
         });
 
-
-   
-  });
+    });
 </script>
