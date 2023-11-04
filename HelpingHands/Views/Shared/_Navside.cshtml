@@ -62,7 +62,7 @@
 
             <a asp-action="ChronicCondition" asp-controller="Chronic" class="dashboard-nav-item"> <i class="bi bi-activity"></i>Chronic Conditions</a>
             <a href="#" class="dashboard-nav-item"> <i class="bi bi-gear"></i>Settings </a>
-            <a href="#" class="dashboard-nav-item"><i class="bi bi-person-circle"></i> Profile </a>
+          @*   <a href="#" class="dashboard-nav-item"><i class="bi bi-person-circle"></i> Profile </a> *@
 
            <div class="nav-item-divider"></div>
            <span class="mx-4"> <button type="submit" class="btn btn-danger w-75 btn-push-down"  data-bs-toggle="modal" data-bs-target="#LogOutModal"><i class="bi bi-box-arrow-in-right"></i> Log Out</button> </span>
@@ -70,65 +70,69 @@
         </nav>
     }
     else if(User.IsInRole("O"))
-    {       <header>
-                <a href="#!" class="menu-toggle"><i class="bi bi-list"></i></a>
-                <a href="#" class="brand-logo">
-                   <span>Office Manager</span>
-                </a>
-            </header>
+    {
+               <header>
+            <a href="#!" class="menu-toggle"><i class="bi bi-list"></i></a>
+            <a href="#" class="brand-logo">
+                <span>Office Manager</span>
+            </a>
+        </header>
 
         <nav class="dashboard-nav-list">
             <a asp-action="Index" asp-controller="OfficeManager" class="dashboard-nav-item">
-            <i class="bi bi-house"></i>
-            Home
-        </a>
-        
-        <a asp-action="GetSuburbs" asp-controller="OfficeManager" class="dashboard-nav-item">
-            
-             <i class="bi bi-building"></i> Suburb
-            
-        </a>
+                <i class="bi bi-house"></i>
+                Home
+            </a>
 
+            <a asp-action="GetSuburbs" asp-controller="OfficeManager" class="dashboard-nav-item">
+
+                <i class="bi bi-building"></i> Suburb
+
+            </a>
+            <a asp-action="MyTimeLine" asp-controller="OfficeManager" class="dashboard-nav-item">
+
+                <i class="bi bi-chat-left-heart-fill"></i>Post
+
+            </a>
             <div class='dashboard-nav-dropdown'>
                 <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
                     <i class="bi bi-boxes"></i> Care Contracts
                 </a>
                 <div class='dashboard-nav-dropdown-menu'>
                     <a asp-action="CareContract" asp-controller="OfficeManager" class="dashboard-nav-dropdown-item">All</a>
-                    <a href="#" class="dashboard-nav-dropdown-item">New Contracts</a>
+                    <a asp-action="NewContract" asp-controller="OfficeManager" class="dashboard-nav-dropdown-item">New Contracts</a>
                     <a href="#" class="dashboard-nav-dropdown-item">Visits</a>
                     <a href="#" class="dashboard-nav-dropdown-item">Closed Contracts</a>
                     <a href="#" class="dashboard-nav-dropdown-item">Canceled Contract</a>
-                    
+
                 </div>
             </div>
-        <div class='dashboard-nav-dropdown'>
+            <div class='dashboard-nav-dropdown'>
                 <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
                     <i class="bi bi-person-square"></i> Nurses
                 </a>
                 <div class='dashboard-nav-dropdown-menu'>
-                    <a href="#"
-                       class="dashboard-nav-dropdown-item">All</a>
-                   
+                    <a asp-action="Patients" asp-controller="OfficeManager" class="dashboard-nav-dropdown-item">All</a>
+
                 </div>
-        </div> 
-        <div class='dashboard-nav-dropdown'>
+            </div>
+            <div class='dashboard-nav-dropdown'>
                 <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
                     <i class="bi bi-person-hearts"></i> Patients
                 </a>
                 <div class='dashboard-nav-dropdown-menu'>
                     <a href="#"
                        class="dashboard-nav-dropdown-item">All</a>
-                   
-                </div>
-        </div>
-         <a asp-action="ChronicCondition" asp-controller="Chronic" class="dashboard-nav-item"> <i class="bi bi-activity"></i>Chronic Conditions</a>
-         <a href="#" class="dashboard-nav-item"> <i class="bi bi-gear"></i>Settings </a>
-        <a href="#" class="dashboard-nav-item"><i class="bi bi-person-circle"></i> Profile </a>
 
-           <div class="nav-item-divider"></div>
-    
-          <span class="mx-4"> <button type="submit" class="btn btn-danger w-75 btn-push-down" data-bs-toggle="modal" data-bs-target="#LogOutModal"><i class="bi bi-box-arrow-in-right"></i> Log Out</button> </span>
+                </div>
+            </div>
+            <a asp-action="ChronicCondition" asp-controller="Chronic" class="dashboard-nav-item"> <i class="bi bi-activity"></i>Chronic Conditions</a>
+            <a href="#" class="dashboard-nav-item"> <i class="bi bi-gear"></i>Settings </a>
+            @*         <a href="#" class="dashboard-nav-item"><i class="bi bi-person-circle"></i> Profile </a> *@
+
+            <div class="nav-item-divider"></div>
+
+            <span class="mx-4"> <button type="submit" class="btn btn-danger w-75 btn-push-down" data-bs-toggle="modal" data-bs-target="#LogOutModal"><i class="bi bi-box-arrow-in-right"></i> Log Out</button> </span>
         </nav>
     }
     else if (User.IsInRole("N"))

@@ -7,7 +7,8 @@
     --Dash-white: #f8f9fa;
     --Nav-hover: #9e2a2b7d;
     --bg-greyish: #e0e1dd1a;
-    --bg-profile:#f1faee;
+    --bg-profile: #f1faee;
+    --HelpingHandsBG: #f8f9fa;
 }
 
 .bg-profile{
@@ -492,11 +493,15 @@ h1, .h1 {
     content: "*";
     color: red;
 }
-
+.yellow {
+    color: #ffb703;
+}
 .dataTables_length {
     padding-bottom: 20px;
 }
-
+.shadow-nyana {
+    box-shadow: 4px 10px 25px -2px rgba(108, 117, 125, 1);
+}
 .table {
     overflow-x: auto;
     max-width: 100%;

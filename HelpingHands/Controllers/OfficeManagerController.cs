@@ -5,6 +5,8 @@ using HelpingHands.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using HelpingHands.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace HelpingHands.Controllers
 {
@@ -14,10 +16,14 @@ namespace HelpingHands.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IConfiguration _configuration;
-        public OfficeManagerController(ILogger<HomeController> logger, ApplicationDbContext context)
+        private readonly ValidationService _validate;
+        private readonly UserService _userService;
+        public OfficeManagerController(ILogger<HomeController> logger, ApplicationDbContext context, UserService userService, ValidationService validation)
         {
 
             _context = context;
+            _userService = userService;
+            _validate = validation;
         }
         public IActionResult Index()
         {
@@ -42,7 +48,10 @@ namespace HelpingHands.Controllers
         }
         public IActionResult GetSuburbs()
         {
-            var suburbs = _context.Suburb.Where(c => c.Archived == false).ToList();
+            var suburbs = _context.Suburb.Where(c => c.Archived == false)
+                .Include(c=>c.City)
+                .OrderByDescending(c=>c.City.Name)
+                .ToList();
 
             return View(suburbs);
         }
@@ -140,7 +149,138 @@ namespace HelpingHands.Controllers
             return View(model);
         }
 
+        public IActionResult NewContract()
+        {
+            var careContracts = _context.CareContract
+                .Where(c => c.Archived == false && c.CareStatus.Contains("New"))
+                .Include(c => c.Patient)
+                .Include(c => c.Nurse)
+                .Include(c => c.Suburb)
+                .ThenInclude(c => c.City)
+                .OrderByDescending(c => c.ContractDate)
+                .ToList();
 
+            return View(careContracts);
+        }
 
+        public IActionResult Patients()
+        {
+            var users = _context.Users.Where(u => u.Archived == false && u.UserType.Contains("N")).ToList();
+            return View(users);
+        }
+
+        public IActionResult NurseUser()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> SubmitNurse(AddUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                bool checkEMail = IsEmailAlreadyInUse(model.Email);
+
+                if (checkEMail == false)
+                {
+                    var newUser = new UserModel
+                    {
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Email = model.Email,
+                        CellNo = model.CellNo,
+                        Password = model.Password,
+                        UserType = model.UserType,
+
+                    };
+                    _context.Users.Add(newUser);
+                    await _context.SaveChangesAsync();
+
+                    int userId = newUser.UserID;
+                    if (model.UserType == "N")
+                    {
+                        var newNurse = new Nurse
+                        {
+
+                            FirstName = model.FirstName,
+                            LastName = model.LastName,
+                            Email = model.Email,
+                            CellNo = model.CellNo,
+                            Password = model.Password,
+                            userID = userId,
+
+                        };
+                        _context.Nurse.Add(newNurse);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = $"Error: Email {model.Email} Is already in use";
+                    return RedirectToAction("NurseUser", "OfficeManager");
+                }
+                return RedirectToAction("Patients", "OfficeManager");
+            }
+            return View(model);
+        }
+
+        public IActionResult MyTimeLine()
+        {
+            var posts = _context.TimelinePost.Where(p => p.Archived == false).Include(p => p.Comments)
+                .ThenInclude(p=>p.User).ToList();
+
+            var timeLine = new TimeLineViewModel
+            {
+
+                Posts = posts
+            };
+
+            return View(timeLine);
+        }
+
+   
+        public IActionResult Post([FromRoute] int id)
+        {
+            var post = _context.TimelinePost.Where(p => p.Id.Equals(id))
+                .Include(p => p.Comments)
+                .ThenInclude(p=>p.User)
+                .FirstOrDefault();
+
+            ViewBag.Post = post;
+
+            return View();
+        }
+        // POST: Comment on Timeline Post
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CommentOnPost([FromRoute] int id, CommentOnPost model)
+        {
+            var userID = _userService.GetLoggedInUserId();
+            var post = _context.TimelinePost.Where(p => p.Id.Equals(id)).Include(p => p.Comments).FirstOrDefault();
+       
+            if (post != null && !post.Archived)
+            {
+                if (ModelState.IsValid)
+                {
+                    var comment = new PostComment
+                    {
+                        UserId = userID,
+                        CommentContent = model.CommentContent,
+                        Post = post,
+                        CreatedAt = DateTime.Now,
+                    };
+                    _context.Add(comment);
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToAction("Post", new { id = id });
+                }
+                return View("Error");
+            }
+            return NotFound();
+        }
+        public bool IsEmailAlreadyInUse(string email)
+        {
+            var existingUser = _context.Users.FirstOrDefault(u => u.Email == email);
+            return existingUser != null;
+        }
     }
 }

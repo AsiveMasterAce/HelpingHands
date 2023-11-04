@@ -1,0 +1,82 @@
+﻿@model HelpingHands.Models.ViewModels.AddUserViewModel
+@{
+    ViewData["Title"] = "Nurse User";
+}
+
+<div class="card">
+    <div class="card-header d-flex">
+
+        <p class="text-uppercase pt-1">Add Nurse</p>
+
+        <div class="ms-auto">
+
+            <a class="btn btn-danger" asp-action="Patients" asp-controller="OfficeManager">Back</a>
+
+        </div>
+    </div>
+
+    <div class="col-12 card-body">
+        <form asp-action="SubmitNurse" asp-controller="OfficeManager">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger text-center" role="alert">
+                        @TempData["ErrorMessage"]
+                    </div>
+                }
+
+                <div class="form-group col-6">
+                    <label asp-for="FirstName" class="control-label required"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="LastName" class="control-label required"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label asp-for="Email" class="control-label required"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label asp-for="CellNo" class="control-label required"></label>
+                    <input asp-for="CellNo" class="form-control" />
+                    <span asp-validation-for="CellNo" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="UserType" class="control-label required"></label>
+                    <select asp-for="UserType" class="form-select" disabled >
+                        <option value="">Select User Type</option>
+                        <option value="O">Office Manager</option>
+                        <option value="N" selected>Nurse</option>
+                    </select>
+                    <input asp-for="UserType" value="N" hidden/>
+                    <span asp-validation-for="UserType" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password" class="control-label required"></label>
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="control-label required"></label>
+                <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="d-flex">
+                <div class="form-group mt-3 ms-auto">
+                    <input type="submit" value="Add Nurse" class="btn btn-success" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

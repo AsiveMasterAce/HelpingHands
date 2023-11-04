@@ -124,7 +124,60 @@ namespace HelpingHands.Controllers
 
             return View(model);
         }
+        public IActionResult MyTimeLine()
+        {
+            var posts = _context.TimelinePost.Where(p => p.Archived == false).Include(p => p.Comments)
+                .ThenInclude(p => p.User).ToList();
 
+            var timeLine = new TimeLineViewModel
+            {
+
+                Posts = posts
+            };
+
+            return View(timeLine);
+        }
+
+
+        public IActionResult Post([FromRoute] int id)
+        {
+            var post = _context.TimelinePost.Where(p => p.Id.Equals(id))
+                .Include(p => p.Comments)
+                .ThenInclude(p => p.User)
+                .FirstOrDefault();
+
+            ViewBag.Post = post;
+
+            return View();
+        }
+        // POST: Comment on Timeline Post
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CommentOnPost([FromRoute] int id, CommentOnPost model)
+        {
+            var userID = _userService.GetLoggedInUserId();
+            var post = _context.TimelinePost.Where(p => p.Id.Equals(id)).Include(p => p.Comments).FirstOrDefault();
+
+            if (post != null && !post.Archived)
+            {
+                if (ModelState.IsValid)
+                {
+                    var comment = new PostComment
+                    {
+                        UserId = userID,
+                        CommentContent = model.CommentContent,
+                        Post = post,
+                        CreatedAt = DateTime.Now,
+                    };
+                    _context.Add(comment);
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToAction("Post", new { id = id });
+                }
+                return View("Error");
+            }
+            return NotFound();
+        }
         private bool IsPreferredSuburbExists(int nurseId, int suburbId)
         {
             var existingPreferredSuburb = _context.PreferredSuburb

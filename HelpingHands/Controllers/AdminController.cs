@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace HelpingHands.Controllers
 {
-    [Authorize(Roles = "A")]
+   
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;

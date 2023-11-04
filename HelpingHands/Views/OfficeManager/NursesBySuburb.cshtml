@@ -1,26 +1,43 @@
 ﻿@model HelpingHands.Models.Suburb
 @{
-    ViewData["Title"] = "NursesBySuburb";
+    ViewData["Title"] = "Nurses ";
 }
 
 
 <div class="container">
 
-    <div class="col-4">
+    <div class="card">
 
-       <h1> @Model.Name </h1>
+    
+    <div class="card-header d-flex">
+
+        <p class="text-uppercase pt-1">Nurses in this Suburb</p>
+
+        <div class="ms-auto">
+
+            <a class="btn btn-danger" asp-action="GetSuburbs" asp-controller="OfficeManager">Back</a>
+
+        </div>
+    </div>
+    <div class="card-body">
+
+        <h4 class="fw-bold">Suburb: </h4>
+        <h5><i class="bi bi-pin-map text-danger fs-2"></i>  @Model.Name </h5>
+
+        <h5 class="mt-5 fw-bold">Nurses:</h5>
         @foreach(var name in Model.PreferredSuburbs){
 
-            <h4>
-
-                @name.Nurse.FirstName
-            </h4>
-
-            <h4>
-
-               
-            </h4>
+            if (name.Nurse.FirstName != null)
+            {
+                <p>
+                    -@name.Nurse.FirstName @name.Nurse.LastName
+                </p>
+            }
+        
         }
+    
+    </div>
+
     </div>
 </div>
 

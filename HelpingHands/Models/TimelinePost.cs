@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HelpingHands.Models.Users;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HelpingHands.Models
 {
@@ -20,11 +22,14 @@ namespace HelpingHands.Models
     {
         [Key]
         public int Id { get; set; }
+
+        [ForeignKey("User")]
         public int UserId { get; set; }
         public string CommentContent { get; set; }
         public TimelinePost Post { get; set; }
         public DateTime CreatedAt { get; set; }
         public bool Archived { get; set; } = false;
+        public virtual UserModel? User { get; set; }
     }
 
 }

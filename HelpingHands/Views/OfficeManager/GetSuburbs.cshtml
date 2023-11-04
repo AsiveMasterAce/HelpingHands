@@ -3,11 +3,11 @@
     ViewData["Title"] = "GetSuburbs";
 }
 
-<div class="container mt-5">
+<div class="container">
 
-    <h3> Select Suburb</h3>
-
-    <table class="table" id="suburbTable"> 
+    <h5 class="mb-4 fw-bold"> View Nurse By Suburbs </h5>
+    
+    <table class="table table-sm small-text" id="suburbTable">
         <thead>
  
           <tr>
@@ -17,6 +17,9 @@
              </th>
              <th>
                   Postal Codes
+             </th>
+             <th>
+                  City
              </th>
              <th>
                  Action
@@ -37,8 +40,11 @@
                      @item.PostalCode
                  </td>
                  <td>
+                     @item.City.Name
+                 </td>
+                 <td>
 
-                     <a asp-action="NursesBySuburb" asp-controller="OfficeManager"  asp-route-Id="@item.SuburbID" class="btn btn-primary ">
+                     <a asp-action="NursesBySuburb" asp-controller="OfficeManager"  asp-route-Id="@item.SuburbID" class="btn btn-primary small-btn">
                          Show Nurses
                      </a>
                  </td>
@@ -54,7 +60,9 @@
 <script>
 
     $(document).ready(function () {
-        $("#suburbTable").DataTable();
-
+        $("#suburbTable").DataTable({
+            "order": [[2, "asc"]]
+        });
+     
     });
 </script>
