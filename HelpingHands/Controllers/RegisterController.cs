@@ -17,11 +17,13 @@ namespace HelpingHands.Controllers
         private readonly ValidationService _validationService;
 
 
-        public RegisterController(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor, ValidationService validationService)
+
+        public RegisterController(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor, ValidationService validationService, EncryptService encrypt)
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
             _validationService = validationService;
+     
         }
 
         public IActionResult Index()
@@ -55,19 +57,24 @@ namespace HelpingHands.Controllers
         { 
             if (ModelState.IsValid)
             {
-                //bool checkEMail = IsEmailAlreadyInUse(model.Email);
+                
 
                 bool checkEMail= _validationService.IsEmailAlreadyInUse(model.Email);
 
                 if (checkEMail == false)
                 {
+
+                    string hashPassword = EncryptService.HashPassword(model.Password);
+
+                    string trimMail =model.Email.ToLower().Trim();
+
                     var newUser = new UserModel
                     {
                         FirstName = model.FirstName,
                         LastName = model.LastName,
-                        Email = model.Email,
+                        Email = trimMail,
                         CellNo = model.CellNo,
-                        Password = model.Password,
+                        Password = hashPassword,
                         UserType = "P",
                     };
                     _context.Users.Add(newUser);
@@ -78,9 +85,11 @@ namespace HelpingHands.Controllers
                     {
                         FirstName = model.FirstName,
                         LastName = model.LastName,
-                        Email = model.Email,
+                        Email = trimMail,
                         CellNo = model.CellNo,
-                        Password = model.Password,
+                        Password = hashPassword,
+                        AddressLine1=model.AddressLine1,
+                        AddressLine2=model.AddressLine2,
                         userID = userId,
                         SuburbID = model.SelectedSuburbId,
                         ProfilePicUrl=null,

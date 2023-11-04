@@ -46,15 +46,26 @@ namespace HelpingHands.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = _context.Users.Where(u => u.Archived == false && u.Email==model.Email && u.Password== model.Password).FirstOrDefault();
+                var user = _context.Users.Where(u => u.Archived == false && u.Email==model.Email).FirstOrDefault();
 
                 if(user!=null)
                 {
-                    var userService = new UserService(_httpContextAccessor, _context);
+                    bool isPasswordValid = EncryptService.VerifyPassword(model.Password, user.Password);
 
-                    await userService.SignInUser(user);
+                    if(isPasswordValid)
+                    {
 
-                    return RedirectToAction("Index", "Home");
+                        var userService = new UserService(_httpContextAccessor, _context);
+
+                        await userService.SignInUser(user);
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Invalid Password";
+                        return RedirectToAction("LogIn", "Auth");
+                    }
                 }
                 else
                 {
