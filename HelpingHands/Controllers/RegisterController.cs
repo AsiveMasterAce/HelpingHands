@@ -57,8 +57,7 @@ namespace HelpingHands.Controllers
         { 
             if (ModelState.IsValid)
             {
-                
-
+               
                 bool checkEMail= _validationService.IsEmailAlreadyInUse(model.Email);
 
                 if (checkEMail == false)

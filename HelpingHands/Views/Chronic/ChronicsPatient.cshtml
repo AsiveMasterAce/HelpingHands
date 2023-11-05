@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Chronics Patient";
+
+}
+@model IList<PatientChronicCondition>
+
+
+<div class="mt-1">
+    <div class="d-flex">
+
+        <h6 class="fw-bold">My Chronic Conditions</h6>
+
+        <div class="ms-auto">
+            <a asp-action="AddChronic" asp-controller="Chronic" class="btn btn-success btn-sm">Add Conditions</a>
+        </div>
+    </div>
+
+    <div class="mt-5">
+
+        @if (Model == null || !Model.Any())
+        {
+            <div class="alert alert-info">
+               You dont have any chronic conditions...if you do, please add one
+            </div>
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
+
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var condition in Model)
+                {
+                    <tr>
+                        <td>@condition.ChronicCondition.Name</td>
+                        <td>@condition.ChronicCondition.Description</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+
+    </div>
+</div>

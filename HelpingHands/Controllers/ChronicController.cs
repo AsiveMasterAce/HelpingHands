@@ -4,6 +4,7 @@ using HelpingHands.Models.ViewModels;
 using HelpingHands.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace HelpingHands.Controllers
@@ -12,10 +13,10 @@ namespace HelpingHands.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserService _userService;
-        public ChronicController(ApplicationDbContext context, UserService userService) 
+        public ChronicController(ApplicationDbContext context, UserService userService)
         {
             _userService = userService;
-            _context = context;      
+            _context = context;
         }
         public IActionResult Index()
         {
@@ -24,7 +25,7 @@ namespace HelpingHands.Controllers
 
         public IActionResult ChronicCondition()
         {
-            var chronicCond= _context.ChronicCondition.Where(cc=>cc.Archived==false).ToList();
+            var chronicCond = _context.ChronicCondition.Where(cc => cc.Archived == false).ToList();
 
             return View(chronicCond);
         }
@@ -34,12 +35,12 @@ namespace HelpingHands.Controllers
 
         }
 
-        public async Task<IActionResult> SubmitCondition(AddChronicVM model) 
+        public async Task<IActionResult> SubmitCondition(AddChronicVM model)
         {
             if (ModelState.IsValid)
             {
                 bool checkChronic = CheckChronicExist(model.Name);
-                if (checkChronic==false)
+                if (checkChronic == false)
                 {
 
                     var newCondition = new ChronicCondition
@@ -57,12 +58,12 @@ namespace HelpingHands.Controllers
 
                 }
             }
-        
+
             return View(model);
         }
         public IActionResult EditCondition([FromRoute] int id)
         {
-            var chronicCond = _context.ChronicCondition.Where(cc=>cc.ChronicID==id).FirstOrDefault();
+            var chronicCond = _context.ChronicCondition.Where(cc => cc.ChronicID == id).FirstOrDefault();
 
             var editCondition = new EditChronicVM
             {
@@ -84,7 +85,7 @@ namespace HelpingHands.Controllers
                 }
 
                 chronicCond.Name = model.Name;
-                chronicCond.Description= model.Description; 
+                chronicCond.Description = model.Description;
 
                 _context.ChronicCondition.Update(chronicCond);
                 await _context.SaveChangesAsync();
@@ -106,6 +107,7 @@ namespace HelpingHands.Controllers
             return Json(true);
         }
 
+        [HttpGet]
         public IActionResult ChronicsPatient()
         {
             var UserID = _userService.GetLoggedInUserId();
@@ -114,10 +116,55 @@ namespace HelpingHands.Controllers
 
             var chronicCon = _context.PatientChronicCondition
                 .Where(cc => cc.PatientID == patient.PatientID)
+                .Include(cc => cc.ChronicCondition)
+                .OrderBy(cc=>cc.ChronicCondition.Name)
                 .ToList();
 
+            ViewBag.ChronicsPatient = chronicCon;
+
+            return View(chronicCon);
+        }
+
+        public IActionResult AddChronic()
+        {
+            var chronicConditions = _context.ChronicCondition.ToList();
+
+            var selectList = new SelectList(chronicConditions, "ChronicID", "Name");
+            ViewBag.ChronicConditions = selectList;
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> SubmitSelected(SelectChronicVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                int userID= _userService.GetLoggedInUserId();
+
+                var patient= _context.Patient.Where(p=>p.userID == userID).FirstOrDefault();
+
+                var selectedConditions = model.SelectedChronicConditions;
+
+                foreach (var con in selectedConditions)
+                {
+
+                    var PatientChronic = new PatientChronicCondition
+                    {
+                        ChronicID = con,
+                        PatientID = patient.PatientID
+                    };
+
+                    _context.PatientChronicCondition.Add(PatientChronic);
+
+                    await _context.SaveChangesAsync();
+                }
+
+                return RedirectToAction("ChronicsPatient", "Chronic");
+            }
+            return View(model);
+        }
+
+
         public bool CheckChronicExist(string condition)
         {
             return _context.ChronicCondition.Any(c => c.Name == condition);

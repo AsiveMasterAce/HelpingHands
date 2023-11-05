@@ -75,7 +75,7 @@
                         <h6 class="text-lg-start fw-bold">DOB:</h6>
                     </div>
                     <div class="col-6">
-                        @Model.DOB.ToString("dd/MM/yyyy")
+                        @(Model.DOB == DateTime.MinValue ? "" : Model.DOB.ToString("dd/MM/yyyy"))
                     </div>
                 </div>
                 <hr />
@@ -86,6 +86,30 @@
                     </div>
                     <div class="col-6">
                         @Model.AddressLine1  @Model.AddressLine2  @Model.Suburb.Name, @Model.Suburb.City?.Name , @Model.Suburb?.PostalCode
+                    </div>
+                </div>
+                <hr />
+                <h5 class="fw-bold">Emergency Contact</h5>
+                <div class="row">
+
+                    <div class="col-3">
+
+                        <h6 class="text-lg-start fw-bold">Full Name:</h6>
+                    </div>
+                    <div class="col-6">
+                        @Model.EmergencyPerson
+                    </div>
+                </div>
+                <hr />
+
+                <div class="row">
+
+                    <div class="col-3">
+
+                        <h6 class="text-lg-start fw-bold">Cell No:</h6>
+                    </div>
+                    <div class="col-6">
+                        @Model.EmergencyPersonNo
                     </div>
                 </div>
                 <hr />
@@ -112,7 +136,7 @@
 
             <div class="p-3 text-center rounded-2 bg-profile">
 
-                <img src="@(Model.ProfilePicUrl != null ? Url.Content(Model.ProfilePicUrl) : Url.Content("https://picsum.photos/200/300"))" class="rounded-4" width="200" height="200" style="margin-top:50px">
+                <img src="@(Model.ProfilePicUrl != null ? Url.Content(Model.ProfilePicUrl) : Url.Content("https://placehold.co/400"))" class="rounded-4" width="200" height="200" style="margin-top:50px">
 
                 <h4 class="mt-3 fw-bold">@Model.FirstName @Model.LastName  </h4>
 

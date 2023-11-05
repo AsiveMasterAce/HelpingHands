@@ -76,7 +76,7 @@ namespace HelpingHands.Models.ViewModels
         public string? Password { get; set; }
 
         [Required(ErrorMessage = "Confirm password is required.")]
-        [Compare("Password", ErrorMessage = "Confirm password doesn't match, Type again!")]
+        [Compare("Password", ErrorMessage = "Confirm password doesn't match password, Type again!")]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm Password")]
         public string? ConfirmPassword { get; set; }

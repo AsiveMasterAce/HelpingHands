@@ -1,0 +1,45 @@
+﻿@model HelpingHands.Models.ViewModels.SelectChronicVM
+@{
+    ViewData["Title"] = "Add Chronic";
+}
+
+<div class="card">
+    <div class="card-header d-flex">
+
+        <p class="text-uppercase pt-1">Add New Condition</p>
+
+        <div class="ms-auto">
+
+            <a class="btn btn-danger" asp-action="" asp-controller="">Back</a>
+
+        </div>
+    </div>
+
+    <div class="col-12 card-body">
+        <form asp-action="SubmitSelected" asp-controller="Chronic">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <label class="form-label">Select Chronic Conditions</label>
+
+            <select id="chronicConditions" asp-for="SelectedChronicConditions" asp-items="@ViewBag.ChronicConditions" multiple="multiple" class="form-control"></select>
+            <div class="d-flex">
+                <div class="form-group mt-3 ms-auto">
+                    <input type="submit" value="Add Conditions" class="btn btn-success" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<!-- Load jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Load Bootstrap Multiselect -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js"></script>
+<script>
+    $(function () {
+        $('#chronicConditions').multiselect({
+            includeSelectAllOption: true
+        });
+    });
+</script>

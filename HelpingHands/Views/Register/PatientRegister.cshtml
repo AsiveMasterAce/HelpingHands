@@ -82,15 +82,24 @@
                 </div>
 
             </div>
-            
             <div class="form-group">
                 <label asp-for="Password" class="control-label required"></label>
-                <input asp-for="Password" type="password" class="form-control" />
+                <div class="input-group">
+                    <input asp-for="Password" type="password" class="form-control" id="password" />
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="toggle-password"><i class="bi bi-eye"></i></button>
+                    </div>
+                </div>
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ConfirmPassword" class="control-label required"></label>
-                <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                <div class="input-group">
+                    <input asp-for="ConfirmPassword" type="password" class="form-control" id="confirmPassword" />
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="toggle-confirm-password"><i class="bi bi-eye"></i></button>
+                    </div>
+                </div>
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="d-flex">
@@ -107,6 +116,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
+
+        $('#toggle-password, #toggle-confirm-password').click(function () {
+            var passwordInput = $('#password');
+            var confirmPasswordInput = $('#confirmPassword');
+            if (passwordInput.attr('type') === 'password') {
+                passwordInput.attr('type', 'text');
+                confirmPasswordInput.attr('type', 'text');
+                $(this).find('i').removeClass('bi-eye').addClass('bi-eye-slash');
+            } else {
+                passwordInput.attr('type', 'password');
+                confirmPasswordInput.attr('type', 'password');
+                $(this).find('i').removeClass('bi-eye-slash').addClass('bi-eye');
+            }
+        });
+
 
         $('#suburbDropdown').val('');
         $('#cityDropdown').change(function () {

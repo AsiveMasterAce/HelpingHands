@@ -4,6 +4,7 @@ namespace HelpingHands.Models.ViewModels
 {
     public class ChronicConditionViewModel
     {
+
     }
     public class AddChronicVM 
     {
@@ -25,4 +26,9 @@ namespace HelpingHands.Models.ViewModels
         [Display(Name = "Description")]
         public string? Description { get; set; }
     }
+    public class SelectChronicVM
+    {
+        public IEnumerable<int> SelectedChronicConditions { get; set; }
+    }
+
 }

@@ -48,6 +48,16 @@ namespace HelpingHands.Controllers
 
             var pateint = _context.Patient.Where(p => p.userID == UserID).FirstOrDefault();
 
+            DateTime dateOfBirth;
+            if(pateint.DOB ==DateTime.MinValue)
+            {
+                dateOfBirth = DateTime.Today;
+            }
+            else
+            {
+                dateOfBirth = pateint.DOB;
+            }
+            
             var updatePatient = new UpdatePatientsProfileViewModel
             {
                 PatientID=pateint.PatientID,
@@ -56,7 +66,7 @@ namespace HelpingHands.Controllers
                 Email = pateint.Email,
                 CellNo=pateint.CellNo,
                 IDNumber=pateint.IDNumber,
-                DOB=pateint.DOB,
+                DOB= dateOfBirth,
                 EmergencyPerson=pateint.EmergencyPerson,
                 EmergencyPersonNo=pateint.EmergencyPersonNo
             };
