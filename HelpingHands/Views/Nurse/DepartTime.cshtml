@@ -1,0 +1,39 @@
+﻿@model HelpingHands.Models.ViewModels.AddDepartTimeViewModel
+@{
+    ViewData["Title"] = "Depart Time";
+}
+
+
+
+<div class="card">
+    <div class="card-header d-flex">
+
+        <p class="text-uppercase pt-1">Update Depart Time</p>
+
+        <div class="ms-auto">
+
+            <a class="btn btn-danger" asp-action="" asp-controller="">Back</a>
+
+        </div>
+    </div>
+
+    <div class="col-12 card-body">
+        <form asp-action="SubmitDepartTime" asp-controller="Nurse" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input asp-for="CareVisitId" hidden />
+            <div class="form-group">
+                <label class="form-label" asp-for="VisitDepartTime"></label>
+                <input class="form-control" asp-for="VisitDepartTime" type="time" />
+                <span class="text-danger" asp-validation-for="VisitDepartTime"></span>
+            </div>
+
+            <div class="d-flex">
+                <div class="form-group mt-3 ms-auto">
+                    <input type="submit" value="Update Time" class="btn btn-success" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

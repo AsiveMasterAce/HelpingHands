@@ -50,6 +50,17 @@ namespace HelpingHands.Controllers
 
                 if(user!=null)
                 {
+                    bool checkHash = IsPasswordHashed(user.Password);
+                    // Check if the password is hashed
+                    if (checkHash==false)
+                    {
+                        // Hash the password and update the user's record
+                        user.Password = EncryptService.HashPassword(model.Password);
+                        _context.Users.Update(user);
+                        _context.SaveChanges();
+                    }
+
+
                     bool isPasswordValid = EncryptService.VerifyPassword(model.Password, user.Password);
 
                     if(isPasswordValid)
@@ -90,6 +101,29 @@ namespace HelpingHands.Controllers
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        public bool IsPasswordHashed(string password)
+        {
+            if (string.IsNullOrEmpty(password))
+            {
+                return false;
+            }
+
+            if (password.Length % 4 != 0)
+            {
+                return false;
+            }
+
+            try
+            {
+                Convert.FromBase64String(password);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
         }
     }
 }

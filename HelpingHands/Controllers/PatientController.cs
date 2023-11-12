@@ -122,6 +122,29 @@ namespace HelpingHands.Controllers
    
             return View(contracts);
         }
+
+        public IActionResult PatientVisits()
+        {
+            var userID = _userService.GetLoggedInUserId();
+
+            var Patient = _context.Patient.Where(p => p.userID == userID).FirstOrDefault();
+
+            var PatientID = Patient.PatientID;
+
+            var contracts = _context.CareContract.Where(c => c.PatientID == PatientID && !c.CareStatus.Contains("Closed")).ToList();
+
+            var visits = new List<CareVisit>();
+
+            foreach (var contract in contracts)
+            {
+                visits.AddRange(_context.CareVisit.Where(v => v.ContractID == contract.ContractID));
+            }
+
+            visits = visits.OrderByDescending(v => v.VisitDate).ToList();
+
+            return View(visits);
+        }
+
     }
 
 

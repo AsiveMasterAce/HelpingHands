@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewData["Title"] = "Patient Visits";
+}
+
+@model IList<CareVisit>
+
+<h2>My Visits</h2>
+
+<table class="table table-striped mt-4 small-text">
+    <thead>
+        <tr>
+            <th>Visit Date</th>
+            <th style="width:10%;">Arrive Time</th>
+            <th style="width:10%;">Depart Time</th>
+            <th>Wound Condition</th>
+            <th>Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var visit in Model)
+        {
+            <tr>
+                <td>@visit.VisitDate.Value.ToString("dd/MM/yyyy") </td>
+                <td>@visit.VisitArriveTime?.ToString("hh\\:mm")</td>
+                <td>@visit.VisitDepartTime?.ToString("hh\\:mm")</td>
+                <td>@visit.WoundCondition</td>
+                <td>@visit.Notes</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

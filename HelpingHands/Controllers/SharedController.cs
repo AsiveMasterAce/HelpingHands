@@ -31,9 +31,9 @@ namespace HelpingHands.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateTimelinePost(CreateTimeline post)
         {
-            var user =  _userService.GetLoggedInUser;
-   
-            if (User.IsInRole("O"))
+            var user = _userService.GetLoggedInUser;
+
+            if (User.IsInRole("O")||User.IsInRole("N"))
             {
                 if (ModelState.IsValid)
                 {
@@ -53,6 +53,10 @@ namespace HelpingHands.Controllers
                     if (User.IsInRole("O"))
                     {
                         return RedirectToAction("MyTimeLine", "OfficeManager");
+                    }
+                    else if(User.IsInRole("N"))
+                    {
+                        return RedirectToAction("MyTimeLine", "Nurse");
                     }
                 }
                 return View("Error");

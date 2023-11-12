@@ -1,0 +1,47 @@
+﻿@model HelpingHands.Models.ViewModels.AddNotesTimeViewModel
+@{
+    ViewData["Title"] = "Add Notes";
+}
+
+
+
+<div class="card">
+    <div class="card-header d-flex">
+
+        <p class="text-uppercase pt-1">Add Notes</p>
+
+        <div class="ms-auto">
+
+            <a class="btn btn-danger" asp-action="" asp-controller="">Back</a>
+
+        </div>
+    </div>
+
+    <div class="col-12 card-body">
+        <form asp-action="SubmitVisitNotes" asp-controller="Nurse">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="CareVisitId" hidden />
+            <div class="form-group">
+                <label class="form-label" asp-for="WoundCondition"></label>
+                <textarea class="form-control" asp-for="WoundCondition" rows="4" cols="4"> 
+
+                </textarea>
+                <span class="text-danger" asp-validation-for="WoundCondition"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label" asp-for="Notes"></label>
+                <textarea class="form-control" asp-for="Notes" rows="4" cols="4">
+                </textarea>
+                <span class="text-danger" asp-validation-for="Notes"></span>
+            </div>
+
+            <div class="d-flex">
+                <div class="form-group mt-3 ms-auto">
+                    <input type="submit" value="Add Notes" class="btn btn-success" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+

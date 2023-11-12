@@ -34,7 +34,17 @@ namespace HelpingHands.Services
             int loggedUserId = GetLoggedInUserId();
             return _context.Users.FirstOrDefault(u => u.UserID == loggedUserId);
         }
+        public Patient GetPatient()
+        {
+            int loggedUserId = GetLoggedInUserId();
+            return _context.Patient.FirstOrDefault(p => p.userID == loggedUserId);
+        }
 
+        public Nurse GetNurse()
+        {
+            int loggedUserId = GetLoggedInUserId();
+            return _context.Nurse.FirstOrDefault(n => n.userID == loggedUserId);
+        }
         public async Task SignInUser(UserModel user)
         {
             var claims = new List<Claim>

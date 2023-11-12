@@ -81,10 +81,10 @@
                         
                         <thead>
                             <tr>
-                                <th>Visit Time</th>
                                 <th>Date</th>
                                 <th>Patient</th>
                                 <th>Address</th>
+                                <th>Contract Wound Description</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -93,9 +93,6 @@
                             {
 
                                 <tr>
-                                    <td>
-                                        @item.VisitArriveTime.Value.ToString(@"hh\:mm")
-                                    </td>
                                     <td>
                                         @item.VisitDate.Value.ToString("dd/MM/yyyy")
                                     </td>
@@ -107,14 +104,16 @@
                                         @item.CareContract.AddressLine1 @item.CareContract.AddressLine2 @item.CareContract.Suburb.Name @item.CareContract.Suburb.PostalCode
                                     </td>
                                     <td>
-
+                                        @item.CareContract.WoundDescription
                                     </td>
-
+                                    <td>
+                                    <a class="btn btn-success btn-sm" asp-action="UpdateArriveTime" asp-controller="Nurse" asp-route-Id="@item.CareVisitID">Arrive Time</a>
+                                    <a class="btn btn-success btn-sm" asp-action="UpdateNotes" asp-controller="Nurse" asp-route-Id="@item.CareVisitID">Notes</a>
+                                    <a class="btn btn-success btn-sm" asp-action="DepartTime" asp-controller="Nurse" asp-route-Id="@item.CareVisitID">Depart Time</a>
+                                </td>
                                 </tr>
 
                             }
-
-
                         </tbody>
                 </table>
                 }

@@ -5,10 +5,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using HelpingHands.Services;
 
 namespace HelpingHands.Controllers
 {
-   
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -65,13 +66,15 @@ namespace HelpingHands.Controllers
 
                 if (checkEMail == false)
                 {
+                    string hashPassword = EncryptService.HashPassword(model.Password);
+
                     var newUser = new UserModel
                     {
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         Email = model.Email,
                         CellNo = model.CellNo,
-                        Password = model.Password,
+                        Password = hashPassword,
                         UserType = model.UserType,
 
                     };
@@ -88,7 +91,7 @@ namespace HelpingHands.Controllers
                             LastName = model.LastName,
                             Email = model.Email,
                             CellNo = model.CellNo,
-                            Password = model.Password,
+                            Password = hashPassword,
                             userID = userId,
                             
                         };

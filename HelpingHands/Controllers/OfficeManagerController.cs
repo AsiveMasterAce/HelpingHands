@@ -282,5 +282,8 @@ namespace HelpingHands.Controllers
             var existingUser = _context.Users.FirstOrDefault(u => u.Email == email);
             return existingUser != null;
         }
+
+
+        
     }
 }

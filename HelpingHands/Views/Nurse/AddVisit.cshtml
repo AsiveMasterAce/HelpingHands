@@ -1,0 +1,42 @@
+﻿@model HelpingHands.Models.ViewModels.AddVisitViewModel;
+@{
+    ViewData["Title"] = "Add Visit";
+}
+
+
+<div class="card">
+    <div class="card-header d-flex">
+
+        <p class="text-uppercase pt-1">Create Visit</p>
+
+        <div class="ms-auto">
+
+            <a class="btn btn-danger" asp-action="Contract" asp-controller="Nurse">Back</a>
+
+        </div>
+    </div>
+
+    <div class="col-12 card-body">
+        <form asp-action="SubmitVisit" asp-controller="Nurse">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+             <input asp-for="contractId" hidden/>
+            <div class="form-group">
+                <label class="form-label">Visit Date</label>
+                <input class="form-control" asp-for="VisitDate" type="date" />
+                <span class="text-danger" asp-validation-for="VisitDate"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Axtimate Time</label>
+                <input class="form-control" asp-for="AxtimateArriveTime" type="time"/>
+                <span class="text-danger" asp-validation-for="AxtimateArriveTime"></span>
+            </div>
+
+            <div class="d-flex">
+                <div class="form-group mt-3 ms-auto">
+                    <input type="submit" value="Create Visit" class="btn btn-success" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

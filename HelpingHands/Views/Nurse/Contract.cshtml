@@ -1,0 +1,146 @@
+﻿@model List<CareContract>
+@{
+    ViewData["Title"] = "Contract";
+}
+
+<div class="d-flex mb-2 mx-3">
+
+    <h6 style="margin-left:22px; font-weight:600;">My Contracts</h6>
+
+</div>
+
+<div class="p-3 mx-3">
+
+    @if (Model.Count() != 0)
+    {
+
+
+        <table class="table table-striped table-sm small-text" id="careContractTable">
+            <thead class="thead-dark mt-3">
+                <tr>
+                    <th>
+                        Contract Date
+                    </th>
+                    <th>
+                        Wound Condition
+                    </th>
+                    <th>
+                        Location
+                    </th>
+
+                    <th class="no-sort">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            @item.ContractDate.Value.ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            @item.WoundDescription
+                        </td>
+                        <td>
+                            @item.AddressLine1 @item.AddressLine2 @item.Suburb.Name @item.Suburb.City.Name
+                        </td>
+
+                        <td>
+                            <a class="btn btn-outline-secondary rounded-3 small-btn" asp-controller="Nurse" asp-action="AddVisit" asp-route-Id="@item.ContractID" title="Add Visit">
+                                <i class="bi bi-plus-circle-dotted"></i> Visit
+                            </a>
+                            <a class="btn btn-outline-primary rounded-3 small-btn" asp-controller="Nurse" asp-action="ContractVisits" asp-route-Id="@item.ContractID" title="View Visits">
+                                <i class="bi bi-eye"></i> Visits
+                            </a>
+                            <a class="btn btn-outline-danger rounded-3 small-btn" asp-action="" asp-controller="Nurse" title="Close Contract" data-bs-toggle="modal" data-bs-target="#DeleteModal" data-item-id="@item.ContractID">
+                                <i class="bi bi-x-octagon"></i>   Close
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info text-center">
+
+            <p class="fw-bold">No Contracts Available</p>
+            <img src="~/img/AccessD.png" width="330" height="330"/>
+        </div>
+    }
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="fs-1 text-danger">
+                    <i class="bi bi-trash3-fill"></i>
+                </div>
+                <p>
+                   Are You closing The Contract??          
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="deleteBtn">Close Contract </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+
+
+        $("#careContractTable").DataTable({
+            "scrollY": "430px",
+            "scrollCollapse": true,
+            "columnDefs": [
+                { "orderable": false, "targets": 'no-sort' }
+            ],
+            "order": [[0, "desc"]],
+            "max-width": "100%"
+        });
+
+        $('[data-bs-toggle="modal"]').on('click', function () {
+            var contractId = $(this).data('item-id');
+            $('#deleteBtn').data('item-id', contractId);
+        });
+
+        $("#deleteBtn").click(function () {
+            var contractId = $(this).data('item-id'); // Retrieve the user ID correctly
+
+            console.log(contractId);
+
+            $.ajax({
+                url: "/Nurse/CloseContract/" + contractId,
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function () {
+                    window.location.href = "/Nurse/Contract";
+                },
+                error: function () {
+                    alert("Error while deleting user");
+                    console.log(contractId);
+                }
+            });
+        });
+
+
+
+    });
+</script>
+
