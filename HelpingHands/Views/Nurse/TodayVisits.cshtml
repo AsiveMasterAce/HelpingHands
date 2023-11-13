@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewData["Title"] = "TodayVisits";
+    var careVisits = ViewBag.CareVisits as IEnumerable<CareVisit>;
+}
+
+<div class="row mt-4">
+    <div class="col-12 shadow-sm">
+
+        <div class="d-flex">
+            <div>
+
+                <h5>Today's Visits</h5>
+            </div>
+            <div class="ms-auto">
+                <a class="btn btn-danger small-btn"> <i class="bi bi-eye"></i>View More</a>
+            </div>
+
+        </div>
+        @if (careVisits.Count() != 0)
+        {
+            <table class="table small-text text-center">
+
+                <thead>
+                    <tr>
+
+                        <th>Axtimatted Time</th>
+                        <th>Patient</th>
+                        <th>Address</th>
+                        <th>Contract Wound Description</th>
+                        <th>
+                            Updates
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in careVisits)
+                    {
+
+                        <tr>
+                            <td>
+                                @item.AxtimateArriveTime?.ToString(@"hh\:mm")
+                            </td>
+                            <td>
+                                @item.CareContract.Patient.FirstName @item.CareContract.Patient.LastName
+
+                            </td>
+                            <td>
+                                @item.CareContract.AddressLine1 @item.CareContract.AddressLine2 @item.CareContract.Suburb.Name @item.CareContract.Suburb.PostalCode
+                            </td>
+                            <td>
+                                @item.CareContract.WoundDescription
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-success btn-sm" asp-action="UpdateArriveTime" asp-controller="Nurse" asp-route-Id="@item.CareVisitID"> <i class="bi bi-alarm"></i> Arrive Time</a>
+                                <a class="btn btn-outline-secondary btn-sm" asp-action="UpdateNotes" asp-controller="Nurse" asp-route-Id="@item.CareVisitID"> <i class="bi bi-pen-fill"></i> Notes</a>
+                                <a class="btn btn-outline-primary btn-sm" asp-action="DepartTime" asp-controller="Nurse" asp-route-Id="@item.CareVisitID"> <i class="bi bi-clock-history"></i> Depart Time</a>
+                                <a class="btn btn-outline-danger btn-sm" asp-action="PatientDet" asp-controller="Nurse" asp-route-Id="@item.CareContract.PatientID"><i class="bi bi-person-bounding-box"></i> Patient</a>
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-info text-center">
+                <p>You have no visits today, add An Event!</p>
+                <img src="~/img/Calendar-bro.png" class="w-25">
+            </div>
+        }
+
+    </div>
+

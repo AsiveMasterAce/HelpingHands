@@ -5,25 +5,17 @@
 
 <div class="d-flex mb-2 mx-3">
 
-    <h6 style="margin-left:22px; font-weight:600;">All Care Contracts</h6>
+    <h6 style="margin-left:22px; font-weight:600;">Closed Care Contracts</h6>
 
 </div>
 
 <div class="p-3 mx-3">
     <div class="filter-bg mb-3 rounded-2 p-3">
         <h5><i class="bi bi-sliders"></i> Filters</h5>
-            <form method="get" class="form-inline">
-               <div class="row">
+        <p>Filter By Contract Date</p>
+        <form method="get" class="form-inline">
+            <div class="row">
 
-                <div class="form-group col-4">
-                    <label for="careStatus">Choose Care Status:</label>
-                    <select name="careStatus" id="careStatus" class="form-control-sm">
-                        <option value="ALL">All</option>
-                        <option value="New">New</option>
-                        <option value="Closed">Closed</option>
-                        <option value="Assigned">Assigned</option>
-                    </select>
-                </div>
                 <div class="form-group col-3">
                     <label for="startDate">Start Date:</label>
                     <input type="date" name="startDate" id="startDate" class="form-control-sm">
@@ -38,14 +30,10 @@
 
                 </div>
             </div>
-          </form>
+        </form>
 
-        <div class="col-1">
-            <a class="btn btn-outline-dark" href="@ViewBag.PdfFilePath" download target="_blank">
-                <i class="bi bi-printer"></i>
-            </a>
-        </div>
-        
+
+
     </div>
 
     @if (Model.Count() != 0)
@@ -56,13 +44,13 @@
                 <tr>
                     <th>
                         Contract Date
-                    </th> 
+                    </th>
                     <th>
                         Care Status
                     </th>
                     <th>
                         Wound Condition
-                    </th>                
+                    </th>
                     <th>
                         Patient
                     </th>
@@ -71,17 +59,14 @@
                     </th>
                     <th>
                         Start Date
-                    </th>  
+                    </th>
                     <th>
                         End Date
                     </th>
-                    <th>
+                    <th class="no-sort">
                         Location
                     </th>
 
-                    <th class="no-sort">
-                        Action
-                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -91,7 +76,7 @@
 
                         <td>
                             @item.ContractDate.Value.ToString("dd/MM/yyyy")
-                        </td> 
+                        </td>
                         <td>
                             @item.CareStatus
                         </td>
@@ -100,7 +85,7 @@
                         </td>
                         <td>
                             @item.Patient?.FirstName @item.Patient?.LastName
-                        </td> 
+                        </td>
                         <td>
                             @item.Nurse?.FirstName @item.Nurse?.LastName
                         </td>
@@ -111,7 +96,7 @@
                             {
                                 @item.StartDate.Value.ToString("dd/MM/yyyy")
                             }
-                        </td> 
+                        </td>
                         <td>
                             @if (item.EndDate == null)
                             { }
@@ -124,20 +109,7 @@
                             @item.AddressLine1 @item.AddressLine2 @item.Suburb.Name @item.Suburb.City.Name
                         </td>
 
-                        <td>
-                            @if (item.CareStatus.Contains("New"))
-                            {
-                                
-                            <a class="btn btn-outline-secondary rounded-3 small-btn" asp-controller="OfficeManager" asp-action="AssignContract" asp-route-Id="@item.ContractID" title="Assign Contract"  >
-                                <i class="bi bi-arrow-up-right-circle"></i> Assign
-                            </a>
-                            }
-                            else
-                            {
-                              
-                            }
-
-                        </td>
+   
                     </tr>
                 }
             </tbody>
@@ -167,7 +139,7 @@
             "max-width": "100%"
         });
 
-        
+
 
 
     });

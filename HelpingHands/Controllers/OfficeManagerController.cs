@@ -7,6 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HelpingHands.Services;
 using Microsoft.AspNetCore.Identity;
+using iText.Kernel.Pdf;
+using iText.Layout.Element;
+using iText.Layout.Properties;
+using iText.Layout;
+using HelpingHands.Helpers;
+using Microsoft.Extensions.Hosting;
+using System.Drawing.Printing;
 
 namespace HelpingHands.Controllers
 {
@@ -18,12 +25,14 @@ namespace HelpingHands.Controllers
         private readonly IConfiguration _configuration;
         private readonly ValidationService _validate;
         private readonly UserService _userService;
-        public OfficeManagerController(ILogger<HomeController> logger, ApplicationDbContext context, UserService userService, ValidationService validation)
+        private readonly IWebHostEnvironment _hostEnvironment;
+        public OfficeManagerController(ILogger<HomeController> logger, ApplicationDbContext context, UserService userService, ValidationService validation, IWebHostEnvironment hostEnvironment)
         {
 
             _context = context;
             _userService = userService;
             _validate = validation;
+            _hostEnvironment = hostEnvironment;
         }
         public IActionResult Index()
         {
@@ -46,12 +55,15 @@ namespace HelpingHands.Controllers
             ViewBag.Contract = contracts.Take(6).Where(c => c.CareStatus.Contains("New")).OrderByDescending(c => c.ContractDate);
             return View();
         }
-        public IActionResult GetSuburbs()
+        public IActionResult GetSuburbs(string city = null)
         {
-            var suburbs = _context.Suburb.Where(c => c.Archived == false)
-                .Include(c=>c.City)
-                .OrderByDescending(c=>c.City.Name)
+            var suburbs = _context.Suburb
+                .Where(c => c.Archived == false && (string.IsNullOrEmpty(city) || c.City.Name == city))
+                .Include(c => c.City)
+                .OrderByDescending(c => c.City.Name)
                 .ToList();
+
+            ViewBag.Cities = _context.City.OrderBy(c => c.Name).ToList();
 
             return View(suburbs);
         }
@@ -80,27 +92,54 @@ namespace HelpingHands.Controllers
             return View();
         }
 
-        public IActionResult CareContract()
+        public IActionResult CareContract(string careStatus, DateTime? startDate, DateTime? endDate)
         {
-            var careContracts = _context.CareContract
-                .Where(c => c.Archived == false)
-                .Include(c => c.Patient)
+            IQueryable<CareContract> careContracts = _context.CareContract
+                .Where(c => c.Archived == false);
+
+            if (!string.IsNullOrEmpty(careStatus) && careStatus != "ALL")
+            {
+                careContracts = careContracts.Where(c => c.CareStatus == careStatus);
+            }
+
+            if (startDate != null && endDate != null)
+            {
+                careContracts = careContracts.Where(c => c.ContractDate >= startDate && c.ContractDate <= endDate);
+            }
+
+            careContracts = careContracts.Include(c => c.Patient)
                 .Include(c => c.Nurse)
                 .Include(c => c.Suburb)
                 .ThenInclude(c => c.City)
-                .OrderByDescending(c => c.ContractDate)
-                .ToList();
-            return View(careContracts);
+                .OrderByDescending(c => c.ContractDate);
+
+            var filteredCareContracts = careContracts.ToList();
+
+            GeneratePDF generatePDF = new GeneratePDF();
+
+            string webRootPath = _hostEnvironment.WebRootPath;
+            string filePath = generatePDF.GeneratePdfContract(filteredCareContracts,webRootPath);
+            string pdfUrl = Url.Content("~/CareContracts.pdf");
+            ViewBag.PdfFilePath = pdfUrl; // Store the file path in a ViewBag variable
+
+            return View(filteredCareContracts);
         }
+      
 
         public IActionResult AssignContract([FromRoute] int Id)
         {
-            var careContract = _context.CareContract.Where(c =>c.ContractID == Id).FirstOrDefault();
+            var careContract = _context.CareContract.Where(c =>c.ContractID == Id).
+                Include(c => c.Patient).
+                Include(c=>c.Suburb)
+               .ThenInclude(c=>c.City)
+                .FirstOrDefault();
 
             if (careContract == null)
             {
                 NotFound();
             }
+
+   
             var preferredSuburbs = _context.PreferredSuburb.Where(p => p.SuburbID == careContract.SuburdID).ToList();
             var nurses = new List<Nurse>();
             foreach (var preferredSuburb in preferredSuburbs)
@@ -112,6 +151,10 @@ namespace HelpingHands.Controllers
                 }
             }
 
+
+            ViewBag.PatientName = $"{careContract.Patient.FirstName} {careContract.Patient.LastName} ";
+            ViewBag.ContractAddress = $"{careContract.AddressLine1}, {careContract.AddressLine2}, {careContract.Suburb.City.Name}, {careContract.Suburb.PostalCode}";
+            ViewBag.WoundCondition = $"{careContract.WoundDescription}";
             ViewBag.Nurses = nurses;
 
             var assignContract = new AssignContract
@@ -149,24 +192,91 @@ namespace HelpingHands.Controllers
             return View(model);
         }
 
-        public IActionResult NewContract()
+        public IActionResult NewContract(DateTime? startDate, DateTime? endDate)
         {
-            var careContracts = _context.CareContract
-                .Where(c => c.Archived == false && c.CareStatus.Contains("New"))
-                .Include(c => c.Patient)
+            IQueryable<CareContract> careContracts = _context.CareContract
+                .Where(c => c.Archived == false && c.CareStatus.Contains("New"));
+
+            if (startDate != null && endDate != null)
+            {
+                careContracts = careContracts.Where(c => c.ContractDate >= startDate && c.ContractDate <= endDate);
+            }
+
+            careContracts = careContracts.Include(c => c.Patient)
                 .Include(c => c.Nurse)
                 .Include(c => c.Suburb)
                 .ThenInclude(c => c.City)
-                .OrderByDescending(c => c.ContractDate)
-                .ToList();
+                .OrderByDescending(c => c.ContractDate);
 
-            return View(careContracts);
+            var filteredCareContracts = careContracts.ToList();
+
+            return View(filteredCareContracts);
+        }
+        public IActionResult ClosedContract(DateTime? startDate, DateTime? endDate)
+        {
+            IQueryable<CareContract> careContracts = _context.CareContract
+                .Where(c => c.Archived == false && c.CareStatus.Contains("Closed"));
+
+            if (startDate != null && endDate != null)
+            {
+                careContracts = careContracts.Where(c => c.ContractDate >= startDate && c.ContractDate <= endDate);
+            }
+
+            careContracts = careContracts.Include(c => c.Patient)
+                .Include(c => c.Nurse)
+                .Include(c => c.Suburb)
+                .ThenInclude(c => c.City)
+                .OrderByDescending(c => c.ContractDate);
+
+            var filteredCareContracts = careContracts.ToList();
+
+            return View(filteredCareContracts);
         }
 
-        public IActionResult Patients()
+        public IActionResult Nurses()
         {
             var users = _context.Users.Where(u => u.Archived == false && u.UserType.Contains("N")).ToList();
+
             return View(users);
+        }
+
+        public IActionResult NurseActivity([FromRoute] int id, DateTime? startDate, DateTime? endDate)
+        {
+            var nurse = _context.Nurse
+                           .Include(n => n.CareContracts)
+                               .ThenInclude(cc => cc.CareVisits)
+                           .Include(n => n.CareContracts)
+                               .ThenInclude(cc => cc.Patient)
+                           .Where(n => n.userID.Equals(id))
+                           .FirstOrDefault();
+
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                nurse.CareContracts = nurse.CareContracts
+                                           .Where(cc => cc.ContractDate >= startDate && cc.ContractDate <= endDate).
+                                           OrderByDescending(cc=>cc.ContractDate)
+                                           .ToList();
+            }
+
+            foreach (var contract in nurse.CareContracts)
+            {
+                contract.CareVisits = contract.CareVisits.OrderByDescending(cv => cv.VisitDate).ToList();
+            }
+
+            return View(nurse);
+        }
+
+
+        public IActionResult NurseDetails([FromRoute]int Id)
+        {
+            var nurse = _context.Nurse.Where(n => n.userID.Equals(Id))
+            .Include(n => n.PreferredSuburbs).FirstOrDefault();
+
+
+            var prefferedSuburbs = _context.PreferredSuburb.Where(ps => ps.NurseID == nurse.NurseID).Select(ps => ps.Suburb.Name).ToList();
+            ViewBag.prefferedSuburbs = prefferedSuburbs;
+            return View(nurse);
+   
         }
 
         public IActionResult NurseUser()
@@ -218,11 +328,34 @@ namespace HelpingHands.Controllers
                     TempData["ErrorMessage"] = $"Error: Email {model.Email} Is already in use";
                     return RedirectToAction("NurseUser", "OfficeManager");
                 }
-                return RedirectToAction("Patients", "OfficeManager");
+                return RedirectToAction("Nurses", "OfficeManager");
             }
             return View(model);
         }
 
+        public IActionResult Patients()
+        {
+            var users = _context.Users.Where(u => u.Archived == false && u.UserType.Contains("P")).ToList();
+
+            return View(users);
+        
+        } 
+        public IActionResult PatientCond([FromRoute]int Id)
+        {
+            var patient = _context.Patient.Where(p => p.userID.Equals(Id)).FirstOrDefault();
+            var viewModel = new PatientChronicConditionViewModel
+            {
+                PatientID = Id,
+                FullName= $"{patient.FirstName} {patient.LastName}",
+                ChronicConditions = _context.PatientChronicCondition
+                 .Where(cc => cc.PatientID.Equals(Id))
+                 .Select(cc => cc.ChronicCondition.Name)
+                 .ToList()
+            };
+
+            return View(viewModel);
+
+        }
         public IActionResult MyTimeLine()
         {
             var posts = _context.TimelinePost.Where(p => p.Archived == false).Include(p => p.Comments)

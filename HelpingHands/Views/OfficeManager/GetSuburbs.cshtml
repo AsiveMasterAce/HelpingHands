@@ -5,9 +5,40 @@
 
 <div class="container">
 
-    <h5 class="mb-4 fw-bold"> View Nurse By Suburbs </h5>
-    
-    <table class="table table-sm small-text" id="suburbTable">
+    <h6 class="mb-4 fw-bold"> View Nurse By Suburbs </h6>
+    <div class="filter-bg mb-3 rounded-2 p-3">
+        <h5><i class="bi bi-sliders"></i> Filters</h5>
+        <form method="get" class="form-inline" asp-action="GetSuburbs" asp-controller="OfficeManager">
+            <div class="row">
+                <div class="form-group col-4">
+                    <label for="city">Choose A City:</label>
+                    <select name="city" class="form-control-sm">
+                        <option selected value="">All</option>
+                        @foreach (var city in ViewBag.Cities)
+                        {
+                            <option value="@city.Name">@city.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-2">
+                    <button type="submit" class="btn btn-success small-btn">Filter</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="col-1">
+            <a class="btn btn-outline-dark" href="@ViewBag.PdfFilePath" download target="_blank">
+                <i class="bi bi-printer"></i>
+            </a>
+        </div>
+
+    </div>
+
+    @if (Model.Count() != 0)
+    {
+        
+ 
+    <table class="table table-sm small-text table-striped" id="suburbTable">
         <thead>
  
           <tr>
@@ -52,8 +83,16 @@
              }
         </tbody>
 
-    </table>
-    
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info text-center">
+            <p>We dont have a suburb entry for this city, contact Admin for an update</p>
+
+            <img src="~/img/map1.png" class="w-25">
+        </div>
+    }
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

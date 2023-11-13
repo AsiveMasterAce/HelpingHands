@@ -77,15 +77,18 @@
             </div>
             @if (careVisits.Count() != 0)
           {
-                <table class="table small-text">
+                <table class="table small-text text-center">
                         
                         <thead>
                             <tr>
-                                <th>Date</th>
+                              
+                                <th>Axtimatted Time</th>
                                 <th>Patient</th>
                                 <th>Address</th>
                                 <th>Contract Wound Description</th>
-                                <th></th>
+                                <th>
+                                    Updates
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -94,7 +97,7 @@
 
                                 <tr>
                                     <td>
-                                        @item.VisitDate.Value.ToString("dd/MM/yyyy")
+                                        @item.AxtimateArriveTime?.ToString(@"hh\:mm")
                                     </td>
                                     <td>
                                         @item.CareContract.Patient.FirstName @item.CareContract.Patient.LastName
@@ -107,9 +110,10 @@
                                         @item.CareContract.WoundDescription
                                     </td>
                                     <td>
-                                    <a class="btn btn-success btn-sm" asp-action="UpdateArriveTime" asp-controller="Nurse" asp-route-Id="@item.CareVisitID">Arrive Time</a>
-                                    <a class="btn btn-success btn-sm" asp-action="UpdateNotes" asp-controller="Nurse" asp-route-Id="@item.CareVisitID">Notes</a>
-                                    <a class="btn btn-success btn-sm" asp-action="DepartTime" asp-controller="Nurse" asp-route-Id="@item.CareVisitID">Depart Time</a>
+                                    <a class="btn btn-outline-success btn-sm" asp-action="UpdateArriveTime" asp-controller="Nurse" asp-route-Id="@item.CareVisitID"> <i class="bi bi-alarm"></i> Arrive Time</a>
+                                    <a class="btn btn-outline-secondary btn-sm" asp-action="UpdateNotes" asp-controller="Nurse" asp-route-Id="@item.CareVisitID"> <i class="bi bi-pen-fill"></i> Notes</a>
+                                    <a class="btn btn-outline-primary btn-sm" asp-action="DepartTime" asp-controller="Nurse" asp-route-Id="@item.CareVisitID"> <i class="bi bi-clock-history"></i> Depart Time</a>
+                                    <a class="btn btn-outline-danger btn-sm" asp-action="PatientDet" asp-controller="Nurse" asp-route-Id="@item.CareContract.PatientID"><i class="bi bi-person-bounding-box"></i> Patient</a>
                                 </td>
                                 </tr>
 

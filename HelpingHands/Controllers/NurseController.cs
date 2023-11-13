@@ -55,6 +55,7 @@ namespace HelpingHands.Controllers
             return View();
         }
 
+        #region PreferredSuburbs
         [HttpGet]
         public IActionResult NurseSuburb()
         {
@@ -158,6 +159,9 @@ namespace HelpingHands.Controllers
             return View(model);
         }
 
+        #endregion
+
+        #region NurseContracts
         public IActionResult Contract()
         {
             var user = _userService.GetLoggedInUser();
@@ -186,6 +190,26 @@ namespace HelpingHands.Controllers
             }).ToList();
             return View(visitViewModels);
         }
+        public IActionResult NewContracts()
+        {
+            var user = _userService.GetLoggedInUser();
+
+            var nurse = _context.Nurse.Where(n => n.userID == user.UserID).FirstOrDefault();
+
+            var nursePreferredSuburbs = _context.PreferredSuburb.Where(p => p.NurseID == nurse.NurseID).Select(p => p.SuburbID).ToList();
+
+            var newCareContracts = _context.CareContract.Where(c => c.CareStatus.Contains("New") && nursePreferredSuburbs.Contains(c.Suburb.SuburbID))
+                .Include(c => c.Patient)
+                .Include(c => c.Suburb)
+                .ThenInclude(c => c.City)
+                .ToList();
+
+            return View(newCareContracts);
+        }
+
+        #endregion
+
+        #region Posts
         public IActionResult MyTimeLine()
         {
             var posts = _context.TimelinePost.Where(p => p.Archived == false).Include(p => p.Comments)
@@ -240,7 +264,9 @@ namespace HelpingHands.Controllers
             return NotFound();
         }
 
+        #endregion
 
+        #region Visit
         public IActionResult AddVisit([FromRoute] int Id)
         {
             var contracts = _context.CareContract.Where(cc => cc.ContractID == Id).FirstOrDefault();
@@ -260,17 +286,25 @@ namespace HelpingHands.Controllers
 
             if(ModelState.IsValid)
             {
-                var visit = new CareVisit
+                if (!IsValidVisitDate(model.VisitDate))
                 {
-                    VisitDate = model.VisitDate,
-                    AxtimateArriveTime = model.AxtimateArriveTime,
-                    ContractID=model.contractId,
-                    Archived=false,
-                };
+                    TempData["ErrorMessage"] = "VisitDate must be unique and cannot be a previous date";
+                    return RedirectToAction("AddVisit", "Nurse", new { Id = model.contractId });
+                }
+                else
+                {
+                    var visit = new CareVisit
+                    {
+                        VisitDate = model.VisitDate,
+                        AxtimateArriveTime = model.AxtimateArriveTime,
+                        ContractID = model.contractId,
+                        Archived = false,
+                    };
 
-                _context.CareVisit.Add(visit);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Contract", "Nurse");
+                    _context.CareVisit.Add(visit);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Contract", "Nurse");
+                }
             }
             return View(model);
         }
@@ -359,24 +393,51 @@ namespace HelpingHands.Controllers
             return View(model);
         }
 
-        public IActionResult NewContracts()
+        public IActionResult PatientDet([FromRoute] int Id)
         {
+
+
+            var patient = _context.Patient.Where(p => p.PatientID == Id)
+                .Include(p => p.Suburb)
+                .Include(p => p.Suburb)
+                .ThenInclude(p => p.City)
+                .FirstOrDefault();
+
+            var chronicCon = _context.PatientChronicCondition
+                .Where(cc => cc.PatientID == patient.PatientID)
+                .Select(cc => cc.ChronicCondition.Name)
+                .ToList();
+
+            ViewBag.PatientChronic = chronicCon;
+
+            return View(patient);
+        }
+
+        public IActionResult TodayVisits()
+        {
+
+
             var user = _userService.GetLoggedInUser();
 
             var nurse = _context.Nurse.Where(n => n.userID == user.UserID).FirstOrDefault();
 
-            var nursePreferredSuburbs = _context.PreferredSuburb.Where(p => p.NurseID == nurse.NurseID).Select(p => p.SuburbID).ToList();
+            var careVisits = _context.CareVisit.Where(c => c.CareContract.NurseID == nurse.NurseID && c.VisitDate.Value.Date == DateTime.Now.Date)
+            .Include(c => c.CareContract)
+            .ThenInclude(c => c.Patient)
+            .ThenInclude(c => c.Suburb)
+            .ToList();
 
-            var newCareContracts = _context.CareContract.Where(c => c.CareStatus.Contains("New") && nursePreferredSuburbs.Contains(c.Suburb.SuburbID))
-                .Include(c=>c.Patient)
-                .Include(c=>c.Suburb)
-                .ThenInclude(c=>c.City)
-                .ToList();
-
-            return View(newCareContracts);
+            ViewBag.CareVisits = careVisits.OrderByDescending(c => c.VisitDate).ToList();
+            return View();
         }
 
 
+
+        #endregion
+
+
+
+        #region AjaxCalls
 
         [HttpPost("/Nurse/DeleteVisit/{visitId}")]
         public JsonResult DeleteVisit(int visitId)
@@ -420,7 +481,8 @@ namespace HelpingHands.Controllers
             return Json(true);
         }
 
-
+        #endregion
+        #region Validations
         private bool IsPreferredSuburbExists(int nurseId, int suburbId)
         {
             var existingPreferredSuburb = _context.PreferredSuburb
@@ -428,6 +490,18 @@ namespace HelpingHands.Controllers
 
             return existingPreferredSuburb != null;
         }
+        private bool IsValidVisitDate(DateTime? visitDate)
+        {
+            // Check if VisitDate has already been used or is a previous date
+            if (_context.CareVisit.Any(v => v.VisitDate.HasValue && v.VisitDate.Value.Date == visitDate.Value.Date) ||
+                visitDate.Value.Date < DateTime.Now.Date)
+            {
+                return false;
+            }
 
+            return true;
+        }
+
+        #endregion
     }
 }

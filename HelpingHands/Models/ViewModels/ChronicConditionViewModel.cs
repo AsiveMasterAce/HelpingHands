@@ -30,5 +30,12 @@ namespace HelpingHands.Models.ViewModels
     {
         public IEnumerable<int> SelectedChronicConditions { get; set; }
     }
+    public class PatientChronicConditionViewModel
+    {
+        public int PatientID { get; set; }
+        public string FullName { get; set; }
+
+        public List<string> ChronicConditions { get; set; }
+    }
 
 }

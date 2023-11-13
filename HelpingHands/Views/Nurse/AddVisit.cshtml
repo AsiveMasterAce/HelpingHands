@@ -15,14 +15,19 @@
 
         </div>
     </div>
-
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger text-center mt-2" role="alert">
+            @TempData["ErrorMessage"]
+        </div>
+    }
     <div class="col-12 card-body">
         <form asp-action="SubmitVisit" asp-controller="Nurse">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
              <input asp-for="contractId" hidden/>
             <div class="form-group">
                 <label class="form-label">Visit Date</label>
-                <input class="form-control" asp-for="VisitDate" type="date" />
+                <input class="form-control" asp-for="VisitDate" type="date" id="datePicker" />
                 <span class="text-danger" asp-validation-for="VisitDate"></span>
             </div>
             <div class="form-group">
@@ -40,3 +45,16 @@
         </form>
     </div>
 </div>
+
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $("#datepicker").datepicker({
+            dateFormat: 'dd/mm/yy'
+        });
+    });
+</script>
+

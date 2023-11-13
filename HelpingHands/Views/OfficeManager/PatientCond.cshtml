@@ -1,0 +1,45 @@
+﻿@model HelpingHands.Models.ViewModels.PatientChronicConditionViewModel
+
+@{
+    ViewData["Title"] = "PatientCond";
+}
+
+<div class="card">
+    <div class="card-header d-flex">
+
+        <h5>Chronic Conditions</h5>
+
+        <div class="ms-auto">
+            <a class="btn btn-danger small-btn" asp-action="Patients" asp-controller="OfficeManager"> Back</a>
+        </div>
+    </div>
+
+  
+    
+    <div class="card-body">
+
+      <h4 class="fw-bold mb-4"> 
+        @Model.FullName
+
+      </h4>
+    <h5 class="fw-bold">Chronic Conditions:</h5>
+
+    @if (Model.ChronicConditions.Count() != 0)
+    {
+        
+         <ul>
+        @foreach (var condition in Model.ChronicConditions)
+        {
+            <li>@condition</li>
+        }
+        </ul>
+    }
+    else
+    {
+        <div class="alert alert-info text-center">
+            <p>No Chronic Condition found for @Model.FullName</p>
+        </div>
+    }
+    </div>
+
+</div>

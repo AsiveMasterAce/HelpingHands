@@ -1,6 +1,8 @@
 ﻿@model HelpingHands.Models.ViewModels.AssignContract
 @{
     ViewData["Title"] = "Assign Contract";
+
+
 }
 
 <div class="card">
@@ -18,10 +20,18 @@
     <div class="card-body">
         <div class="row">
             <div class="col-6">
-                <h5>Contract Information</h5>
+                <h5 class="mb-3">Contract Information</h5>
+                <div class="px-3 bg-greyish round3">
+
+                    <p><span class="fw-bold"> Patient Name: </span> @ViewBag.PatientName</p>
+                    <p> <span class="fw-bold">Contract Address:</span> @ViewBag.ContractAddress</p>
+                    <p> <span class="fw-bold">Wound Description: </span> @ViewBag.WoundCondition</p>
+                </div>
+
+               
             </div>
             <div class="col-6">
-                <h5>Recommended Nurses</h5>
+                <h5 class="mb-3">Recommended Nurses</h5>
                 <ul>
                     @foreach (var nurse in ViewBag.Nurses)
                     {
@@ -29,6 +39,10 @@
                         {
                             <li>@nurse.FirstName @nurse.LastName</li>
 
+                        }
+                        else
+                        {
+                           <p class="text-capitalize">Sorry no nurses in this area</p>
                         }
                     }
                 </ul>
@@ -49,6 +63,8 @@
                      <button class="btn btn-success" type="submit">Assign Nurse</button>
                     </div>
                 </form>
+
+
             </div>
             <div class="custom-loader d-none" id="spinner"></div>
         </div>

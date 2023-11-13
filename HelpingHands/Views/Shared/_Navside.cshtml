@@ -101,34 +101,25 @@
                 <div class='dashboard-nav-dropdown-menu'>
                     <a asp-action="CareContract" asp-controller="OfficeManager" class="dashboard-nav-dropdown-item">All</a>
                     <a asp-action="NewContract" asp-controller="OfficeManager" class="dashboard-nav-dropdown-item">New Contracts</a>
-                    <a href="#" class="dashboard-nav-dropdown-item">Visits</a>
-                    <a href="#" class="dashboard-nav-dropdown-item">Closed Contracts</a>
-                    <a href="#" class="dashboard-nav-dropdown-item">Canceled Contract</a>
-
+                    <a asp-action="ClosedContract" asp-controller="OfficeManager" class="dashboard-nav-dropdown-item">Closed Contracts</a>
+                    
                 </div>
             </div>
-            <div class='dashboard-nav-dropdown'>
-                <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
-                    <i class="bi bi-person-square"></i> Nurses
-                </a>
-                <div class='dashboard-nav-dropdown-menu'>
-                    <a asp-action="Patients" asp-controller="OfficeManager" class="dashboard-nav-dropdown-item">All</a>
 
-                </div>
-            </div>
-            <div class='dashboard-nav-dropdown'>
-                <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
-                    <i class="bi bi-person-hearts"></i> Patients
-                </a>
-                <div class='dashboard-nav-dropdown-menu'>
-                    <a href="#"
-                       class="dashboard-nav-dropdown-item">All</a>
+            <a asp-action="Nurses" asp-controller="OfficeManager" class="dashboard-nav-item">
 
-                </div>
-            </div>
+                <i class="bi bi-person-square"></i> Nurses
+
+            </a>
+          <a asp-action="Patients" asp-controller="OfficeManager" class="dashboard-nav-item">
+
+                <i class="bi bi-person-hearts"></i> Patients
+
+            </a>
+          
+           
             <a asp-action="ChronicCondition" asp-controller="Chronic" class="dashboard-nav-item"> <i class="bi bi-activity"></i>Chronic Conditions</a>
-            <a href="#" class="dashboard-nav-item"> <i class="bi bi-gear"></i>Settings </a>
-            @*         <a href="#" class="dashboard-nav-item"><i class="bi bi-person-circle"></i> Profile </a> *@
+ 
 
             <div class="nav-item-divider"></div>
 
@@ -188,7 +179,6 @@
         </div>
       
         <a asp-action="NurseSuburb" asp-controller="Nurse" class="dashboard-nav-item"> <i class="bi bi-geo-fill"></i>My Suburbs </a>
-        <a href="#" class="dashboard-nav-item"> <i class="bi bi-gear"></i>Settings </a>
         <a asp-action="NurseProfile" asp-controller="Profile" class="dashboard-nav-item"><i class="bi bi-person-circle"></i> Profile </a>
         <div class="nav-item-divider"></div>
 

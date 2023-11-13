@@ -165,7 +165,7 @@ namespace HelpingHands.Controllers
                     {
                         return NotFound();
                     }
-                    user.Password = model.Password;
+                    user.Password = EncryptService.HashPassword(model.Password);
 
                     _context.Users.Update(user);
                     var role = model.UserType.Trim();
@@ -173,14 +173,14 @@ namespace HelpingHands.Controllers
                     if (role == "N")
                     {
                         var nurse = _context.Nurse.Where(n => n.userID == model.UserID).FirstOrDefault();
-                        nurse.Password = model.Password;
+                        nurse.Password = EncryptService.HashPassword(model.Password);
                         _context.Nurse.Update(nurse);
                     }
                     else if (role == "P")
                     {
                         var patient = _context.Patient.Where(p => p.userID == model.UserID).FirstOrDefault();
 
-                        patient.Password = model.Password;
+                        patient.Password = EncryptService.HashPassword(model.Password);
                         _context.Patient.Update(patient);
                     }
                     await _context.SaveChangesAsync();

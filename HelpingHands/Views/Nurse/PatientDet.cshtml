@@ -1,0 +1,145 @@
+﻿@model HelpingHands.Models.Users.Patient
+@{
+    ViewData["Title"] = "Patient Details";
+}
+<div class="d-flex mb-2">
+    <h6 style="margin-left:22px; font-weight:600;">My Patient Details</h6>
+
+    <div class="ms-auto">
+        <a asp-action="Index" asp-controller="Nurse" class="btn btn-danger btn-sm"> Back</a>
+    </div>
+</div>
+<div class="">
+
+    <div class="p-3 text-center rounded-2 bg-profile">
+
+        <img src="@(Model.ProfilePicUrl != null ? Url.Content(Model.ProfilePicUrl) : Url.Content("https://placehold.co/400"))" class="rounded-4" width="200" height="200" style="margin-top:50px">
+
+        <h4 class="mt-3 fw-bold">@Model.FirstName @Model.LastName  </h4>
+    </div>
+
+
+
+<div class="mt-2">
+    <div class="">
+
+        <div class="rounded-2 p-3 bg-profile">
+
+            <h5 class="fw-bold mb-3">Personal Details</h5>
+            <div class="row">
+                <div class="col-3">
+
+                    <h6 class="text-lg-start fw-bold">First Name:</h6>
+                </div>
+                <div class="col-6">
+                    @Model.FirstName
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-3">
+
+                    <h6 class="text-lg-start fw-bold">Last Name:</h6>
+                </div>
+                <div class="col-6">
+                    @Model.LastName
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-3">
+
+                    <h6 class="text-lg-start fw-bold">Cell Number:</h6>
+                </div>
+                <div class="col-6">
+                    @Model.CellNo
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-3">
+
+                    <h6 class="text-lg-start fw-bold">E-mail Address:</h6>
+                </div>
+                <div class="col-6">
+                    @Model.Email
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-3">
+
+                    <h6 class="text-lg-start fw-bold">ID Number:</h6>
+                </div>
+                <div class="col-6">
+                    @Model.IDNumber
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-3">
+
+                    <h6 class="text-lg-start fw-bold">DOB:</h6>
+                </div>
+                <div class="col-6">
+                    @(Model.DOB == DateTime.MinValue ? "" : Model.DOB.ToString("dd/MM/yyyy"))
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-3">
+
+                    <h6 class="text-lg-start fw-bold">Address:</h6>
+                </div>
+                <div class="col-6">
+                    @Model.AddressLine1  @Model.AddressLine2  @Model.Suburb.Name, @Model.Suburb.City?.Name , @Model.Suburb?.PostalCode
+                </div>
+            </div>
+            <hr />
+            <h5 class="fw-bold">Emergency Contact</h5>
+            <div class="row">
+
+                <div class="col-3">
+
+                    <h6 class="text-lg-start fw-bold">Full Name:</h6>
+                </div>
+                <div class="col-6">
+                    @Model.EmergencyPerson
+                </div>
+            </div>
+            <hr />
+
+            <div class="row">
+
+                <div class="col-3">
+
+                    <h6 class="text-lg-start fw-bold">Cell No:</h6>
+                </div>
+                <div class="col-6">
+                    @Model.EmergencyPersonNo
+                </div>
+            </div>
+            <hr />
+            <h5 class="fw-bold">My Chronic Condition</h5>
+            @foreach (var chronicCon in ViewBag.PatientChronic)
+            {
+                <div class="row">
+                    <div class="col-6">
+                        -@chronicCon
+                    </div>
+                </div>
+            }
+
+        </div>
+
+    </div>
+    
+
+    </div>
+
+</div>
+
+
+
+
+

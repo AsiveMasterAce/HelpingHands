@@ -1,14 +1,17 @@
 ﻿@model IEnumerable<HelpingHands.Models.Users.UserModel>
 @{
-    ViewData["Title"] = "Patients";
+    ViewData["Title"] = "Nurses";
 }
 
 
 <div class="d-flex mb-3 mx-3">
 
-    <h5 class="fw-bold">Patients</h5>
+    <h5 class="fw-bold">Nurses</h5>
 
-  
+    <div class="ms-auto">
+
+        <a asp-action="NurseUser" asp-controller="OfficeManager" class="btn btn-success">New Nurse</a>
+    </div>
 
 </div>
 
@@ -51,16 +54,23 @@
                         @item.CellNo
                     </td>
                     <td>
-                        <a class="btn btn-outline-success rounded-3 small-btn " asp-controller="OfficeManager" asp-action="PatientCond" asp-route-Id="@item.UserID">
-                            <i class="bi bi-activity"></i>  Conditions
+                        <a class="btn btn-outline-success rounded-3 small-btn " asp-controller="OfficeManager" asp-action="NurseActivity" asp-route-Id="@item.UserID">
+                          <i class="bi bi-activity"></i>  Activities
+                        </a>
+                        <a class="btn btn-outline-dark rounded-3 small-btn " asp-controller="OfficeManager" asp-action="NurseDetails" asp-route-Id="@item.UserID">
+                          <i class="bi bi-person-circle"></i> Nurse Details
                         </a>
                     </td>
                 </tr>
-
+               
             }
         </tbody>
     </table>
 </div>
+
+
+
+
 <script>
 
     $(document).ready(function () {
