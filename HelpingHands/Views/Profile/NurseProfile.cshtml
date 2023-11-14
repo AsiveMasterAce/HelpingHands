@@ -130,10 +130,10 @@
                 </a>
             </div>
 
-            <div class="p-3 text-center rounded-2">
+            <div class="p-3 text-center rounded-2 bg-profile mt-5">
 
-                <a asp-action="" asp-controller=""> <i class="bi bi-shield-lock"></i> Change Password</a>
-            </div> 
+                <a asp-action="UpdatePassword" asp-controller="Profile" class="text-black"> <i class="bi bi-shield-lock"></i> Update Password</a>
+            </div>
 
         </div>
 
@@ -186,7 +186,7 @@
             processData: false,
             contentType: false,
             success: function (response) {
-                $('#uploadModal').modal('close');
+                $('#uploadModal').modal('hide');
 
                 
                 $('.rounded-4').attr('src', response.url);
