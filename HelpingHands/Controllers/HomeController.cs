@@ -41,7 +41,6 @@ namespace HelpingHands.Controllers
             }
 
 
-            ViewBag.Business = _context.Business.ToList();
             ViewBag.FAQ = _context.FAQs.ToList();
                 return View();
         }
