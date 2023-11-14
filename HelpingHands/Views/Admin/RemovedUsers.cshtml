@@ -121,28 +121,42 @@
             "max-width": "100%"
         });
 
-        $('#userTable tbody').on('click', '.delete-btn', function () {
+        $('#loaderModal').modal('hide');
+
+        $('.active-btn').click(function () {
             var itemId = $(this).data('item-id');
-            console.log(itemId);
-            $('#deleteBtn').data('item-id', itemId);
+            console.log("itemId:", itemId);
+            $('#activateBtn').data('item-id', itemId);
         });
-        $("#deleteBtn").click(function () {
-            var userId = $(this).data('item-id'); // Retrieve the user ID correctly
 
-            console.log(userId);
 
+        $("#activateBtn").click(function () {
+            var userId = $(this).data('item-id');
+            console.log("userId:", userId);
             $.ajax({
-                url: "/Admin/DeleteUser/" + userId,
+                url: "/Admin/ActivateUser/" + userId,
                 type: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
-                //data: JSON.stringify({userId: userId}),
+                beforeSend: function () {
+
+                    $('#loaderModal').modal('show');
+                    $("#ActiveModal").hide();
+                },
                 success: function () {
-                    window.location.href = "/Admin/Users";
+                    // window.location.href = "/Suburb/RemovedSuburbs";
+                    setTimeout(function () {
+                        window.location.href = "/Admin/RemovedUsers";
+                    }, 3000);
+
+                },
+                complete: function () {
+                    // Hide the loader
+                    $('#loaderModal').modal('hide');
                 },
                 error: function () {
                     alert("Error while deleting user");
-                    console.log(userId);
+                    console.log("suburbId:", suburbId);
                 }
             });
         });

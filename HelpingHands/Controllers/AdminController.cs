@@ -315,7 +315,18 @@ namespace HelpingHands.Controllers
             return View(usersList);
         }
 
+        [HttpPost("/Admin/ActivateUser/{userId}")]
+        public JsonResult ActivateUser(int userId)
+        {
+            var user = _context.Users.Where(u => u.UserID == userId).FirstOrDefault();
 
+            user.Archived = false;
+
+            _context.Users.Update(user);
+            _context.SaveChanges();
+
+            return Json(true);
+        }
         public IActionResult AddBusinessData()
         {
             return View();
