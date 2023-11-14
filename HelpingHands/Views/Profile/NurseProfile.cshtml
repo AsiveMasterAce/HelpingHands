@@ -13,6 +13,14 @@
             <a class="btn btn-success small-btn" style="margin-right: 2rem;" title="Update Profile" asp-action="UpdateNurseProfile" asp-controller="Profile">Update Profile</a>
         </div>
     </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            <strong>Success!</strong> @TempData["SuccessMessage"]
+        </div>
+    }
+
 <div class="row">
 
     <div class="col-9">

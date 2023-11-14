@@ -73,14 +73,14 @@
                     </td>
                     <td>
                         <a class="btn btn-warning rounded-3 small-btn" asp-controller="Admin" asp-action="EditUser" asp-route-Id="@item.UserID">
-                            <i class="bi bi-pen"></i>
+                            <i class="bi bi-pen"></i> update
                         </a>
                         <a class="btn btn-danger rounded-3 small-btn delete-btn" data-bs-toggle="modal" data-bs-target="#DeleteModal" data-item-id="@item.UserID">
-                            <i class="bi bi-trash3"></i>
+                            <i class="bi bi-trash3"></i> Remove
 
                         </a>
                         <a class="btn btn-secondary rounded-3 small-btn" asp-controller="Admin" asp-action="UpdateUserPassword" asp-route-Id="@item.UserID">
-                            <i class="bi bi-key-fill"></i>
+                            <i class="bi bi-key-fill"></i> Password
                         </a>
 
                     </td>
@@ -125,50 +125,6 @@
         });
     </script>
 }
-<style>
-
-  /* Define the colors */
-:root {
-  --color-primary: #780000;
-  --color-secondary: #c1121f;
-  --color-accent: #fdf0d5;
-  --color-highlight: #003049;
-  --color-error: #669bbc;
-}
-
-/* Apply the colors to the datatable */
-    .table {
-        background-color: var(--color-primary);
-        color: var(--color-accent);
-        overflow-x: auto;
-        max-width: 100%;
-    }
-
-
-.table th {
-  background-color: var(--color-secondary);
-  color: var(--color-accent);
-}
-
-.table td {
-  background-color: var(--color-accent);
-}
-
-.table tr:hover {
-  background-color: var(--color-highlight);
-}
-
-.table .error {
-  background-color: var(--color-error);
-  color: white;
-}
-  .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-    background-color: var(--color-highlight);
-    color: var(--color-accent);
-    border: 1px solid var(--color-accent);
-  }
-
-</style>
 
 <script>
 

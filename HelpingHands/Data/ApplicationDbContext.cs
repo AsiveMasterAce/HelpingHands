@@ -62,5 +62,6 @@ namespace HelpingHands.Data
        public DbSet<Business> Business { get; set; }
        public DbSet<PostComment> PostComment { get; set; }
        public DbSet<TimelinePost> TimelinePost { get; set; }
+       public DbSet<FAQs> FAQs { get; set; }
     }
 }

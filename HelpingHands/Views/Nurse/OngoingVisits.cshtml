@@ -1,0 +1,95 @@
+﻿@model HelpingHands.Models.Users.Nurse
+
+@{
+    ViewData["Title"] = "On Going";
+}
+<div class="d-flex mb-3">
+
+    <h2> My Visits Per Contract</h2>
+
+    <div class="ms-auto">
+    </div>
+</div>
+
+<div class="mb-2">
+    <p>Contracts assigned to nurse with their Care Visits</p>
+    Filter by Contract Date Range
+    <form asp-action="MyActivities" method="get">
+        <div class="row">
+            <div class="col-md-3">
+                <label for="startDate">Start Date:</label>
+                <input type="date" name="startDate" id="startDate" class="form-control" pattern="\d{2}/\d{2}/\d{4}" placeholder="dd/mm/yyyy" />
+            </div>
+            <div class="col-md-3">
+                <label for="endDate">End Date:</label>
+                <input type="date" name="endDate" id="endDate" class="form-control" pattern="\d{2}/\d{2}/\d{4}" placeholder="dd/mm/yyyy" />
+            </div>
+
+            <div class="col-md-3 mt-4">
+                <input type="submit" class="btn btn-success small-btn" value="Filter" />
+            </div>
+
+        </div>
+    </form>
+
+    <form asp-action="MyActivities" method="get" class="mt-2">
+        <input type="hidden" name="id" value="@Model.userID" />
+        <input type="submit" class="btn btn-outline-danger small-btn" value="Default List" />
+    </form>
+</div>
+@if (Model.CareContracts.Count() != 0)
+{
+
+
+    @foreach (var contract in Model.CareContracts)
+    {
+
+        <div class="row bg-dark text-white p-2">
+
+            <div class="col-4">
+
+                <h5>Contract Date: @contract.ContractDate.Value.ToString("dd/MM/yyyy")</h5>
+            </div>
+            <div class="col-4">
+                <h5>Patient: @contract.Patient.FirstName @contract.Patient.LastName</h5>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Arrival Time</th>
+                    <th>Departure Time</th>
+                    <th>Wound Condition</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var visit in contract.CareVisits)
+                {
+
+                    <tr>
+                        <td>@visit.VisitDate.Value.ToString("dd/MM/yyyy")</td>
+                        <td>@visit.VisitArriveTime?.ToString(@"hh\:mm")</td>
+                        <td>@visit.VisitDepartTime?.ToString(@"hh\:mm")</td>
+                        <td>@visit.WoundCondition</td>
+                        <td>@visit.Notes</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+}
+else
+{
+    <div class="alert alert-info text-center">
+
+        <p>
+            No activitie Found for @Model.FirstName @Model.LastName
+
+        </p>
+        <img src="~/img/act2.png" width="330" height="330" />
+
+    </div>
+}

@@ -164,20 +164,20 @@
                 </div>
             </div>
 
-        <div class='dashboard-nav-dropdown'>
-            <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
-                <i class="bi bi-calendar-heart"></i> Visits
-            </a>
-            <div class='dashboard-nav-dropdown-menu'>
-                <a  asp-action="" asp-controller=""
-                   class="dashboard-nav-dropdown-item">All
-               </a>
-                <a href="#" class="dashboard-nav-dropdown-item">On-going Visits</a>
-                <a href="#" class="dashboard-nav-dropdown-item">Upcoming Visits</a>
-                <a href="#" class="dashboard-nav-dropdown-item">History Visits</a>
+            <div class='dashboard-nav-dropdown'>
+                <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                    <i class="bi bi-calendar-heart"></i> Visits
+                </a>
+                <div class='dashboard-nav-dropdown-menu'>
+                    <a asp-action="TodayVisits" asp-controller="Nurse" class="dashboard-nav-dropdown-item">
+
+                        Today Visits
+
+                    </a>
+                    <a asp-action="MyActivities" asp-controller="Nurse" class="dashboard-nav-item"> My Visits </a>
+                </div>
             </div>
-        </div>
-      
+         
         <a asp-action="NurseSuburb" asp-controller="Nurse" class="dashboard-nav-item"> <i class="bi bi-geo-fill"></i>My Suburbs </a>
         <a asp-action="NurseProfile" asp-controller="Profile" class="dashboard-nav-item"><i class="bi bi-person-circle"></i> Profile </a>
         <div class="nav-item-divider"></div>
@@ -216,8 +216,7 @@
             </a>
             <div class='dashboard-nav-dropdown-menu'>
                     <a asp-action="PatientVisits" asp-controller="Patient" class="dashboard-nav-dropdown-item">View Visit</a>
-                    <a href="#" class="dashboard-nav-dropdown-item">History Visits</a>
-                
+               
             </div>
         </div>
         <div class='dashboard-nav-dropdown'>
@@ -229,7 +228,6 @@
                     <a asp-action="ChronicsPatient" asp-controller="Chronic" class="dashboard-nav-dropdown-item">Chronic Conditions</a>
                 </div>
         </div>
-         <a href="#" class="dashboard-nav-item"> <i class="bi bi-gear"></i>Settings </a>
 
         <div class="nav-item-divider"></div>
 

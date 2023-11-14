@@ -40,6 +40,9 @@ namespace HelpingHands.Controllers
                 }
             }
 
+
+            ViewBag.Business = _context.Business.ToList();
+            ViewBag.FAQ = _context.FAQs.ToList();
                 return View();
         }
         public IActionResult Test()
@@ -50,6 +53,11 @@ namespace HelpingHands.Controllers
             return View(users);
         }
        
+        public IActionResult FAQ()
+        {
+            
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

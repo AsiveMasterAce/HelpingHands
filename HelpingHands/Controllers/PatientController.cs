@@ -21,6 +21,26 @@ namespace HelpingHands.Controllers
         }
         public IActionResult Index()
         {
+            var userID = _userService.GetLoggedInUserId();
+
+            var Patient = _context.Patient.Where(p => p.userID == userID).FirstOrDefault();
+
+            var PatientID = Patient.PatientID;
+
+            var contracts = _context.CareContract.Where(c => c.PatientID == PatientID && !c.CareStatus.Contains("Assigned"))
+                .Include(c=>c.Nurse)
+                .ToList();
+
+            var visits = new List<CareVisit>();
+
+            foreach (var contract in contracts)
+            {
+                visits.AddRange(_context.CareVisit
+                .Where(v => v.ContractID == contract.ContractID && v.VisitDate == DateTime.Now.Date));
+            }
+
+            visits = visits.OrderByDescending(v => v.VisitDate).ToList();
+            ViewBag.Visits = visits.Take(6);
             return View();
         }
 
@@ -131,7 +151,7 @@ namespace HelpingHands.Controllers
 
             var PatientID = Patient.PatientID;
 
-            var contracts = _context.CareContract.Where(c => c.PatientID == PatientID && !c.CareStatus.Contains("Closed")).ToList();
+            var contracts = _context.CareContract.Where(c => c.PatientID == PatientID && !c.CareStatus.Contains("Assigned")).ToList();
 
             var visits = new List<CareVisit>();
 

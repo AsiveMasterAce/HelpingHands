@@ -3,20 +3,16 @@
     ViewData["Title"] = "TodayVisits";
     var careVisits = ViewBag.CareVisits as IEnumerable<CareVisit>;
 }
+<div class="d-flex mb-2">
 
+    <h5 class="fw-bold">My Visits For Today</h5>
+
+    <div class="ms-auto">
+ 
+    </div>
+</div>
 <div class="row mt-4">
-    <div class="col-12 shadow-sm">
-
-        <div class="d-flex">
-            <div>
-
-                <h5>Today's Visits</h5>
-            </div>
-            <div class="ms-auto">
-                <a class="btn btn-danger small-btn"> <i class="bi bi-eye"></i>View More</a>
-            </div>
-
-        </div>
+ 
         @if (careVisits.Count() != 0)
         {
             <table class="table small-text text-center">

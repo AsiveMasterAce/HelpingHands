@@ -5,7 +5,38 @@
 }
 
 
-<div class="">
-
-    
-</div>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>NPONumber</th>
+            <th>CellNo</th>
+            <th>Email</th>
+            <th>OperationgHrs</th>
+            <th>Logo</th>
+            <th>SuburdID</th>
+            <th>Archived</th>
+            <th>AddressLine1</th>
+            <th>AddressLine2</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in users)
+        {
+            <tr>
+                <td>@user.ID</td>
+                <td>@user.Name</td>
+                <td>@user.NPONumber</td>
+                <td>@user.CellNo</td>
+                <td>@user.Email</td>
+                <td>@user.OperationgHrs</td>
+                <td>@user.Logo</td>
+                <td>@user.SuburdID</td>
+                <td>@user.Archived</td>
+                <td>@user.AddressLine1</td>
+                <td>@user.AddressLine2</td>
+            </tr>
+        }
+    </tbody>
+</table>

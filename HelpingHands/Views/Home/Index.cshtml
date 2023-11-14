@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+
 }
 
 
@@ -22,4 +23,31 @@
 
  </div>
 
-  
+ @if (ViewBag.FAQ != null)
+{
+ <div class="mt-5 px-2">
+     
+     <h4 class="text-center fw-bold mb-5">Frequanty asked questions about us</h4>
+
+    @foreach (var faq in ViewBag.FAQ)
+        {
+
+             <div class="row">
+
+            <div class="col-5">
+                
+                <h5 class="fw-bold">@faq.Question</h5>
+              
+            </div>
+            <div class="col-6">
+
+                <p>@faq.Answer</p>
+            </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    
+}

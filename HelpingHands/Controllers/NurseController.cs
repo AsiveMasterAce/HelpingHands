@@ -267,6 +267,36 @@ namespace HelpingHands.Controllers
         #endregion
 
         #region Visit
+
+        public IActionResult MyActivities(DateTime? startDate, DateTime? endDate)
+        {
+
+            var userId = _userService.GetLoggedInUserId();
+
+            var nurse = _context.Nurse
+                           .Include(n => n.CareContracts)
+                               .ThenInclude(cc => cc.CareVisits)
+                           .Include(n => n.CareContracts)
+                               .ThenInclude(cc => cc.Patient)
+                           .Where(n => n.userID.Equals(userId))
+                           .FirstOrDefault();
+
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                nurse.CareContracts = nurse.CareContracts
+                                           .Where(cc => cc.ContractDate >= startDate && cc.ContractDate <= endDate).
+                                           OrderByDescending(cc => cc.ContractDate)
+                                           .ToList();
+            }
+
+            foreach (var contract in nurse.CareContracts)
+            {
+                contract.CareVisits = contract.CareVisits.OrderByDescending(cv => cv.VisitDate).ToList();
+            }
+
+            return View(nurse);
+        }
+
         public IActionResult AddVisit([FromRoute] int Id)
         {
             var contracts = _context.CareContract.Where(cc => cc.ContractID == Id).FirstOrDefault();
@@ -415,8 +445,6 @@ namespace HelpingHands.Controllers
 
         public IActionResult TodayVisits()
         {
-
-
             var user = _userService.GetLoggedInUser();
 
             var nurse = _context.Nurse.Where(n => n.userID == user.UserID).FirstOrDefault();

@@ -32,9 +32,9 @@ namespace HelpingHands.Models.ViewModels
         public string? IDNumber { get; set; }
 
         [Required]
-        [Display(Name ="Gender")]
+        [Display(Name = "Gender")]
 
-        public string? Gender { get;set; }
+        public string? Gender { get; set; }
 
     }
 
@@ -75,5 +75,19 @@ namespace HelpingHands.Models.ViewModels
         public string? EmergencyPersonNo { get; set; }
 
 
+    }
+
+    public class UpdatePasswordViewModel
+    {
+        [Required(ErrorMessage = "Old Password is required.")]
+        public string OldPassword { get; set; }
+
+        [Required(ErrorMessage = "New Password is required.")]
+        [StringLength(100, ErrorMessage = "New Password must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        public string NewPassword { get; set; }
+
+        [Required(ErrorMessage = "Confirm New Password is required.")]
+        [Compare("NewPassword", ErrorMessage = "New Password and Confirm New Password must match.")]
+        public string ConfirmNewPassword { get; set; }
     }
 }

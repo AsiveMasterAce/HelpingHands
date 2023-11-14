@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Index";
+    var careVisits = ViewBag.Visits as IEnumerable<CareVisit>;
 }
 
 
@@ -13,7 +14,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Care Contracts</h5>
                     <p class="card-text">Create care contracts and view contracts that you created.</p>
-                    <a href="#" class="btn btn-secondary">Care Contracts</a>
+                    <a asp-action="CreateContract" asp-controller="Patient" class="btn btn-secondary">Care Contracts</a>
                 </div>
             </div>
         </div>
@@ -24,26 +25,94 @@
                 <div class="card-body">
                     <h5 class="card-title">Care Visits</h5>
                     <p class="card-text"> See your care visits made by your favorite nurses.</p>
-                    <a href="#" class="btn btn-secondary">See Visits</a>
+                    <a asp-action="PatientVisits" asp-controller="Patient" class="btn btn-secondary">See Visits</a>
                 </div>
             </div>
         </div>
         <div class="col-4 ">
 
             <div class="card" style="width: 18rem;">
-                <img src="~/img/Date_Patient.png" class="card-img-top" alt="...">
+                <img src="~/img/med.png" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Set Appoitment</h5>
-                    <p class="card-text">Set check up  with Helping Hands and let us heal you</p>
-                    <a href="#" class="btn btn-secondary">Set Appoitnment</a>
+                    <h5 class="card-title">Add Condition</h5>
+                    <p class="card-text">Set Profile up  with Helping Hands and let us heal you</p>
+                    <a asp-action="ChronicsPatient" asp-controller="Chronic" class="btn btn-secondary">Add Conditions</a>
                 </div>
             </div>
         </div>
 
     </div>
-        
 
 
+    <div class="row mt-4">
+        <div class="col-12 shadow-sm">
+
+            <div class="d-flex">
+                <div>
+
+                    <h5>Today's Visits</h5>
+                </div>
+          
+
+            </div>
+            @if (careVisits.Count() != 0)
+            {
+                <table class="table small-text text-center">
+
+                    <thead>
+                        <tr>
+
+                            <th>Axtimatted Time</th>
+                            <th>Nurse</th>
+                            <th>Nurse Cell No</th>
+                            <th>Nurse Email</th>
+                            <th>Address</th>
+                            <th>Contract Wound Description</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in careVisits)
+                        {
+
+                            <tr>
+                                <td>
+                                    @item.AxtimateArriveTime?.ToString(@"hh\:mm")
+                                </td>
+                                <td>
+                                    @item.CareContract.Nurse.FirstName @item.CareContract.Nurse?.LastName
+
+                                </td>
+                                <td>
+                                    @item.CareContract?.Nurse.CellNo 
+
+                                </td>
+                                <td>
+                                    @item.CareContract?.Nurse?.Email 
+
+                                </td>
+                                <td>
+                                    @item.CareContract?.AddressLine1 @item.CareContract?.AddressLine2 @item.CareContract?.Suburb?.Name @item.CareContract?.Suburb?.PostalCode
+                                </td>
+                                <td>
+                                    @item.CareContract?.WoundDescription
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-info text-center">
+                    <p>You have no visits today coming up, create a contract</p>
+                    <img src="~/img/Calendar-bro.png" class="w-25">
+                </div>
+            }
+
+        </div>
+    </div>
 
 
 

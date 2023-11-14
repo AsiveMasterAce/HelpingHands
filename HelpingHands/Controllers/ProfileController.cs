@@ -158,6 +158,52 @@ namespace HelpingHands.Controllers
             return View(model);
         }
 
+
+        public IActionResult UpdatePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SubmitUpdatePassword(UpdatePasswordViewModel model)
+        {
+            var userID = _userService.GetLoggedInUserId();
+            var patient = _context.Patient.Where(c=>c.userID.Equals(userID)).FirstOrDefault();
+            var Nurse = _context.Nurse.Where(c=>c.userID.Equals(userID)).FirstOrDefault();
+            var user = _userService.GetLoggedInUser();
+
+            bool isOldPasswordCorrect = EncryptService.VerifyPassword(model.OldPassword, user.Password);
+
+            if (!isOldPasswordCorrect)
+            {
+                TempData["ErrorMessage"] = "Invalid Old Password";
+                return RedirectToAction("UpdatePassword", "Profile");
+            }
+
+            if (ModelState.IsValid)
+            {
+                user.Password = EncryptService.HashPassword(model.NewPassword);
+
+
+                if (User.IsInRole("P"))
+                {
+                    patient.Password=user.Password;
+                    await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Your password has been updated successfully.";
+                    return RedirectToAction("PatientProfile", "Profile");
+                }
+                else if(User.IsInRole("N"))
+                {
+                    Nurse.Password = user.Password;
+                    await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Your password has been updated successfully.";
+                    return RedirectToAction("NurseProfile", "Profile");
+
+                }
+            }
+
+            return View(model);
+        }
         [HttpPost]
         public async Task<IActionResult> UploadProfilePicture(IFormFile image)
         {
